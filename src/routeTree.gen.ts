@@ -14,7 +14,6 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as ShopRouteImport } from './routes/shop'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
@@ -46,11 +45,6 @@ const MembershipRoute = MembershipRouteImport.update({
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -106,7 +100,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -121,7 +114,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -137,7 +129,6 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -154,7 +145,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/shop'
     | '/dashboard'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -169,7 +159,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/shop'
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
@@ -184,7 +173,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/shop'
     | '/_authenticated/dashboard'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
@@ -201,7 +189,6 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   RegisterRoute: typeof RegisterRoute
-  ShopRoute: typeof ShopRoute
   ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
   ApiPublicHooksMatrixCommissionsRoute: typeof ApiPublicHooksMatrixCommissionsRoute
 }
@@ -241,13 +228,6 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -349,7 +329,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   RegisterRoute: RegisterRoute,
-  ShopRoute: ShopRoute,
   ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,
   ApiPublicHooksMatrixCommissionsRoute: ApiPublicHooksMatrixCommissionsRoute,
 }
