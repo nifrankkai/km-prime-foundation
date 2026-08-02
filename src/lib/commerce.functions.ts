@@ -274,13 +274,13 @@ export const listOrders = createServerFn({ method: "GET" })
       totalPv: row.total_pv as number,
       createdAt: row.created_at as string,
       deliveredAt: (row.delivered_at as string | null) ?? null,
-      items: ((row.order_items ?? []) as OrderSummary["items"]).map((item) => ({
-        id: item.id,
-        name: item.name,
-        image: item.image,
-        quantity: item.quantity,
-        unitPriceCents: item.unitPriceCents ?? (item as unknown as { unit_price_cents: number }).unit_price_cents,
-        pv: item.pv,
+      items: (row.order_items ?? []).map((item) => ({
+        id: item.id as string,
+        name: item.name as string,
+        image: (item.image as string | null) ?? null,
+        quantity: item.quantity as number,
+        unitPriceCents: item.unit_price_cents as number,
+        pv: item.pv as number,
       })),
     }));
   });
