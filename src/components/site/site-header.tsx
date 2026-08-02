@@ -20,6 +20,7 @@ const navLinks = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
   { to: "/membership", label: "Become a Member" },
+  { to: "/cart", label: "Cart" },
 ] as const;
 
 export function SiteHeader() {
