@@ -1,24 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { SiteHeader } from "@/components/site/site-header";
+import { SiteFooter } from "@/components/site/site-footer";
+import { Hero } from "@/components/home/hero";
+import { TrustBadges } from "@/components/home/trust-badges";
+import { Story } from "@/components/home/story";
+import { FeatureGrid } from "@/components/home/feature-grid";
+import { ComparisonTable } from "@/components/home/comparison-table";
+import { ProductCarousel } from "@/components/home/product-carousel";
+import { Testimonials } from "@/components/home/testimonials";
+import { CtaBand } from "@/components/home/cta-band";
+
+const title = "KM Prime — Premium Products at a Fair Member Price";
+const description =
+  "KM Prime sells lab-verified wellness and home essentials at transparent prices, with member pricing and referral rewards.";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <SiteHeader />
+      <main>
+        <Hero />
+        <TrustBadges />
+        <Story />
+        <FeatureGrid />
+        <ComparisonTable />
+        <ProductCarousel />
+        <Testimonials />
+        <CtaBand />
+      </main>
+      <SiteFooter />
     </div>
   );
 }
