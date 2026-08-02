@@ -83,11 +83,11 @@ function MembershipPanel() {
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <Stat
               label="Membership"
-              value={isLoading ? "…" : membershipLabels[overview?.membershipStatus ?? "pending"]}
+              value={isLoading ? "…" : (membershipLabels[overview?.membershipStatus ?? "pending"] ?? "Pending")}
             />
             <Stat
               label="Business Licence"
-              value={isLoading ? "…" : licenseLabels[overview?.licenseStatus ?? "inactive"]}
+              value={isLoading ? "…" : (licenseLabels[overview?.licenseStatus ?? "inactive"] ?? "Inactive")}
               tone={overview?.licenseStatus === "grace_period" ? "warn" : undefined}
             />
             <Stat
