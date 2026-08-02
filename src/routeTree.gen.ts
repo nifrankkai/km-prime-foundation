@@ -41,6 +41,7 @@ import { Route as AuthenticatedDashboardPerformanceRouteImport } from './routes/
 import { Route as AuthenticatedDashboardWalletRouteImport } from './routes/_authenticated/dashboard.wallet'
 import { Route as ApiPublicHooksLicenseGraceRouteImport } from './routes/api/public/hooks/license-grace'
 import { Route as ApiPublicHooksMatrixCommissionsRouteImport } from './routes/api/public/hooks/matrix-commissions'
+import { Route as ApiPublicHooksWeeklyCycleRouteImport } from './routes/api/public/hooks/weekly-cycle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -218,6 +219,12 @@ const ApiPublicHooksMatrixCommissionsRoute =
     path: '/api/public/hooks/matrix-commissions',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicHooksWeeklyCycleRoute =
+  ApiPublicHooksWeeklyCycleRouteImport.update({
+    id: '/api/public/hooks/weekly-cycle',
+    path: '/api/public/hooks/weekly-cycle',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -251,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
+  '/api/public/hooks/weekly-cycle': typeof ApiPublicHooksWeeklyCycleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -282,6 +290,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
+  '/api/public/hooks/weekly-cycle': typeof ApiPublicHooksWeeklyCycleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -317,6 +326,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
+  '/api/public/hooks/weekly-cycle': typeof ApiPublicHooksWeeklyCycleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -352,6 +362,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
+    | '/api/public/hooks/weekly-cycle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
+    | '/api/public/hooks/weekly-cycle'
   id:
     | '__root__'
     | '/'
@@ -417,6 +429,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
+    | '/api/public/hooks/weekly-cycle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -431,6 +444,7 @@ export interface RootRouteChildren {
   ShopIndexRoute: typeof ShopIndexRoute
   ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
   ApiPublicHooksMatrixCommissionsRoute: typeof ApiPublicHooksMatrixCommissionsRoute
+  ApiPublicHooksWeeklyCycleRoute: typeof ApiPublicHooksWeeklyCycleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -659,6 +673,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicHooksMatrixCommissionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/weekly-cycle': {
+      id: '/api/public/hooks/weekly-cycle'
+      path: '/api/public/hooks/weekly-cycle'
+      fullPath: '/api/public/hooks/weekly-cycle'
+      preLoaderRoute: typeof ApiPublicHooksWeeklyCycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -748,6 +769,7 @@ const rootRouteChildren: RootRouteChildren = {
   ShopIndexRoute: ShopIndexRoute,
   ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,
   ApiPublicHooksMatrixCommissionsRoute: ApiPublicHooksMatrixCommissionsRoute,
+  ApiPublicHooksWeeklyCycleRoute: ApiPublicHooksWeeklyCycleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
