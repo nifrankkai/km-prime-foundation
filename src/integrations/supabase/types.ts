@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          published: boolean
+          published_at: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          published?: boolean
+          published_at?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          published?: boolean
+          published_at?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string
@@ -95,6 +128,7 @@ export type Database = {
         Row: {
           amount_cents: number
           created_at: string
+          credited_at: string | null
           id: string
           note: string | null
           period_month: string
@@ -107,6 +141,7 @@ export type Database = {
         Insert: {
           amount_cents?: number
           created_at?: string
+          credited_at?: string | null
           id?: string
           note?: string | null
           period_month: string
@@ -119,6 +154,7 @@ export type Database = {
         Update: {
           amount_cents?: number
           created_at?: string
+          credited_at?: string | null
           id?: string
           note?: string | null
           period_month?: string
@@ -127,6 +163,45 @@ export type Database = {
           updated_at?: string
           user_id?: string
           volume?: number
+        }
+        Relationships: []
+      }
+      gallery_features: {
+        Row: {
+          caption: string | null
+          created_at: string
+          display_name: string
+          id: string
+          member_id: string | null
+          photo_url: string
+          rank_key: string | null
+          sort_order: number
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          display_name: string
+          id?: string
+          member_id?: string | null
+          photo_url: string
+          rank_key?: string | null
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          member_id?: string | null
+          photo_url?: string
+          rank_key?: string | null
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
         }
         Relationships: []
       }
@@ -676,20 +751,327 @@ export type Database = {
         }
         Relationships: []
       }
+      role_permissions: {
+        Row: {
+          created_at: string
+          granted: boolean
+          id: string
+          permission_key: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          permission_key: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          permission_key?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount_cents: number
+          balance_after_cents: number
+          created_at: string
+          created_by: string | null
+          id: string
+          metadata: Json
+          note: string | null
+          reference: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Insert: {
+          amount_cents: number
+          balance_after_cents: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metadata?: Json
+          note?: string | null
+          reference?: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Update: {
+          amount_cents?: number
+          balance_after_cents?: number
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metadata?: Json
+          note?: string | null
+          reference?: string | null
+          type?: Database["public"]["Enums"]["transaction_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_permission_overrides: {
+        Row: {
+          created_at: string
+          granted: boolean
+          id: string
+          permission_key: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          permission_key: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          granted?: boolean
+          id?: string
+          permission_key?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallets: {
+        Row: {
+          balance_cents: number
+          created_at: string
+          frozen: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance_cents?: number
+          created_at?: string
+          frozen?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance_cents?: number
+          created_at?: string
+          frozen?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      withdrawal_requests: {
+        Row: {
+          admin_note: string | null
+          amount_cents: number
+          created_at: string
+          destination: string
+          id: string
+          method: Database["public"]["Enums"]["payment_method"]
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          amount_cents: number
+          created_at?: string
+          destination: string
+          id?: string
+          method: Database["public"]["Enums"]["payment_method"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          amount_cents?: number
+          created_at?: string
+          destination?: string
+          id?: string
+          method?: Database["public"]["Enums"]["payment_method"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: Database["public"]["Enums"]["withdrawal_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
       activate_member: { Args: { _user_id: string }; Returns: undefined }
+      admin_adjust_wallet: {
+        Args: { _amount_cents: number; _note: string; _user_id: string }
+        Returns: number
+      }
+      admin_assign_role: {
+        Args: {
+          _enabled: boolean
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_report_stats: { Args: never; Returns: Json }
+      admin_review_kyc: {
+        Args: { _approve: boolean; _reason: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_review_withdrawal: {
+        Args: { _approve: boolean; _id: string; _note: string }
+        Returns: undefined
+      }
+      admin_set_commission_status: {
+        Args: {
+          _amount_cents: number
+          _commission_id: string
+          _note: string
+          _status: Database["public"]["Enums"]["commission_status"]
+        }
+        Returns: undefined
+      }
+      admin_set_member_status: {
+        Args: {
+          _status: Database["public"]["Enums"]["member_status"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      admin_set_order_status: {
+        Args: {
+          _order_id: string
+          _status: Database["public"]["Enums"]["order_status"]
+        }
+        Returns: undefined
+      }
+      admin_set_role_permission: {
+        Args: {
+          _granted: boolean
+          _key: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: undefined
+      }
+      admin_set_stock: {
+        Args: { _product_id: string; _stock_quantity: number }
+        Returns: undefined
+      }
+      admin_set_user_permission: {
+        Args: { _granted: boolean; _key: string; _user_id: string }
+        Returns: undefined
+      }
+      admin_set_wallet_frozen: {
+        Args: { _frozen: boolean; _user_id: string }
+        Returns: undefined
+      }
+      admin_update_rank: {
+        Args: {
+          _key: string
+          _leadership_share: number
+          _min_active_directs: number
+          _min_group_pv: number
+          _min_personal_pv: number
+          _unlocked_levels: number
+        }
+        Returns: undefined
+      }
+      admin_upsert_announcement: {
+        Args: {
+          _body: string
+          _id: string
+          _published: boolean
+          _title: string
+        }
+        Returns: string
+      }
+      admin_upsert_gallery_feature: {
+        Args: {
+          _caption: string
+          _display_name: string
+          _id: string
+          _photo_url: string
+          _rank_key: string
+          _visible: boolean
+        }
+        Returns: string
+      }
+      admin_upsert_product: {
+        Args: {
+          _category: string
+          _description: string
+          _id: string
+          _images: string[]
+          _name: string
+          _price_cents: number
+          _pv: number
+          _retail_price_cents: number
+          _slug: string
+          _status: Database["public"]["Enums"]["product_status"]
+          _stock_quantity: number
+        }
+        Returns: string
+      }
       confirm_order_received: {
         Args: { _order_id: string }
         Returns: undefined
+      }
+      credit_paid_commissions: { Args: never; Returns: Json }
+      has_permission: {
+        Args: { _key: string; _user_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
       is_in_downline: {
         Args: { _position: string; _root: string }
         Returns: boolean
       }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
       pay_license: { Args: { _user_id: string }; Returns: undefined }
       place_in_matrix: { Args: { _user_id: string }; Returns: string }
       process_leadership_bonus: { Args: never; Returns: Json }
@@ -698,9 +1080,30 @@ export type Database = {
       process_monthly_cycle: { Args: never; Returns: Json }
       process_pv_totals: { Args: never; Returns: Json }
       process_rank_advancement: { Args: never; Returns: Json }
+      process_weekly_cycle: { Args: never; Returns: Json }
+      request_withdrawal: {
+        Args: {
+          _amount_cents: number
+          _destination: string
+          _method: Database["public"]["Enums"]["payment_method"]
+        }
+        Returns: string
+      }
       username_exists: { Args: { _username: string }; Returns: boolean }
+      wallet_apply: {
+        Args: {
+          _actor: string
+          _amount_cents: number
+          _note: string
+          _reference: string
+          _type: Database["public"]["Enums"]["transaction_type"]
+          _user_id: string
+        }
+        Returns: number
+      }
     }
     Enums: {
+      app_role: "super_admin" | "manager" | "mini_admin" | "stockist"
       commission_status: "paid" | "held"
       commission_type:
         | "matrix"
@@ -740,6 +1143,15 @@ export type Database = {
         | "refunded"
       payout_frequency: "weekly" | "monthly"
       product_status: "active" | "inactive"
+      transaction_type:
+        | "commission_credit"
+        | "withdrawal_debit"
+        | "withdrawal_refund"
+        | "admin_credit"
+        | "admin_debit"
+        | "order_payment"
+        | "license_payment"
+      withdrawal_status: "pending" | "approved" | "rejected" | "paid"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -867,6 +1279,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["super_admin", "manager", "mini_admin", "stockist"],
       commission_status: ["paid", "held"],
       commission_type: [
         "matrix",
@@ -905,6 +1318,16 @@ export const Constants = {
       payment_state: ["unpaid", "pending_review", "paid", "failed", "refunded"],
       payout_frequency: ["weekly", "monthly"],
       product_status: ["active", "inactive"],
+      transaction_type: [
+        "commission_credit",
+        "withdrawal_debit",
+        "withdrawal_refund",
+        "admin_credit",
+        "admin_debit",
+        "order_payment",
+        "license_payment",
+      ],
+      withdrawal_status: ["pending", "approved", "rejected", "paid"],
     },
   },
 } as const
