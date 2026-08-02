@@ -1,6 +1,15 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LogOut, Network, Receipt, ShieldCheck, UserRound, Wallet } from "lucide-react";
+import {
+  BarChart3,
+  IdCard,
+  LogOut,
+  Network,
+  Receipt,
+  ShieldCheck,
+  UserRound,
+  Wallet,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
@@ -10,8 +19,10 @@ const items = [
   { to: "/dashboard", label: "Profile", icon: UserRound, exact: true },
   { to: "/dashboard/membership", label: "Membership Status", icon: ShieldCheck, exact: false },
   { to: "/dashboard/matrix", label: "Matrix Tree", icon: Network, exact: false },
+  { to: "/dashboard/performance", label: "PV & Ranks", icon: BarChart3, exact: false },
   { to: "/dashboard/wallet", label: "Wallet", icon: Wallet, exact: false },
   { to: "/dashboard/orders", label: "Orders", icon: Receipt, exact: false },
+  { to: "/dashboard/kyc", label: "KYC Verification", icon: IdCard, exact: false },
 ] as const;
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
