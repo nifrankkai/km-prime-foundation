@@ -4,6 +4,7 @@ import {
   BarChart3,
   IdCard,
   LogOut,
+  Megaphone,
   Network,
   Receipt,
   ShieldCheck,
@@ -14,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
 import { supabase } from "@/integrations/supabase/client";
+import { useAdminAccess } from "@/hooks/use-admin-access";
 
 const items = [
   { to: "/dashboard", label: "Profile", icon: UserRound, exact: true },
@@ -34,6 +36,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 function DashboardLayout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { isStaff } = useAdminAccess();
 
   async function handleSignOut() {
     await queryClient.cancelQueries();
@@ -62,6 +65,14 @@ function DashboardLayout() {
                 </Link>
               ))}
             </nav>
+            {isStaff && (
+              <Link
+                to="/admin"
+                className="mt-3 flex items-center gap-3 rounded-xl border border-primary/30 bg-primary-soft px-3 py-2.5 text-sm font-semibold text-primary-deep"
+              >
+                <ShieldCheck className="size-4" /> Admin console
+              </Link>
+            )}
             <Button
               variant="primeGhost"
               className="mt-6 w-full"
