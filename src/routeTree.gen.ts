@@ -21,6 +21,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminKycRouteImport } from './routes/_authenticated/admin.kyc'
 import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
@@ -89,6 +90,11 @@ const ShopSlugRoute = ShopSlugRouteImport.update({
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminKycRoute = AuthenticatedAdminKycRouteImport.update({
+  id: '/kyc',
+  path: '/kyc',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const AuthenticatedAdminMembersRoute =
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
+  '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
+  '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
+  '/_authenticated/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -234,6 +243,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/shop/$slug'
     | '/shop/'
+    | '/admin/kyc'
     | '/admin/members'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/shop/$slug'
     | '/shop'
+    | '/admin/kyc'
     | '/admin/members'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/shop/$slug'
     | '/shop/'
+    | '/_authenticated/admin/kyc'
     | '/_authenticated/admin/members'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
@@ -392,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/kyc': {
+      id: '/_authenticated/admin/kyc'
+      path: '/kyc'
+      fullPath: '/admin/kyc'
+      preLoaderRoute: typeof AuthenticatedAdminKycRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/members': {
       id: '/_authenticated/admin/members'
       path: '/members'
@@ -466,11 +485,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminKycRoute: typeof AuthenticatedAdminKycRoute
   AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminKycRoute: AuthenticatedAdminKycRoute,
   AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
