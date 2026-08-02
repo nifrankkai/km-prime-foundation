@@ -24,6 +24,7 @@ import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authent
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
 import { Route as AuthenticatedDashboardOrdersRouteImport } from './routes/_authenticated/dashboard.orders'
+import { Route as AuthenticatedDashboardPerformanceRouteImport } from './routes/_authenticated/dashboard.performance'
 import { Route as AuthenticatedDashboardWalletRouteImport } from './routes/_authenticated/dashboard.wallet'
 import { Route as ApiPublicHooksLicenseGraceRouteImport } from './routes/api/public/hooks/license-grace'
 import { Route as ApiPublicHooksMatrixCommissionsRouteImport } from './routes/api/public/hooks/matrix-commissions'
@@ -107,6 +108,12 @@ const AuthenticatedDashboardOrdersRoute =
     path: '/orders',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardPerformanceRoute =
+  AuthenticatedDashboardPerformanceRouteImport.update({
+    id: '/performance',
+    path: '/performance',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardWalletRoute =
   AuthenticatedDashboardWalletRouteImport.update({
     id: '/wallet',
@@ -140,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -158,6 +166,7 @@ export interface FileRoutesByTo {
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -179,6 +188,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/_authenticated/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
+    | '/dashboard/performance'
     | '/dashboard/wallet'
     | '/dashboard/'
     | '/api/public/hooks/license-grace'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
+    | '/dashboard/performance'
     | '/dashboard/wallet'
     | '/dashboard'
     | '/api/public/hooks/license-grace'
@@ -238,6 +250,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
     | '/_authenticated/dashboard/orders'
+    | '/_authenticated/dashboard/performance'
     | '/_authenticated/dashboard/wallet'
     | '/_authenticated/dashboard/'
     | '/api/public/hooks/license-grace'
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardOrdersRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/performance': {
+      id: '/_authenticated/dashboard/performance'
+      path: '/performance'
+      fullPath: '/dashboard/performance'
+      preLoaderRoute: typeof AuthenticatedDashboardPerformanceRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/wallet': {
       id: '/_authenticated/dashboard/wallet'
       path: '/wallet'
@@ -394,6 +414,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
   AuthenticatedDashboardMembershipRoute: typeof AuthenticatedDashboardMembershipRoute
   AuthenticatedDashboardOrdersRoute: typeof AuthenticatedDashboardOrdersRoute
+  AuthenticatedDashboardPerformanceRoute: typeof AuthenticatedDashboardPerformanceRoute
   AuthenticatedDashboardWalletRoute: typeof AuthenticatedDashboardWalletRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
@@ -405,6 +426,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardMembershipRoute:
       AuthenticatedDashboardMembershipRoute,
     AuthenticatedDashboardOrdersRoute: AuthenticatedDashboardOrdersRoute,
+    AuthenticatedDashboardPerformanceRoute:
+      AuthenticatedDashboardPerformanceRoute,
     AuthenticatedDashboardWalletRoute: AuthenticatedDashboardWalletRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
