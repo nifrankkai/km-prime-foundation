@@ -11,15 +11,20 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as ShopRouteImport } from './routes/shop'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as ShopIndexRouteImport } from './routes/shop.index'
+import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
 import { Route as AuthenticatedDashboardOrdersRouteImport } from './routes/_authenticated/dashboard.orders'
+import { Route as AuthenticatedDashboardPerformanceRouteImport } from './routes/_authenticated/dashboard.performance'
 import { Route as AuthenticatedDashboardWalletRouteImport } from './routes/_authenticated/dashboard.wallet'
 import { Route as ApiPublicHooksLicenseGraceRouteImport } from './routes/api/public/hooks/license-grace'
 import { Route as ApiPublicHooksMatrixCommissionsRouteImport } from './routes/api/public/hooks/matrix-commissions'
@@ -31,6 +36,16 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -48,20 +63,31 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ShopIndexRoute = ShopIndexRouteImport.update({
+  id: '/shop/',
+  path: '/shop/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopSlugRoute = ShopSlugRouteImport.update({
+  id: '/shop/$slug',
+  path: '/shop/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardKycRoute =
+  AuthenticatedDashboardKycRouteImport.update({
+    id: '/kyc',
+    path: '/kyc',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardMatrixRoute =
@@ -80,6 +106,12 @@ const AuthenticatedDashboardOrdersRoute =
   AuthenticatedDashboardOrdersRouteImport.update({
     id: '/orders',
     path: '/orders',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPerformanceRoute =
+  AuthenticatedDashboardPerformanceRouteImport.update({
+    id: '/performance',
+    path: '/performance',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardWalletRoute =
@@ -103,14 +135,19 @@ const ApiPublicHooksMatrixCommissionsRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop/': typeof ShopIndexRoute
+  '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -118,13 +155,18 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop': typeof ShopIndexRoute
+  '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -134,14 +176,19 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/cart': typeof CartRoute
+  '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/shop': typeof ShopRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/shop/$slug': typeof ShopSlugRoute
+  '/shop/': typeof ShopIndexRoute
+  '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
+  '/_authenticated/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
@@ -151,14 +198,19 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cart'
+    | '/checkout'
     | '/login'
     | '/membership'
     | '/register'
-    | '/shop'
     | '/dashboard'
+    | '/shop/$slug'
+    | '/shop/'
+    | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
+    | '/dashboard/performance'
     | '/dashboard/wallet'
     | '/dashboard/'
     | '/api/public/hooks/license-grace'
@@ -166,13 +218,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cart'
+    | '/checkout'
     | '/login'
     | '/membership'
     | '/register'
+    | '/shop/$slug'
     | '/shop'
+    | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
+    | '/dashboard/performance'
     | '/dashboard/wallet'
     | '/dashboard'
     | '/api/public/hooks/license-grace'
@@ -181,14 +238,19 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/cart'
+    | '/checkout'
     | '/login'
     | '/membership'
     | '/register'
-    | '/shop'
     | '/_authenticated/dashboard'
+    | '/shop/$slug'
+    | '/shop/'
+    | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
     | '/_authenticated/dashboard/orders'
+    | '/_authenticated/dashboard/performance'
     | '/_authenticated/dashboard/wallet'
     | '/_authenticated/dashboard/'
     | '/api/public/hooks/license-grace'
@@ -198,10 +260,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CartRoute: typeof CartRoute
+  CheckoutRoute: typeof CheckoutRoute
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   RegisterRoute: typeof RegisterRoute
-  ShopRoute: typeof ShopRoute
+  ShopSlugRoute: typeof ShopSlugRoute
+  ShopIndexRoute: typeof ShopIndexRoute
   ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
   ApiPublicHooksMatrixCommissionsRoute: typeof ApiPublicHooksMatrixCommissionsRoute
 }
@@ -220,6 +285,20 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -243,13 +322,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -257,11 +329,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/shop/': {
+      id: '/shop/'
+      path: '/shop'
+      fullPath: '/shop/'
+      preLoaderRoute: typeof ShopIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop/$slug': {
+      id: '/shop/$slug'
+      path: '/shop/$slug'
+      fullPath: '/shop/$slug'
+      preLoaderRoute: typeof ShopSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/kyc': {
+      id: '/_authenticated/dashboard/kyc'
+      path: '/kyc'
+      fullPath: '/dashboard/kyc'
+      preLoaderRoute: typeof AuthenticatedDashboardKycRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/matrix': {
@@ -283,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/orders'
       fullPath: '/dashboard/orders'
       preLoaderRoute: typeof AuthenticatedDashboardOrdersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/performance': {
+      id: '/_authenticated/dashboard/performance'
+      path: '/performance'
+      fullPath: '/dashboard/performance'
+      preLoaderRoute: typeof AuthenticatedDashboardPerformanceRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/wallet': {
@@ -310,19 +410,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
   AuthenticatedDashboardMembershipRoute: typeof AuthenticatedDashboardMembershipRoute
   AuthenticatedDashboardOrdersRoute: typeof AuthenticatedDashboardOrdersRoute
+  AuthenticatedDashboardPerformanceRoute: typeof AuthenticatedDashboardPerformanceRoute
   AuthenticatedDashboardWalletRoute: typeof AuthenticatedDashboardWalletRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardKycRoute: AuthenticatedDashboardKycRoute,
     AuthenticatedDashboardMatrixRoute: AuthenticatedDashboardMatrixRoute,
     AuthenticatedDashboardMembershipRoute:
       AuthenticatedDashboardMembershipRoute,
     AuthenticatedDashboardOrdersRoute: AuthenticatedDashboardOrdersRoute,
+    AuthenticatedDashboardPerformanceRoute:
+      AuthenticatedDashboardPerformanceRoute,
     AuthenticatedDashboardWalletRoute: AuthenticatedDashboardWalletRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
@@ -346,10 +451,13 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CartRoute: CartRoute,
+  CheckoutRoute: CheckoutRoute,
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   RegisterRoute: RegisterRoute,
-  ShopRoute: ShopRoute,
+  ShopSlugRoute: ShopSlugRoute,
+  ShopIndexRoute: ShopIndexRoute,
   ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,
   ApiPublicHooksMatrixCommissionsRoute: ApiPublicHooksMatrixCommissionsRoute,
 }
