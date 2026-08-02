@@ -14,16 +14,77 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      members: {
+        Row: {
+          created_at: string
+          id: string
+          status: Database["public"]["Enums"]["member_status"]
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          status?: Database["public"]["Enums"]["member_status"]
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["member_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string | null
+          referrer_id: string | null
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id: string
+          phone?: string | null
+          referrer_id?: string | null
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          referrer_id?: string | null
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referrer_id_fkey"
+            columns: ["referrer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      username_exists: { Args: { _username: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      member_status: "pending" | "active" | "inactive"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +211,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      member_status: ["pending", "active", "inactive"],
+    },
   },
 } as const
