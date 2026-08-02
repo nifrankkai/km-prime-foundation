@@ -188,7 +188,7 @@ function MembershipPanel() {
   );
 }
 
-function Stat({ label, value, tone }: { label: string; value: string; tone?: "warn" }) {
+function Stat({ label, value, tone }: { label: string; value: string; tone?: "warn" | undefined }) {
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>

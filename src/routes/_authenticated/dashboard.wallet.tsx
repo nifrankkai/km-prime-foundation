@@ -110,7 +110,7 @@ function WalletPanel() {
   );
 }
 
-function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
+function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean | undefined }) {
   return (
     <div className="rounded-xl border border-border bg-card p-5">
       <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
