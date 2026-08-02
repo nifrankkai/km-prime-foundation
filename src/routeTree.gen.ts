@@ -20,6 +20,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
@@ -84,6 +85,11 @@ const ShopSlugRoute = ShopSlugRouteImport.update({
   path: '/shop/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/',
@@ -146,7 +152,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -167,7 +174,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/admin': typeof AuthenticatedAdminRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
@@ -176,6 +182,7 @@ export interface FileRoutesByTo {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -189,7 +196,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
@@ -199,6 +206,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/_authenticated/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -222,6 +230,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
+    | '/admin/'
     | '/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -233,7 +242,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/admin'
     | '/shop/$slug'
     | '/shop'
     | '/dashboard/kyc'
@@ -242,6 +250,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
+    | '/admin'
     | '/dashboard'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -264,6 +273,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/orders'
     | '/_authenticated/dashboard/performance'
     | '/_authenticated/dashboard/wallet'
+    | '/_authenticated/admin/'
     | '/_authenticated/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -362,6 +372,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/'
@@ -428,6 +445,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
@@ -457,12 +485,12 @@ const AuthenticatedDashboardRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
 }
 
