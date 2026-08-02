@@ -6,7 +6,7 @@ import { PanelCard } from "@/components/dashboard/panel-card";
 import { getAdminStats } from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
-  component: AdminOverview;
+  component: AdminOverview,
 });
 
 function money(cents: number) {
