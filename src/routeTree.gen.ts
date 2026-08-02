@@ -22,6 +22,7 @@ import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminCommissionsRouteImport } from './routes/_authenticated/admin.commissions'
+import { Route as AuthenticatedAdminContentRouteImport } from './routes/_authenticated/admin.content'
 import { Route as AuthenticatedAdminInventoryRouteImport } from './routes/_authenticated/admin.inventory'
 import { Route as AuthenticatedAdminKycRouteImport } from './routes/_authenticated/admin.kyc'
 import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
@@ -102,6 +103,12 @@ const AuthenticatedAdminCommissionsRoute =
   AuthenticatedAdminCommissionsRouteImport.update({
     id: '/commissions',
     path: '/commissions',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminContentRoute =
+  AuthenticatedAdminContentRouteImport.update({
+    id: '/content',
+    path: '/content',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminInventoryRoute =
@@ -211,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
   '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
+  '/admin/content': typeof AuthenticatedAdminContentRoute
   '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
   '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
@@ -239,6 +247,7 @@ export interface FileRoutesByTo {
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
   '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
+  '/admin/content': typeof AuthenticatedAdminContentRoute
   '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
   '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
@@ -271,6 +280,7 @@ export interface FileRoutesById {
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
   '/_authenticated/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
+  '/_authenticated/admin/content': typeof AuthenticatedAdminContentRoute
   '/_authenticated/admin/inventory': typeof AuthenticatedAdminInventoryRoute
   '/_authenticated/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/shop/$slug'
     | '/shop/'
     | '/admin/commissions'
+    | '/admin/content'
     | '/admin/inventory'
     | '/admin/kyc'
     | '/admin/members'
@@ -331,6 +342,7 @@ export interface FileRouteTypes {
     | '/shop/$slug'
     | '/shop'
     | '/admin/commissions'
+    | '/admin/content'
     | '/admin/inventory'
     | '/admin/kyc'
     | '/admin/members'
@@ -362,6 +374,7 @@ export interface FileRouteTypes {
     | '/shop/$slug'
     | '/shop/'
     | '/_authenticated/admin/commissions'
+    | '/_authenticated/admin/content'
     | '/_authenticated/admin/inventory'
     | '/_authenticated/admin/kyc'
     | '/_authenticated/admin/members'
@@ -488,6 +501,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCommissionsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/content': {
+      id: '/_authenticated/admin/content'
+      path: '/content'
+      fullPath: '/admin/content'
+      preLoaderRoute: typeof AuthenticatedAdminContentRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/inventory': {
       id: '/_authenticated/admin/inventory'
       path: '/inventory'
@@ -605,6 +625,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCommissionsRoute: typeof AuthenticatedAdminCommissionsRoute
+  AuthenticatedAdminContentRoute: typeof AuthenticatedAdminContentRoute
   AuthenticatedAdminInventoryRoute: typeof AuthenticatedAdminInventoryRoute
   AuthenticatedAdminKycRoute: typeof AuthenticatedAdminKycRoute
   AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
@@ -617,6 +638,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCommissionsRoute: AuthenticatedAdminCommissionsRoute,
+  AuthenticatedAdminContentRoute: AuthenticatedAdminContentRoute,
   AuthenticatedAdminInventoryRoute: AuthenticatedAdminInventoryRoute,
   AuthenticatedAdminKycRoute: AuthenticatedAdminKycRoute,
   AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
