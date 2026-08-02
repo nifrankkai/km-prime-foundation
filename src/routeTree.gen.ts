@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
@@ -51,6 +52,11 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ShopIndexRoute = ShopIndexRouteImport.update({
+  id: '/shop/',
+  path: '/shop/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/shop/': typeof ShopIndexRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
+  '/shop': typeof ShopIndexRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/shop/': typeof ShopIndexRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/membership'
     | '/register'
     | '/dashboard'
+    | '/shop/'
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
+    | '/shop'
     | '/dashboard/matrix'
     | '/dashboard/membership'
     | '/dashboard/orders'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/membership'
     | '/register'
     | '/_authenticated/dashboard'
+    | '/shop/'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
     | '/_authenticated/dashboard/orders'
@@ -189,6 +201,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   RegisterRoute: typeof RegisterRoute
+  ShopIndexRoute: typeof ShopIndexRoute
   ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
   ApiPublicHooksMatrixCommissionsRoute: typeof ApiPublicHooksMatrixCommissionsRoute
 }
@@ -236,6 +249,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/shop/': {
+      id: '/shop/'
+      path: '/shop'
+      fullPath: '/shop/'
+      preLoaderRoute: typeof ShopIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
@@ -329,6 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   RegisterRoute: RegisterRoute,
+  ShopIndexRoute: ShopIndexRoute,
   ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,
   ApiPublicHooksMatrixCommissionsRoute: ApiPublicHooksMatrixCommissionsRoute,
 }
