@@ -48,7 +48,7 @@ export function Hero() {
             alt="KM Prime premium product range"
             width={1408}
             height={1104}
-            className="shadow-float w-full"
+            className="w-full mix-blend-multiply"
           />
         </div>
       </div>
