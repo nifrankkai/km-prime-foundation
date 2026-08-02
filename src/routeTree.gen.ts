@@ -23,6 +23,7 @@ import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminKycRouteImport } from './routes/_authenticated/admin.kyc'
 import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
+import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin.products'
 import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin.withdrawals'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
@@ -104,6 +105,12 @@ const AuthenticatedAdminMembersRoute =
     path: '/members',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminProductsRoute =
+  AuthenticatedAdminProductsRouteImport.update({
+    id: '/products',
+    path: '/products',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminWithdrawalsRoute =
   AuthenticatedAdminWithdrawalsRouteImport.update({
     id: '/withdrawals',
@@ -178,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/shop/': typeof ShopIndexRoute
   '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
+  '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -201,6 +209,7 @@ export interface FileRoutesByTo {
   '/shop': typeof ShopIndexRoute
   '/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/admin/members': typeof AuthenticatedAdminMembersRoute
+  '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -228,6 +237,7 @@ export interface FileRoutesById {
   '/shop/': typeof ShopIndexRoute
   '/_authenticated/admin/kyc': typeof AuthenticatedAdminKycRoute
   '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
+  '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
   '/_authenticated/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/shop/'
     | '/admin/kyc'
     | '/admin/members'
+    | '/admin/products'
     | '/admin/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -278,6 +289,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/admin/kyc'
     | '/admin/members'
+    | '/admin/products'
     | '/admin/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -304,6 +316,7 @@ export interface FileRouteTypes {
     | '/shop/'
     | '/_authenticated/admin/kyc'
     | '/_authenticated/admin/members'
+    | '/_authenticated/admin/products'
     | '/_authenticated/admin/withdrawals'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
@@ -431,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMembersRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/products': {
+      id: '/_authenticated/admin/products'
+      path: '/products'
+      fullPath: '/admin/products'
+      preLoaderRoute: typeof AuthenticatedAdminProductsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/withdrawals': {
       id: '/_authenticated/admin/withdrawals'
       path: '/withdrawals'
@@ -507,6 +527,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminKycRoute: typeof AuthenticatedAdminKycRoute
   AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
+  AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
   AuthenticatedAdminWithdrawalsRoute: typeof AuthenticatedAdminWithdrawalsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -514,6 +535,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminKycRoute: AuthenticatedAdminKycRoute,
   AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
+  AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
   AuthenticatedAdminWithdrawalsRoute: AuthenticatedAdminWithdrawalsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
