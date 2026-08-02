@@ -20,7 +20,7 @@ export type CommissionRule = {
   key: string;
   name: string;
   commissionType: string;
-  triggerCondition: Record<string, unknown>;
+  triggerCondition: Record<string, string | number | boolean>;
   payoutFormula: string;
   payoutFrequency: "weekly" | "monthly";
 };
@@ -66,7 +66,7 @@ export const listCommissionRules = createServerFn({ method: "GET" }).handler(
       key: row.key,
       name: row.name,
       commissionType: row.commission_type,
-      triggerCondition: (row.trigger_condition ?? {}) as Record<string, unknown>,
+      triggerCondition: (row.trigger_condition ?? {}) as Record<string, string | number | boolean>,
       payoutFormula: row.payout_formula,
       payoutFrequency: row.payout_frequency as "weekly" | "monthly",
     }));
