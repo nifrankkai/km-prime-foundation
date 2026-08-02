@@ -27,6 +27,7 @@ import { Route as AuthenticatedAdminKycRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin.products'
+import { Route as AuthenticatedAdminRanksRouteImport } from './routes/_authenticated/admin.ranks'
 import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin.withdrawals'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
@@ -132,6 +133,11 @@ const AuthenticatedAdminProductsRoute =
     path: '/products',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminRanksRoute = AuthenticatedAdminRanksRouteImport.update({
+  id: '/ranks',
+  path: '/ranks',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminWithdrawalsRoute =
   AuthenticatedAdminWithdrawalsRouteImport.update({
     id: '/withdrawals',
@@ -210,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/ranks': typeof AuthenticatedAdminRanksRoute
   '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -237,6 +244,7 @@ export interface FileRoutesByTo {
   '/admin/members': typeof AuthenticatedAdminMembersRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/admin/ranks': typeof AuthenticatedAdminRanksRoute
   '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -268,6 +276,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
+  '/_authenticated/admin/ranks': typeof AuthenticatedAdminRanksRoute
   '/_authenticated/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
@@ -299,6 +308,7 @@ export interface FileRouteTypes {
     | '/admin/members'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/ranks'
     | '/admin/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/admin/members'
     | '/admin/orders'
     | '/admin/products'
+    | '/admin/ranks'
     | '/admin/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
@@ -356,6 +367,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/members'
     | '/_authenticated/admin/orders'
     | '/_authenticated/admin/products'
+    | '/_authenticated/admin/ranks'
     | '/_authenticated/admin/withdrawals'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
@@ -511,6 +523,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProductsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/ranks': {
+      id: '/_authenticated/admin/ranks'
+      path: '/ranks'
+      fullPath: '/admin/ranks'
+      preLoaderRoute: typeof AuthenticatedAdminRanksRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/withdrawals': {
       id: '/_authenticated/admin/withdrawals'
       path: '/withdrawals'
@@ -591,6 +610,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
+  AuthenticatedAdminRanksRoute: typeof AuthenticatedAdminRanksRoute
   AuthenticatedAdminWithdrawalsRoute: typeof AuthenticatedAdminWithdrawalsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
@@ -602,6 +622,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
   AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
+  AuthenticatedAdminRanksRoute: AuthenticatedAdminRanksRoute,
   AuthenticatedAdminWithdrawalsRoute: AuthenticatedAdminWithdrawalsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
