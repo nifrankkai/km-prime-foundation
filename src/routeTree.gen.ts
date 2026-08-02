@@ -21,6 +21,7 @@ import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_auth
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
 import { Route as AuthenticatedDashboardOrdersRouteImport } from './routes/_authenticated/dashboard.orders'
 import { Route as AuthenticatedDashboardWalletRouteImport } from './routes/_authenticated/dashboard.wallet'
+import { Route as ApiPublicHooksLicenseGraceRouteImport } from './routes/api/public/hooks/license-grace'
 import { Route as ApiPublicHooksMatrixCommissionsRouteImport } from './routes/api/public/hooks/matrix-commissions'
 
 const IndexRoute = IndexRouteImport.update({
@@ -87,6 +88,12 @@ const AuthenticatedDashboardWalletRoute =
     path: '/wallet',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const ApiPublicHooksLicenseGraceRoute =
+  ApiPublicHooksLicenseGraceRouteImport.update({
+    id: '/api/public/hooks/license-grace',
+    path: '/api/public/hooks/license-grace',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicHooksMatrixCommissionsRoute =
   ApiPublicHooksMatrixCommissionsRouteImport.update({
     id: '/api/public/hooks/matrix-commissions',
@@ -106,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
 }
 export interface FileRoutesByTo {
@@ -119,6 +127,7 @@ export interface FileRoutesByTo {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
 }
 export interface FileRoutesById {
@@ -135,6 +144,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
 }
 export interface FileRouteTypes {
@@ -151,6 +161,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/wallet'
     | '/dashboard/'
+    | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/wallet'
     | '/dashboard'
+    | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
   id:
     | '__root__'
@@ -179,6 +191,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/orders'
     | '/_authenticated/dashboard/wallet'
     | '/_authenticated/dashboard/'
+    | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
   fileRoutesById: FileRoutesById
 }
@@ -189,6 +202,7 @@ export interface RootRouteChildren {
   MembershipRoute: typeof MembershipRoute
   RegisterRoute: typeof RegisterRoute
   ShopRoute: typeof ShopRoute
+  ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
   ApiPublicHooksMatrixCommissionsRoute: typeof ApiPublicHooksMatrixCommissionsRoute
 }
 
@@ -278,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardWalletRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/api/public/hooks/license-grace': {
+      id: '/api/public/hooks/license-grace'
+      path: '/api/public/hooks/license-grace'
+      fullPath: '/api/public/hooks/license-grace'
+      preLoaderRoute: typeof ApiPublicHooksLicenseGraceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/hooks/matrix-commissions': {
       id: '/api/public/hooks/matrix-commissions'
       path: '/api/public/hooks/matrix-commissions'
@@ -329,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   MembershipRoute: MembershipRoute,
   RegisterRoute: RegisterRoute,
   ShopRoute: ShopRoute,
+  ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,
   ApiPublicHooksMatrixCommissionsRoute: ApiPublicHooksMatrixCommissionsRoute,
 }
 export const routeTree = rootRouteImport
