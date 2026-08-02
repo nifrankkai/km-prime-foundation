@@ -35,6 +35,7 @@ import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authe
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
+import { Route as AuthenticatedDashboardNewsRouteImport } from './routes/_authenticated/dashboard.news'
 import { Route as AuthenticatedDashboardOrdersRouteImport } from './routes/_authenticated/dashboard.orders'
 import { Route as AuthenticatedDashboardPerformanceRouteImport } from './routes/_authenticated/dashboard.performance'
 import { Route as AuthenticatedDashboardWalletRouteImport } from './routes/_authenticated/dashboard.wallet'
@@ -181,6 +182,12 @@ const AuthenticatedDashboardMembershipRoute =
     path: '/membership',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardNewsRoute =
+  AuthenticatedDashboardNewsRouteImport.update({
+    id: '/news',
+    path: '/news',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardOrdersRoute =
   AuthenticatedDashboardOrdersRouteImport.update({
     id: '/orders',
@@ -236,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
+  '/dashboard/news': typeof AuthenticatedDashboardNewsRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
@@ -266,6 +274,7 @@ export interface FileRoutesByTo {
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
+  '/dashboard/news': typeof AuthenticatedDashboardNewsRoute
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
@@ -300,6 +309,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
+  '/_authenticated/dashboard/news': typeof AuthenticatedDashboardNewsRoute
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/_authenticated/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
@@ -334,6 +344,7 @@ export interface FileRouteTypes {
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
+    | '/dashboard/news'
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
@@ -364,6 +375,7 @@ export interface FileRouteTypes {
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
+    | '/dashboard/news'
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
@@ -397,6 +409,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
+    | '/_authenticated/dashboard/news'
     | '/_authenticated/dashboard/orders'
     | '/_authenticated/dashboard/performance'
     | '/_authenticated/dashboard/wallet'
@@ -604,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardMembershipRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/news': {
+      id: '/_authenticated/dashboard/news'
+      path: '/news'
+      fullPath: '/dashboard/news'
+      preLoaderRoute: typeof AuthenticatedDashboardNewsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/orders': {
       id: '/_authenticated/dashboard/orders'
       path: '/orders'
@@ -677,6 +697,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
   AuthenticatedDashboardMembershipRoute: typeof AuthenticatedDashboardMembershipRoute
+  AuthenticatedDashboardNewsRoute: typeof AuthenticatedDashboardNewsRoute
   AuthenticatedDashboardOrdersRoute: typeof AuthenticatedDashboardOrdersRoute
   AuthenticatedDashboardPerformanceRoute: typeof AuthenticatedDashboardPerformanceRoute
   AuthenticatedDashboardWalletRoute: typeof AuthenticatedDashboardWalletRoute
@@ -689,6 +710,7 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardMatrixRoute: AuthenticatedDashboardMatrixRoute,
     AuthenticatedDashboardMembershipRoute:
       AuthenticatedDashboardMembershipRoute,
+    AuthenticatedDashboardNewsRoute: AuthenticatedDashboardNewsRoute,
     AuthenticatedDashboardOrdersRoute: AuthenticatedDashboardOrdersRoute,
     AuthenticatedDashboardPerformanceRoute:
       AuthenticatedDashboardPerformanceRoute,
