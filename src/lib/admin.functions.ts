@@ -41,12 +41,26 @@ export const getAdminAccess = createServerFn({ method: "GET" })
     };
   });
 
+export type AdminStats = {
+  active_members: number;
+  total_members: number;
+  licensed_members: number;
+  total_pv: number;
+  commissions_paid_cents: number;
+  commissions_held_cents: number;
+  revenue_cents: number;
+  orders_count: number;
+  pending_kyc: number;
+  pending_withdrawals: number;
+  revenue_by_month: { month: string; revenue_cents: number; orders: number }[];
+};
+
 export const getAdminStats = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.rpc("admin_report_stats");
     if (error) throw new Error(error.message);
-    return data as Record<string, unknown>;
+    return data as unknown as AdminStats;
   });
 
 export const listAdminMembers = createServerFn({ method: "POST" })
@@ -198,7 +212,7 @@ export const adminReviewKyc = createServerFn({ method: "POST" })
       _user_id: data.userId,
       _approve: data.approve,
       _reason: data.reason ?? null,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -246,7 +260,7 @@ export const adminReviewWithdrawal = createServerFn({ method: "POST" })
       _id: data.id,
       _approve: data.approve,
       _note: data.note ?? null,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -296,7 +310,7 @@ export const adminUpsertProduct = createServerFn({ method: "POST" })
       _images: data.images,
       _stock_quantity: data.stockQuantity,
       _status: data.status,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -395,7 +409,7 @@ export const adminSetCommissionStatus = createServerFn({ method: "POST" })
       _status: data.status,
       _amount_cents: data.amountCents,
       _note: data.note,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -457,7 +471,7 @@ export const adminUpsertAnnouncement = createServerFn({ method: "POST" })
       _title: data.title,
       _body: data.body,
       _published: data.published,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
@@ -496,7 +510,7 @@ export const adminUpsertGalleryFeature = createServerFn({ method: "POST" })
       _caption: data.caption,
       _photo_url: data.photoUrl,
       _visible: data.visible,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
