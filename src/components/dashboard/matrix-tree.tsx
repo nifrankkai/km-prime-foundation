@@ -61,7 +61,7 @@ function Branch({ node, remaining }: { node: MatrixNode; remaining: number }) {
   );
 }
 
-export function MatrixTree({ root, levels = 3 }: { root: MatrixNode; levels?: number }) {
+export function MatrixTree({ root, levels = 3 }: { root: MatrixNode; levels?: number | undefined }) {
   return (
     <div className="overflow-x-auto pb-2">
       <div className="min-w-max px-2">
