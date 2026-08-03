@@ -21,6 +21,7 @@ export type PermissionKey = (typeof PERMISSION_KEYS)[number];
 
 export const PERMISSION_LABELS: Record<PermissionKey, string> = {
   "members.manage": "Member management",
+  "members.impersonate": "Log in as member",
   "members.wallet": "Wallet adjustments",
   "kyc.review": "KYC review",
   "withdrawals.review": "Withdrawal approvals",
