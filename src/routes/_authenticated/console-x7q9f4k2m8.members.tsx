@@ -196,6 +196,9 @@ function MemberDetail({ userId }: { userId: string }) {
         </div>
       </PanelCard>
 
+      <MemberEditPanel account={account} onSaved={refresh} />
+
+
       <PanelCard
         title="Account actions"
         description="Every balance-affecting action is confirmed and written to the transaction audit trail."
