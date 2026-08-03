@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
+  Banknote,
   IdCard,
   LogOut,
   Megaphone,
