@@ -51,22 +51,36 @@ function MembershipPanel() {
     queryClient.invalidateQueries({ queryKey: ["wallet-ledger"] });
   };
 
+  const [insufficient, setInsufficient] = useState<string | null>(null);
+
+  const handleError = (error: Error) => {
+    if (error.message.includes("INSUFFICIENT_BALANCE")) {
+      setInsufficient("Insufficient balance. Please deposit funds to continue.");
+      toast.error("Insufficient balance. Please deposit funds to continue.");
+      return;
+    }
+    setInsufficient(null);
+    toast.error(error.message || "Payment could not be recorded.");
+  };
+
   const activate = useMutation({
     mutationFn: () => activateFn(),
     onSuccess: () => {
+      setInsufficient(null);
       toast.success("Activated — $65 package + $10 licence recorded. You have been placed in the matrix.");
       invalidate();
     },
-    onError: () => toast.error("Activation could not be completed."),
+    onError: handleError,
   });
 
   const renew = useMutation({
     mutationFn: () => payFn(),
     onSuccess: () => {
+      setInsufficient(null);
       toast.success("Licence payment recorded — active for another 30 days.");
       invalidate();
     },
-    onError: () => toast.error("Payment could not be recorded."),
+    onError: handleError,
   });
 
   const activated = overview?.membershipStatus === "active";
