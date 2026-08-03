@@ -15,6 +15,8 @@ export type WalletTransaction = {
 export type WithdrawalRow = {
   id: string;
   amount_cents: number;
+  fee_cents: number;
+  net_cents: number;
   method: string;
   destination: string;
   status: string;
@@ -28,6 +30,9 @@ export type WalletSnapshot = {
   availableCents: number;
   frozen: boolean;
   kycApproved: boolean;
+  hasPin: boolean;
+  usdtAddress: string | null;
+  mobileMoneyNumber: string | null;
   transactions: WalletTransaction[];
   withdrawals: WithdrawalRow[];
 };
@@ -37,21 +42,35 @@ export const getWalletSnapshot = createServerFn({ method: "GET" })
   .handler(async ({ context }): Promise<WalletSnapshot> => {
     const { supabase, userId } = context;
 
-    const [{ data: wallet }, { data: transactions }, { data: withdrawals }, { data: kyc }] =
-      await Promise.all([
-        supabase.from("wallets").select("balance_cents, frozen").eq("user_id", userId).maybeSingle(),
-        supabase
-          .from("transactions")
-          .select("id, type, amount_cents, balance_after_cents, note, created_at")
-          .order("created_at", { ascending: false })
-          .limit(50),
-        supabase
-          .from("withdrawal_requests")
-          .select("id, amount_cents, method, destination, status, admin_note, created_at")
-          .order("created_at", { ascending: false })
-          .limit(50),
-        supabase.from("kyc_submissions").select("status").maybeSingle(),
-      ]);
+    const [
+      { data: wallet },
+      { data: transactions },
+      { data: withdrawals },
+      { data: kyc },
+      { data: member },
+      { data: profile },
+    ] = await Promise.all([
+      supabase.from("wallets").select("balance_cents, frozen").eq("user_id", userId).maybeSingle(),
+      supabase
+        .from("transactions")
+        .select("id, type, amount_cents, balance_after_cents, note, created_at")
+        .order("created_at", { ascending: false })
+        .limit(100),
+      supabase
+        .from("withdrawal_requests")
+        .select(
+          "id, amount_cents, fee_cents, net_cents, method, destination, status, admin_note, created_at",
+        )
+        .order("created_at", { ascending: false })
+        .limit(50),
+      supabase.from("kyc_submissions").select("status").maybeSingle(),
+      supabase.from("members").select("pin_set_at").eq("id", userId).maybeSingle(),
+      supabase
+        .from("profiles")
+        .select("usdt_address, mobile_money_number")
+        .eq("id", userId)
+        .maybeSingle(),
+    ]);
 
     const balanceCents = wallet?.balance_cents ?? 0;
     const pendingCents = (withdrawals ?? [])
@@ -64,15 +83,32 @@ export const getWalletSnapshot = createServerFn({ method: "GET" })
       availableCents: Math.max(0, balanceCents - pendingCents),
       frozen: wallet?.frozen ?? false,
       kycApproved: kyc?.status === "approved",
+      hasPin: Boolean(member?.pin_set_at),
+      usdtAddress: profile?.usdt_address ?? null,
+      mobileMoneyNumber: profile?.mobile_money_number ?? null,
       transactions: (transactions ?? []) as WalletTransaction[],
       withdrawals: (withdrawals ?? []) as WithdrawalRow[],
     };
   });
 
+const pinSchema = z.object({ pin: z.string().regex(/^[0-9]{4}$/, "PIN must be exactly 4 digits") });
+
+/** A member can only ever set the PIN once — resets go through support. */
+export const setWithdrawalPin = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) => pinSchema.parse(data))
+  .handler(async ({ context, data }) => {
+    const { error } = await context.supabase.rpc("set_withdrawal_pin", { _pin: data.pin });
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
+
 const withdrawalSchema = z.object({
-  amountCents: z.number().int().min(1000).max(100_000_00),
+  amountCents: z.number().int().min(100).max(100_000_00),
   method: z.enum(["visa", "mastercard", "usdt", "mobile_money", "bank_transfer", "manual"]),
   destination: z.string().trim().min(4).max(200),
+  pin: z.string().regex(/^[0-9]{4}$/, "Enter your 4-digit withdrawal PIN"),
+  saveDestination: z.boolean().default(false),
 });
 
 export const requestWithdrawal = createServerFn({ method: "POST" })
@@ -83,8 +119,29 @@ export const requestWithdrawal = createServerFn({ method: "POST" })
       _amount_cents: data.amountCents,
       _method: data.method,
       _destination: data.destination,
+      _pin: data.pin,
     });
-    if (error) throw new Error(error.message);
+    if (error) {
+      if (error.message.includes("PIN_NOT_SET")) {
+        throw new Error("Set your 4-digit withdrawal PIN before requesting a payout.");
+      }
+      if (error.message.includes("INVALID_PIN")) {
+        throw new Error("Incorrect withdrawal PIN.");
+      }
+      throw new Error(error.message);
+    }
+
+    if (data.saveDestination && (data.method === "usdt" || data.method === "mobile_money")) {
+      await context.supabase
+        .from("profiles")
+        .update(
+          data.method === "usdt"
+            ? { usdt_address: data.destination }
+            : { mobile_money_number: data.destination },
+        )
+        .eq("id", context.userId);
+    }
+
     return { ok: true };
   });
 

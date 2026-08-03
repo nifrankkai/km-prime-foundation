@@ -9,6 +9,11 @@ export type PaymentMethodRow = {
   is_enabled: boolean;
   instructions_text: string;
   sort_order: number;
+  network_label: string;
+  receiving_address: string;
+  min_deposit_cents: number;
+  min_withdrawal_cents: number;
+  fee_percent: number;
 };
 
 export type DepositRow = {
@@ -21,12 +26,15 @@ export type DepositRow = {
   reviewed_at: string | null;
 };
 
+const METHOD_COLUMNS =
+  "key, method_name, is_enabled, instructions_text, sort_order, network_label, receiving_address, min_deposit_cents, min_withdrawal_cents, fee_percent";
+
 export const listEnabledPaymentMethods = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }): Promise<PaymentMethodRow[]> => {
     const { data, error } = await context.supabase
       .from("payment_methods")
-      .select("key, method_name, is_enabled, instructions_text, sort_order")
+      .select(METHOD_COLUMNS)
       .eq("is_enabled", true)
       .order("sort_order");
     if (error) throw new Error(error.message);

@@ -6,7 +6,9 @@ import {
   Coins,
   Gauge,
   IdCard,
+  LifeBuoy,
   Mail,
+
   Megaphone,
   Palette,
   Package,
@@ -49,7 +51,15 @@ const nav = [
     permission: "deposits.review",
     exact: false,
   },
+  {
+    to: "/console-x7q9f4k2m8/support",
+    label: "Support tickets",
+    icon: LifeBuoy,
+    permission: "manage_support_tickets",
+    exact: false,
+  },
   { to: "/console-x7q9f4k2m8/products", label: "Products", icon: Package, permission: "products.manage", exact: false },
+
   { to: "/console-x7q9f4k2m8/inventory", label: "Stock", icon: Boxes, permission: "stock.manage", exact: false },
   { to: "/console-x7q9f4k2m8/orders", label: "Orders", icon: BadgeCheck, permission: "orders.manage", exact: false },
   {

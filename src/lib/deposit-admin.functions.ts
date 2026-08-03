@@ -96,7 +96,9 @@ export const listAdminPaymentMethods = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase
       .from("payment_methods")
-      .select("key, method_name, is_enabled, instructions_text, sort_order")
+      .select(
+        "key, method_name, is_enabled, instructions_text, sort_order, network_label, receiving_address, min_deposit_cents, min_withdrawal_cents, fee_percent",
+      )
       .order("sort_order");
     if (error) throw new Error(error.message);
     return data ?? [];
@@ -110,6 +112,11 @@ export const adminSetPaymentMethod = createServerFn({ method: "POST" })
         key: z.string().trim().min(2).max(40),
         isEnabled: z.boolean(),
         instructions: z.string().trim().max(2000),
+        networkLabel: z.string().trim().max(60).default(""),
+        receivingAddress: z.string().trim().max(300).default(""),
+        minDepositCents: z.number().int().min(0).max(10_000_000),
+        minWithdrawalCents: z.number().int().min(0).max(10_000_000),
+        feePercent: z.number().min(0).max(100),
       })
       .parse(data),
   )
@@ -118,6 +125,11 @@ export const adminSetPaymentMethod = createServerFn({ method: "POST" })
       _key: data.key,
       _is_enabled: data.isEnabled,
       _instructions: data.instructions,
+      _network_label: data.networkLabel,
+      _receiving_address: data.receivingAddress,
+      _min_deposit_cents: data.minDepositCents,
+      _min_withdrawal_cents: data.minWithdrawalCents,
+      _fee_percent: data.feePercent,
     } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
