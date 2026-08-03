@@ -180,3 +180,153 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+
+/*
+ * "Ascending Network" — app-side (logged-in dashboard + admin) visual identity.
+ * Scoped to .app-dark so the public marketing site keeps its light theme.
+ */
+
+.app-dark {
+  --radius: 1rem;
+  --background: oklch(0.19 0.035 258);           /* #0B1220 */
+  --foreground: oklch(0.94 0.008 240);           /* #EAF0F5 */
+  --card: oklch(0.24 0.032 256);
+  --card-foreground: oklch(0.94 0.008 240);
+  --popover: oklch(0.24 0.032 256);
+  --popover-foreground: oklch(0.94 0.008 240);
+  --primary: oklch(0.76 0.144 172);              /* #16C79A */
+  --primary-foreground: oklch(0.18 0.035 258);
+  --primary-soft: oklch(0.32 0.055 176);
+  --primary-deep: oklch(0.86 0.13 172);
+  --secondary: oklch(0.27 0.03 256);
+  --secondary-foreground: oklch(0.94 0.008 240);
+  --muted: oklch(0.27 0.03 256);
+  --muted-foreground: oklch(0.74 0.02 245);      /* lifted from #5B6B7A for AA contrast */
+  --accent: oklch(0.31 0.04 256);
+  --accent-foreground: oklch(0.9 0.1 172);
+  --destructive: oklch(0.62 0.15 22);            /* desaturated brick red */
+  --destructive-foreground: oklch(0.97 0.005 240);
+  --warning: oklch(0.83 0.14 86);
+  --warning-foreground: oklch(0.22 0.05 86);
+  --reward: oklch(0.84 0.14 86);                 /* #F4C542 — rewards only */
+  --reward-soft: oklch(0.84 0.14 86 / 0.14);
+  --border: oklch(0.94 0.008 240 / 12%);
+  --input: oklch(0.94 0.008 240 / 18%);
+  --ring: oklch(0.76 0.144 172);
+  --sidebar: oklch(0.22 0.03 257);
+  --sidebar-foreground: oklch(0.94 0.008 240);
+  --sidebar-primary: oklch(0.76 0.144 172);
+  --sidebar-primary-foreground: oklch(0.18 0.035 258);
+  --sidebar-accent: oklch(0.31 0.04 256);
+  --sidebar-accent-foreground: oklch(0.9 0.1 172);
+  --sidebar-border: oklch(0.94 0.008 240 / 12%);
+  --sidebar-ring: oklch(0.76 0.144 172);
+  --font-display: "Space Grotesk", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.app-dark :is(h1, h2, h3, h4) {
+  font-family: var(--font-display);
+}
+
+.app-dark :is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+@theme inline {
+  --color-reward: var(--reward);
+  --color-reward-soft: var(--reward-soft);
+}
+
+/* Financial figures: tabular, heavier, display face. */
+@utility figure-num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Ambient node-graph texture behind app sections. */
+@utility network-bg {
+  position: relative;
+  background-image:
+    radial-gradient(circle at 12% 18%, oklch(0.76 0.144 172 / 0.1), transparent 42%),
+    radial-gradient(circle at 88% 8%, oklch(0.76 0.144 172 / 0.07), transparent 38%),
+    radial-gradient(circle, oklch(0.76 0.144 172 / 0.13) 1px, transparent 1.6px);
+  background-size: 100% 100%, 100% 100%, 34px 34px;
+  background-attachment: fixed, fixed, fixed;
+}
+
+@utility node-glow {
+  box-shadow:
+    0 0 0 1px oklch(0.76 0.144 172 / 0.5),
+    0 0 18px -2px oklch(0.76 0.144 172 / 0.45);
+}
+
+@utility reward-glow {
+  box-shadow: 0 0 20px -4px oklch(0.84 0.14 86 / 0.6);
+}
+
+@keyframes rank-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.84 0.14 86 / 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 12px oklch(0.84 0.14 86 / 0);
+  }
+}
+
+@utility animate-rank-pulse {
+  animation: rank-pulse 2.4s ease-out infinite;
+}
+
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rank-pulse {
+    animation: none;
+  }
+}
+
+/* App-side: safe-area aware bottom tab bar. */
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Filled matrix nodes glow softly. */
+@utility node-glow {
+  box-shadow:
+    0 0 0 1px oklch(0.76 0.144 172 / 0.35),
+    0 0 18px -2px oklch(0.76 0.144 172 / 0.55);
+}
+
+@keyframes rank-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.84 0.14 86 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px oklch(0.84 0.14 86 / 0.45);
+  }
+}
+
+@utility animate-rank-pulse {
+  animation: rank-pulse 2.4s ease-in-out 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rank-pulse,
+  .animate-fade-in {
+    animation: none !important;
+  }
+}

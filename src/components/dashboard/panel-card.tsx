@@ -10,7 +10,7 @@ export function PanelCard({
   children?: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-border bg-card p-7 shadow-soft">
+    <section className="rounded-3xl border border-border bg-card/80 p-6 shadow-soft backdrop-blur sm:p-7">
       <h1 className="text-2xl">{title}</h1>
       <p className="mt-2 text-sm text-muted-foreground">{description}</p>
       {children && <div className="mt-6">{children}</div>}

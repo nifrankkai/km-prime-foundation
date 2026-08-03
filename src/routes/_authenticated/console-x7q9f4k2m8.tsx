@@ -96,12 +96,12 @@ function AdminLayout() {
   const { can, isStaff, isLoading, access } = useAdminAccess();
 
   if (isLoading) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading console…</div>;
+    return <div className="app-dark min-h-screen p-10 text-sm text-muted-foreground">Loading console…</div>;
   }
 
   if (!isStaff) {
     return (
-      <div className="mx-auto max-w-xl px-5 py-24 text-center">
+      <div className="app-dark min-h-screen px-5 py-24 text-center">
         <h1 className="text-2xl">Staff access only</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Your account does not have an administrative role on KM Prime.
@@ -116,10 +116,10 @@ function AdminLayout() {
   const visible = nav.filter((item) => can(item.permission));
 
   return (
-    <div className="min-h-screen bg-secondary/40">
+    <div className="app-dark network-bg min-h-screen">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 py-6 lg:flex-row">
         <aside className="lg:w-60 lg:shrink-0">
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-soft lg:sticky lg:top-6">
+          <div className="rounded-2xl border border-border bg-card/80 p-5 shadow-soft backdrop-blur lg:sticky lg:top-6">
             <Logo />
             <p className="mt-3 text-[11px] font-bold uppercase tracking-widest text-primary">
               Admin console
@@ -193,7 +193,7 @@ function AdminLayout() {
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <main className="min-w-0 flex-1 animate-fade-in">
           <Outlet />
         </main>
       </div>

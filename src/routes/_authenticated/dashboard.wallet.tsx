@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { ArrowDownLeft, ArrowUpRight, Copy, Lock, ShieldCheck, Wallet as WalletIcon } from "lucide-react";
 import { toast } from "sonner";
 
+import { CountUp } from "@/components/dashboard/count-up";
 import { LicenseBanner } from "@/components/dashboard/license-banner";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
@@ -58,7 +59,7 @@ function WalletPage() {
       <LicenseBanner overview={overview} />
 
       <div className="space-y-6">
-        <header className="rounded-2xl border border-border bg-card p-7 shadow-soft">
+        <header className="rounded-3xl border border-border bg-card/80 p-6 shadow-soft backdrop-blur sm:p-7">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
               <h1 className="text-2xl">Wallet</h1>
@@ -70,8 +71,11 @@ function WalletPage() {
               <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-primary-deep">
                 <WalletIcon className="size-3.5" /> Total balance
               </p>
-              <p className="mt-1 text-3xl font-extrabold text-primary">
-                {money(wallet?.balanceCents ?? 0)}
+              <p className="figure-num mt-1 text-3xl text-primary">
+                <CountUp
+                  value={(wallet?.balanceCents ?? 0) / 100}
+                  format={(n) => `$${n.toFixed(2)}`}
+                />
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Available {money(wallet?.availableCents ?? 0)} · Pending{" "}
@@ -104,7 +108,7 @@ function WalletPage() {
           </p>
         )}
 
-        <section className="rounded-2xl border border-border bg-card p-7 shadow-soft">
+        <section className="rounded-3xl border border-border bg-card/80 p-6 shadow-soft backdrop-blur sm:p-7">
           {tab === "deposit" && (
             <DepositTab methods={methods ?? []} onDone={refreshWallet} />
           )}

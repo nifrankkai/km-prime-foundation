@@ -16,6 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
+import { MobileTabBar } from "@/components/dashboard/mobile-tab-bar";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
@@ -51,12 +52,12 @@ function DashboardLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-secondary/40">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 py-6 lg:flex-row">
-        <aside className="lg:w-64 lg:shrink-0">
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-soft lg:sticky lg:top-6">
+    <div className="app-dark network-bg min-h-screen">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-28 pt-6 md:px-5 md:pb-10 lg:flex-row">
+        <aside className="hidden md:block lg:w-64 lg:shrink-0">
+          <div className="rounded-2xl border border-border bg-card/80 p-5 shadow-soft backdrop-blur lg:sticky lg:top-6">
             <Logo />
-            <nav className="mt-6 flex flex-col gap-1">
+            <nav className="mt-6 flex flex-col gap-1 lg:flex-col">
               {items.map((item) => (
                 <Link
                   key={item.to}
@@ -89,10 +90,33 @@ function DashboardLayout() {
           </div>
         </aside>
 
-        <main className="min-w-0 flex-1">
+        <main className="min-w-0 flex-1 animate-fade-in">
+          <div className="mb-4 flex items-center justify-between md:hidden">
+            <Logo />
+            <div className="flex items-center gap-2">
+              {isStaff && (
+                <Link
+                  to="/console-x7q9f4k2m8"
+                  aria-label="Admin console"
+                  className="grid size-9 place-items-center rounded-xl border border-primary/30 bg-primary-soft text-primary-deep"
+                >
+                  <ShieldCheck className="size-4" />
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={handleSignOut}
+                aria-label="Sign out"
+                className="grid size-9 place-items-center rounded-xl border border-border text-muted-foreground"
+              >
+                <LogOut className="size-4" />
+              </button>
+            </div>
+          </div>
           <Outlet />
         </main>
       </div>
+      <MobileTabBar />
     </div>
   );
 }
