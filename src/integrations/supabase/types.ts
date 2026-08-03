@@ -497,9 +497,11 @@ export type Database = {
           id: string
           license_expiry_date: string | null
           license_status: Database["public"]["Enums"]["license_status"]
+          pin_set_at: string | null
           rank_key: string
           status: Database["public"]["Enums"]["member_status"]
           updated_at: string
+          withdrawal_pin_hash: string | null
         }
         Insert: {
           activated_at?: string | null
@@ -508,9 +510,11 @@ export type Database = {
           id: string
           license_expiry_date?: string | null
           license_status?: Database["public"]["Enums"]["license_status"]
+          pin_set_at?: string | null
           rank_key?: string
           status?: Database["public"]["Enums"]["member_status"]
           updated_at?: string
+          withdrawal_pin_hash?: string | null
         }
         Update: {
           activated_at?: string | null
@@ -519,9 +523,11 @@ export type Database = {
           id?: string
           license_expiry_date?: string | null
           license_status?: Database["public"]["Enums"]["license_status"]
+          pin_set_at?: string | null
           rank_key?: string
           status?: Database["public"]["Enums"]["member_status"]
           updated_at?: string
+          withdrawal_pin_hash?: string | null
         }
         Relationships: [
           {
@@ -698,31 +704,46 @@ export type Database = {
       payment_methods: {
         Row: {
           created_at: string
+          fee_percent: number
           id: string
           instructions_text: string
           is_enabled: boolean
           key: string
           method_name: string
+          min_deposit_cents: number
+          min_withdrawal_cents: number
+          network_label: string
+          receiving_address: string
           sort_order: number
           updated_at: string
         }
         Insert: {
           created_at?: string
+          fee_percent?: number
           id?: string
           instructions_text?: string
           is_enabled?: boolean
           key: string
           method_name: string
+          min_deposit_cents?: number
+          min_withdrawal_cents?: number
+          network_label?: string
+          receiving_address?: string
           sort_order?: number
           updated_at?: string
         }
         Update: {
           created_at?: string
+          fee_percent?: number
           id?: string
           instructions_text?: string
           is_enabled?: boolean
           key?: string
           method_name?: string
+          min_deposit_cents?: number
+          min_withdrawal_cents?: number
+          network_label?: string
+          receiving_address?: string
           sort_order?: number
           updated_at?: string
         }
@@ -782,9 +803,11 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          mobile_money_number: string | null
           phone: string | null
           referrer_id: string | null
           updated_at: string
+          usdt_address: string | null
           username: string | null
         }
         Insert: {
@@ -792,9 +815,11 @@ export type Database = {
           email?: string
           full_name?: string
           id: string
+          mobile_money_number?: string | null
           phone?: string | null
           referrer_id?: string | null
           updated_at?: string
+          usdt_address?: string | null
           username?: string | null
         }
         Update: {
@@ -802,9 +827,11 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          mobile_money_number?: string | null
           phone?: string | null
           referrer_id?: string | null
           updated_at?: string
+          usdt_address?: string | null
           username?: string | null
         }
         Relationships: [
@@ -997,6 +1024,77 @@ export type Database = {
         }
         Relationships: []
       }
+      support_ticket_messages: {
+        Row: {
+          attachment_path: string | null
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          is_staff: boolean
+          ticket_id: string
+        }
+        Insert: {
+          attachment_path?: string | null
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          is_staff?: boolean
+          ticket_id: string
+        }
+        Update: {
+          attachment_path?: string | null
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          is_staff?: boolean
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_ticket_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "support_tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_tickets: {
+        Row: {
+          category: Database["public"]["Enums"]["ticket_category"]
+          created_at: string
+          id: string
+          last_reply_at: string
+          status: Database["public"]["Enums"]["ticket_status"]
+          subject: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["ticket_category"]
+          created_at?: string
+          id?: string
+          last_reply_at?: string
+          status?: Database["public"]["Enums"]["ticket_status"]
+          subject: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["ticket_category"]
+          created_at?: string
+          id?: string
+          last_reply_at?: string
+          status?: Database["public"]["Enums"]["ticket_status"]
+          subject?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount_cents: number
@@ -1117,8 +1215,10 @@ export type Database = {
           amount_cents: number
           created_at: string
           destination: string
+          fee_cents: number
           id: string
           method: Database["public"]["Enums"]["payment_method"]
+          net_cents: number
           reviewed_at: string | null
           reviewed_by: string | null
           status: Database["public"]["Enums"]["withdrawal_status"]
@@ -1130,8 +1230,10 @@ export type Database = {
           amount_cents: number
           created_at?: string
           destination: string
+          fee_cents?: number
           id?: string
           method: Database["public"]["Enums"]["payment_method"]
+          net_cents?: number
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["withdrawal_status"]
@@ -1143,8 +1245,10 @@ export type Database = {
           amount_cents?: number
           created_at?: string
           destination?: string
+          fee_cents?: number
           id?: string
           method?: Database["public"]["Enums"]["payment_method"]
+          net_cents?: number
           reviewed_at?: string | null
           reviewed_by?: string | null
           status?: Database["public"]["Enums"]["withdrawal_status"]
@@ -1159,6 +1263,10 @@ export type Database = {
     }
     Functions: {
       activate_member: { Args: { _user_id: string }; Returns: undefined }
+      add_ticket_reply: {
+        Args: { _attachment_path: string; _body: string; _ticket_id: string }
+        Returns: undefined
+      }
       admin_adjust_wallet: {
         Args: { _amount_cents: number; _note: string; _user_id: string }
         Returns: number
@@ -1172,6 +1280,10 @@ export type Database = {
         Returns: undefined
       }
       admin_report_stats: { Args: never; Returns: Json }
+      admin_reset_withdrawal_pin: {
+        Args: { _user_id: string }
+        Returns: undefined
+      }
       admin_review_deposit: {
         Args: { _approve: boolean; _id: string; _note: string }
         Returns: undefined
@@ -1221,6 +1333,13 @@ export type Database = {
       }
       admin_set_stock: {
         Args: { _product_id: string; _stock_quantity: number }
+        Returns: undefined
+      }
+      admin_set_ticket_status: {
+        Args: {
+          _status: Database["public"]["Enums"]["ticket_status"]
+          _ticket_id: string
+        }
         Returns: undefined
       }
       admin_set_user_permission: {
@@ -1282,6 +1401,15 @@ export type Database = {
         Args: { _order_id: string }
         Returns: undefined
       }
+      create_support_ticket: {
+        Args: {
+          _attachment_path: string
+          _category: Database["public"]["Enums"]["ticket_category"]
+          _message: string
+          _subject: string
+        }
+        Returns: string
+      }
       credit_paid_commissions: { Args: never; Returns: Json }
       has_permission: {
         Args: { _key: string; _user_id: string }
@@ -1294,6 +1422,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      has_withdrawal_pin: { Args: { _user_id: string }; Returns: boolean }
       is_in_downline: {
         Args: { _position: string; _root: string }
         Returns: boolean
@@ -1315,9 +1444,11 @@ export type Database = {
           _amount_cents: number
           _destination: string
           _method: Database["public"]["Enums"]["payment_method"]
+          _pin: string
         }
         Returns: string
       }
+      set_withdrawal_pin: { Args: { _pin: string }; Returns: undefined }
       submit_deposit: {
         Args: {
           _amount_cents: number
@@ -1381,6 +1512,14 @@ export type Database = {
         | "refunded"
       payout_frequency: "weekly" | "monthly"
       product_status: "active" | "inactive"
+      ticket_category:
+        | "withdrawal_pin_reset"
+        | "deposit_issue"
+        | "withdrawal_issue"
+        | "account_issue"
+        | "general_question"
+        | "other"
+      ticket_status: "open" | "in_progress" | "resolved" | "closed"
       transaction_type:
         | "commission_credit"
         | "withdrawal_debit"
@@ -1558,6 +1697,15 @@ export const Constants = {
       payment_state: ["unpaid", "pending_review", "paid", "failed", "refunded"],
       payout_frequency: ["weekly", "monthly"],
       product_status: ["active", "inactive"],
+      ticket_category: [
+        "withdrawal_pin_reset",
+        "deposit_issue",
+        "withdrawal_issue",
+        "account_issue",
+        "general_question",
+        "other",
+      ],
+      ticket_status: ["open", "in_progress", "resolved", "closed"],
       transaction_type: [
         "commission_credit",
         "withdrawal_debit",
