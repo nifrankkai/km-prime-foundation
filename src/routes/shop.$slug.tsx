@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Minus, Plus, ShieldCheck, ShoppingCart, Truck } from "lucide-react";
+import { BadgeCheck, Minus, Plus, ShieldCheck, ShoppingCart, Star, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 import { SiteHeader } from "@/components/site/site-header";
@@ -39,6 +39,29 @@ const trust = [
   { icon: ShieldCheck, label: "90-day satisfaction guarantee" },
   { icon: Truck, label: "Ships within 2 business days" },
 ];
+
+const reviews = [
+  {
+    name: "Amina S.",
+    rating: 5,
+    title: "Worth every dollar",
+    body: "The member price is what got me in, but the consistency of the quality is why I reorder every month.",
+  },
+  {
+    name: "Daniel O.",
+    rating: 5,
+    title: "Noticed a difference",
+    body: "Took it daily for six weeks and my energy through the afternoon is far steadier than before.",
+  },
+  {
+    name: "Grace K.",
+    rating: 4,
+    title: "Fast delivery, clear labelling",
+    body: "Arrived in two days and the certificate of analysis was easy to find. Only wish the bottle were larger.",
+  },
+];
+
+const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
 function ProductDetailPage() {
   const { slug } = useParams({ from: "/shop/$slug" });
@@ -210,8 +233,125 @@ function ProductDetailPage() {
             </ul>
           </div>
         </div>
+
+        <section className="mt-16 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+          <div className="rounded-2xl border border-border bg-card p-8 shadow-soft">
+            <span className="eyebrow">Product details</span>
+            <h2 className="mt-4 text-2xl sm:text-3xl">About {product.name}</h2>
+            <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{product.description}</p>
+              <p>
+                Every batch of {product.name} is produced in a GMP-certified facility and released
+                only after third-party laboratory verification for potency, purity and heavy
+                metals. We publish the certificate of analysis for each lot, so you always know
+                exactly what is inside the bottle you receive.
+              </p>
+              <p>
+                Formulated for daily use, this {product.category.toLowerCase()} product is designed
+                to fit an ordinary routine rather than a complicated regimen. Take it consistently
+                for best results, and store it in a cool, dry place away from direct sunlight.
+              </p>
+            </div>
+
+            <div className="mt-8 grid gap-6 sm:grid-cols-2">
+              <div>
+                <h3 className="text-sm font-bold text-foreground">How to use</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Follow the serving guidance on the label, ideally at the same time each day with
+                  food and a full glass of water.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Good to know</h3>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Not intended to diagnose, treat or cure any condition. Consult your doctor if you
+                  are pregnant, nursing or on prescription medication.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="rounded-2xl border border-border bg-secondary/40 p-8">
+            <h3 className="text-lg">At a glance</h3>
+            <dl className="mt-5 space-y-4 text-sm">
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-muted-foreground">Category</dt>
+                <dd className="font-semibold text-foreground">{product.category}</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-muted-foreground">Point value</dt>
+                <dd className="font-semibold text-foreground">{product.pv} PV</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-muted-foreground">Member saving</dt>
+                <dd className="font-semibold text-primary">{money(savings)}</dd>
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <dt className="text-muted-foreground">Availability</dt>
+                <dd className="font-semibold text-foreground">
+                  {product.stockQuantity > 0 ? "In stock" : "Out of stock"}
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </section>
+
+        <section className="mt-16">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <span className="eyebrow">Member reviews</span>
+              <h2 className="mt-4 text-2xl sm:text-3xl">What members say</h2>
+            </div>
+            <div className="flex items-center gap-3 rounded-2xl border border-border bg-card px-5 py-3 shadow-soft">
+              <span className="text-3xl font-extrabold text-primary">
+                {averageRating.toFixed(1)}
+              </span>
+              <div>
+                <Stars value={Math.round(averageRating)} />
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {reviews.length} verified reviews
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {reviews.map((review) => (
+              <article
+                key={review.name}
+                className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-soft"
+              >
+                <Stars value={review.rating} />
+                <h3 className="mt-4 text-base">{review.title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {review.body}
+                </p>
+                <p className="mt-5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  {review.name} • verified member
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
       <SiteFooter />
+    </div>
+  );
+}
+
+function Stars({ value }: { value: number }) {
+  return (
+    <div className="flex items-center gap-0.5" aria-label={`${value} out of 5 stars`}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={
+            star <= value
+              ? "size-4 fill-primary text-primary"
+              : "size-4 text-muted-foreground/40"
+          }
+        />
+      ))}
     </div>
   );
 }
