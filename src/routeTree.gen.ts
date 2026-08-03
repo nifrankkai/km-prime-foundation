@@ -41,7 +41,6 @@ import { Route as AuthenticatedConsoleX7q9f4k2m8StaffRouteImport } from './route
 import { Route as AuthenticatedConsoleX7q9f4k2m8SupportRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.support'
 import { Route as AuthenticatedConsoleX7q9f4k2m8WithdrawalsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.withdrawals'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
-import { Route as AuthenticatedDashboardDepositRouteImport } from './routes/_authenticated/dashboard.deposit'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
@@ -233,12 +232,6 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardDepositRoute =
-  AuthenticatedDashboardDepositRouteImport.update({
-    id: '/deposit',
-    path: '/deposit',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
 const AuthenticatedDashboardKycRoute =
   AuthenticatedDashboardKycRouteImport.update({
     id: '/kyc',
@@ -342,7 +335,6 @@ export interface FileRoutesByFullPath {
   '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/console-x7q9f4k2m8/support': typeof AuthenticatedConsoleX7q9f4k2m8SupportRoute
   '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
-  '/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -386,7 +378,6 @@ export interface FileRoutesByTo {
   '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/console-x7q9f4k2m8/support': typeof AuthenticatedConsoleX7q9f4k2m8SupportRoute
   '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
-  '/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -434,7 +425,6 @@ export interface FileRoutesById {
   '/_authenticated/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/_authenticated/console-x7q9f4k2m8/support': typeof AuthenticatedConsoleX7q9f4k2m8SupportRoute
   '/_authenticated/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
-  '/_authenticated/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -482,7 +472,6 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/staff'
     | '/console-x7q9f4k2m8/support'
     | '/console-x7q9f4k2m8/withdrawals'
-    | '/dashboard/deposit'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -526,7 +515,6 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/staff'
     | '/console-x7q9f4k2m8/support'
     | '/console-x7q9f4k2m8/withdrawals'
-    | '/dashboard/deposit'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -573,7 +561,6 @@ export interface FileRouteTypes {
     | '/_authenticated/console-x7q9f4k2m8/staff'
     | '/_authenticated/console-x7q9f4k2m8/support'
     | '/_authenticated/console-x7q9f4k2m8/withdrawals'
-    | '/_authenticated/dashboard/deposit'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
@@ -835,13 +822,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/deposit': {
-      id: '/_authenticated/dashboard/deposit'
-      path: '/deposit'
-      fullPath: '/dashboard/deposit'
-      preLoaderRoute: typeof AuthenticatedDashboardDepositRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
     '/_authenticated/dashboard/kyc': {
       id: '/_authenticated/dashboard/kyc'
       path: '/kyc'
@@ -993,7 +973,6 @@ const AuthenticatedConsoleX7q9f4k2m8RouteWithChildren =
   )
 
 interface AuthenticatedDashboardRouteChildren {
-  AuthenticatedDashboardDepositRoute: typeof AuthenticatedDashboardDepositRoute
   AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
   AuthenticatedDashboardMembershipRoute: typeof AuthenticatedDashboardMembershipRoute
@@ -1007,7 +986,6 @@ interface AuthenticatedDashboardRouteChildren {
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
-    AuthenticatedDashboardDepositRoute: AuthenticatedDashboardDepositRoute,
     AuthenticatedDashboardKycRoute: AuthenticatedDashboardKycRoute,
     AuthenticatedDashboardMatrixRoute: AuthenticatedDashboardMatrixRoute,
     AuthenticatedDashboardMembershipRoute:
