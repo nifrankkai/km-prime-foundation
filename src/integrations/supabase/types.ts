@@ -1319,10 +1319,24 @@ export type Database = {
         }
         Returns: undefined
       }
-      admin_set_payment_method: {
-        Args: { _instructions: string; _is_enabled: boolean; _key: string }
-        Returns: undefined
-      }
+      admin_set_payment_method:
+        | {
+            Args: { _instructions: string; _is_enabled: boolean; _key: string }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              _fee_percent?: number
+              _instructions: string
+              _is_enabled: boolean
+              _key: string
+              _min_deposit_cents?: number
+              _min_withdrawal_cents?: number
+              _network_label?: string
+              _receiving_address?: string
+            }
+            Returns: undefined
+          }
       admin_set_role_permission: {
         Args: {
           _granted: boolean
