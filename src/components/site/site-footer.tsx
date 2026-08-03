@@ -33,7 +33,9 @@ const columns = [
 ];
 
 export function SiteFooter() {
+  const { data: content } = useSiteContent();
   return (
+
     <footer className="border-t border-border bg-secondary/40">
       <div className="section-shell py-16">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
