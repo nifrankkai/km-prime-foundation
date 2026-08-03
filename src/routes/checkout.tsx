@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
 import { SiteHeader } from "@/components/site/site-header";
@@ -10,12 +10,12 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getCart, placeOrder, PAYMENT_METHODS } from "@/lib/commerce.functions";
+import { getCart, placeOrder, INSUFFICIENT_BALANCE } from "@/lib/commerce.functions";
+import { getWalletSnapshot } from "@/lib/wallet.functions";
 import { money } from "@/lib/format";
 
 const title = "Checkout — KM Prime";
-const description =
-  "Complete your KM Prime order with card, USDT, mobile money, bank transfer or manual payment.";
+const description = "Complete your KM Prime order using your member wallet balance.";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -31,27 +31,27 @@ export const Route = createFileRoute("/checkout")({
   component: CheckoutPage,
 });
 
-type Method = (typeof PAYMENT_METHODS)[number]["value"];
-
 function CheckoutPage() {
   const fetchCart = useServerFn(getCart);
+  const fetchWallet = useServerFn(getWalletSnapshot);
   const submitOrder = useServerFn(placeOrder);
   const navigate = useNavigate();
 
-  const [method, setMethod] = useState<Method>("visa");
-  const [placed, setPlaced] = useState<{ reference: string; manual: boolean } | null>(null);
+  const [placed, setPlaced] = useState<{ reference: string } | null>(null);
+  const [insufficient, setInsufficient] = useState(false);
 
   const { data: lines } = useQuery({ queryKey: ["cart"], queryFn: () => fetchCart() });
+  const { data: wallet } = useQuery({ queryKey: ["wallet-snapshot"], queryFn: () => fetchWallet() });
   const items = lines ?? [];
   const subtotal = items.reduce((sum, l) => sum + l.product.priceCents * l.quantity, 0);
   const pv = items.reduce((sum, l) => sum + l.product.pv * l.quantity, 0);
+  const balance = wallet?.balanceCents ?? 0;
+  const shortfall = Math.max(0, subtotal - balance);
 
   const mutation = useMutation({
     mutationFn: (form: FormData) =>
       submitOrder({
         data: {
-          paymentMethod: method,
-          paymentReference: String(form.get("paymentReference") ?? "") || undefined,
           fullName: String(form.get("fullName") ?? ""),
           phone: String(form.get("phone") ?? ""),
           addressLine1: String(form.get("addressLine1") ?? ""),
@@ -62,8 +62,18 @@ function CheckoutPage() {
           country: String(form.get("country") ?? ""),
         },
       }),
-    onSuccess: (result) => setPlaced(result),
-    onError: (error: Error) => toast.error(error.message),
+    onSuccess: (result) => {
+      setInsufficient(false);
+      setPlaced(result);
+    },
+    onError: (error: Error) => {
+      if (error.message.includes(INSUFFICIENT_BALANCE)) {
+        setInsufficient(true);
+        toast.error("Insufficient balance. Please deposit funds to continue.");
+        return;
+      }
+      toast.error(error.message);
+    },
   });
 
   if (placed) {
@@ -75,9 +85,8 @@ function CheckoutPage() {
             <CheckCircle2 className="mx-auto size-10 text-primary" />
             <h1 className="mt-5 text-3xl">Order {placed.reference} received</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              {placed.manual
-                ? "Your manual payment is in the admin approval queue. The order confirms once an admin verifies it."
-                : "Payment confirmed. You can follow shipping progress and confirm delivery from your dashboard."}
+              Paid from your wallet balance. You can follow shipping progress and confirm delivery from
+              your dashboard.
             </p>
             <Button variant="prime" className="mt-7" onClick={() => navigate({ to: "/dashboard/orders" })}>
               View my orders
@@ -119,33 +128,15 @@ function CheckoutPage() {
             </section>
 
             <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">
-              <h2 className="text-xl">Payment method</h2>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                {PAYMENT_METHODS.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => setMethod(option.value)}
-                    className={
-                      method === option.value
-                        ? "rounded-xl border-2 border-primary bg-primary-soft/50 p-4 text-left"
-                        : "rounded-xl border border-border bg-background p-4 text-left hover:border-primary/40"
-                    }
-                  >
-                    <span className="block text-sm font-bold text-foreground">{option.label}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground">{option.hint}</span>
-                  </button>
-                ))}
-              </div>
-              <div className="mt-5">
-                <Field
-                  name="paymentReference"
-                  label={
-                    method === "manual"
-                      ? "Payment reference / proof note (helps admin approval)"
-                      : "Payment reference (optional)"
-                  }
-                />
+              <h2 className="text-xl">Payment</h2>
+              <div className="mt-5 flex items-center gap-3 rounded-xl border border-border bg-background p-5">
+                <Wallet className="size-5 text-primary" />
+                <div>
+                  <p className="text-sm font-bold text-foreground">Member wallet</p>
+                  <p className="text-xs text-muted-foreground">
+                    Available balance {money(balance)} — top up from the deposit page.
+                  </p>
+                </div>
               </div>
             </section>
           </div>
@@ -158,9 +149,7 @@ function CheckoutPage() {
                   <span className="text-muted-foreground">
                     {line.product.name} × {line.quantity}
                   </span>
-                  <span className="font-semibold">
-                    {money(line.product.priceCents * line.quantity)}
-                  </span>
+                  <span className="font-semibold">{money(line.product.priceCents * line.quantity)}</span>
                 </li>
               ))}
             </ul>
@@ -174,14 +163,29 @@ function CheckoutPage() {
                 <dd>{money(subtotal)}</dd>
               </div>
             </dl>
+
+            {(insufficient || (items.length > 0 && shortfall > 0)) && (
+              <div className="mt-5 rounded-xl border border-destructive/40 bg-destructive/10 p-4">
+                <p className="text-sm font-semibold text-destructive">
+                  Insufficient balance. Please deposit funds to continue.
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  You need {money(shortfall)} more to complete this order.
+                </p>
+                <Button asChild variant="prime" size="sm" className="mt-3">
+                  <Link to="/dashboard/deposit">Deposit Now</Link>
+                </Button>
+              </div>
+            )}
+
             <Button
               type="submit"
               variant="prime"
               size="lg"
               className="mt-6 w-full"
-              disabled={mutation.isPending || items.length === 0}
+              disabled={mutation.isPending || items.length === 0 || shortfall > 0}
             >
-              {mutation.isPending ? "Placing order…" : "Place order"}
+              {mutation.isPending ? "Placing order…" : "Pay from wallet"}
             </Button>
             <Button asChild variant="primeGhost" className="mt-3 w-full">
               <Link to="/cart">Back to cart</Link>
