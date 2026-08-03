@@ -9,7 +9,16 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+
 import { getCart, placeOrder, INSUFFICIENT_BALANCE } from "@/lib/commerce.functions";
 import { getWalletSnapshot } from "@/lib/wallet.functions";
 import { money } from "@/lib/format";
