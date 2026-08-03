@@ -188,7 +188,7 @@
 
 .app-dark {
   --radius: 1rem;
-  --background: oklch(0.19 0.035 258);           /* #0B1220 */
+  --background: oklch(0.14 0.024 258);           /* #060A12 */
   --foreground: oklch(0.94 0.008 240);           /* #EAF0F5 */
   --card: oklch(0.24 0.032 256);
   --card-foreground: oklch(0.94 0.008 240);

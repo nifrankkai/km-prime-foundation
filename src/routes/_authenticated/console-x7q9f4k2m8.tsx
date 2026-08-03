@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 
 import { Logo } from "@/components/site/logo";
+import { NavDrawer, type NavDrawerItem } from "@/components/dashboard/nav-drawer";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
 export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8")({
@@ -114,11 +115,45 @@ function AdminLayout() {
   }
 
   const visible = nav.filter((item) => can(item.permission));
+  const isSuperAdmin = Boolean(access?.roles.includes("super_admin"));
+  const superItems: NavDrawerItem[] = [
+    { to: "/console-x7q9f4k2m8/branding", label: "Logo & favicon", icon: Palette },
+    { to: "/console-x7q9f4k2m8/legal", label: "Legal & footer", icon: Scale },
+    { to: "/console-x7q9f4k2m8/mail", label: "Mail settings", icon: Mail },
+    { to: "/console-x7q9f4k2m8/payment-methods", label: "Payment methods", icon: Banknote },
+    { to: "/console-x7q9f4k2m8/danger", label: "Danger zone", icon: ShieldAlert, tone: "danger" },
+  ];
 
   return (
     <div className="app-dark network-bg min-h-screen">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-5 py-6 lg:flex-row">
-        <aside className="lg:w-60 lg:shrink-0">
+        <div className="flex items-center justify-between lg:hidden">
+          <div className="flex min-w-0 items-center gap-2">
+            <NavDrawer
+              eyebrow="Admin console"
+              groups={[
+                {
+                  items: visible.map((item) => ({
+                    to: item.to,
+                    label: item.label,
+                    icon: item.icon,
+                    exact: item.exact,
+                  })),
+                },
+                ...(isSuperAdmin ? [{ label: "Super admin", items: superItems }] : []),
+                {
+                  label: "Member",
+                  items: [
+                    { to: "/dashboard", label: "Member dashboard", icon: Gauge },
+                  ] as NavDrawerItem[],
+                },
+              ]}
+            />
+            <Logo />
+          </div>
+        </div>
+
+        <aside className="hidden lg:block lg:w-60 lg:shrink-0">
           <div className="rounded-2xl border border-border bg-card/80 p-5 shadow-soft backdrop-blur lg:sticky lg:top-6">
             <Logo />
             <p className="mt-3 text-[11px] font-bold uppercase tracking-widest text-primary">
