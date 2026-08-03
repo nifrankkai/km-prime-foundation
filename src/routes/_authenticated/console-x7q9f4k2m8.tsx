@@ -41,6 +41,13 @@ const nav = [
     permission: "withdrawals.review",
     exact: false,
   },
+  {
+    to: "/console-x7q9f4k2m8/deposits",
+    label: "Pending deposits",
+    icon: Banknote,
+    permission: "deposits.review",
+    exact: false,
+  },
   { to: "/console-x7q9f4k2m8/products", label: "Products", icon: Package, permission: "products.manage", exact: false },
   { to: "/console-x7q9f4k2m8/inventory", label: "Stock", icon: Boxes, permission: "stock.manage", exact: false },
   { to: "/console-x7q9f4k2m8/orders", label: "Orders", icon: BadgeCheck, permission: "orders.manage", exact: false },
