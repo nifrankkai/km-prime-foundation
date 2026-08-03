@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 
 import { Logo } from "@/components/site/logo";
+import { NavDrawer, type NavDrawerItem } from "@/components/dashboard/nav-drawer";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
 export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8")({
