@@ -79,7 +79,7 @@ export const createSupportTicket = createServerFn({ method: "POST" })
       _category: data.category,
       _message: data.message,
       _attachment_path: data.attachmentPath,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { id: id as unknown as string };
   });
