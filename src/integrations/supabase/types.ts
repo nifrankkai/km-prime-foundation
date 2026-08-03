@@ -1172,6 +1172,10 @@ export type Database = {
         Returns: undefined
       }
       admin_report_stats: { Args: never; Returns: Json }
+      admin_review_deposit: {
+        Args: { _approve: boolean; _id: string; _note: string }
+        Returns: undefined
+      }
       admin_review_kyc: {
         Args: { _approve: boolean; _reason: string; _user_id: string }
         Returns: undefined
@@ -1201,6 +1205,10 @@ export type Database = {
           _order_id: string
           _status: Database["public"]["Enums"]["order_status"]
         }
+        Returns: undefined
+      }
+      admin_set_payment_method: {
+        Args: { _instructions: string; _is_enabled: boolean; _key: string }
         Returns: undefined
       }
       admin_set_role_permission: {
@@ -1291,7 +1299,9 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      my_wallet_balance: { Args: never; Returns: number }
       pay_license: { Args: { _user_id: string }; Returns: undefined }
+      pay_order_from_wallet: { Args: { _order_id: string }; Returns: undefined }
       place_in_matrix: { Args: { _user_id: string }; Returns: string }
       process_leadership_bonus: { Args: never; Returns: Json }
       process_license_grace: { Args: never; Returns: Json }
@@ -1305,6 +1315,14 @@ export type Database = {
           _amount_cents: number
           _destination: string
           _method: Database["public"]["Enums"]["payment_method"]
+        }
+        Returns: string
+      }
+      submit_deposit: {
+        Args: {
+          _amount_cents: number
+          _method_key: string
+          _screenshot_path: string
         }
         Returns: string
       }
