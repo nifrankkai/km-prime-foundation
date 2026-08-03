@@ -453,6 +453,30 @@ function WithdrawTab({
     );
   }
 
+  function validate(): boolean {
+    if (!selected) {
+      toast.error("Select a payout method.");
+      return false;
+    }
+    if (cents < minCents) {
+      toast.error(`Minimum withdrawal is ${money(minCents)}.`);
+      return false;
+    }
+    if (cents > wallet!.availableCents) {
+      toast.error("Amount exceeds available balance.");
+      return false;
+    }
+    if (destinationValue.trim().length < 4) {
+      toast.error("Enter a payout destination.");
+      return false;
+    }
+    if (pin.length !== 4) {
+      toast.error("Enter your 4-digit PIN.");
+      return false;
+    }
+    return true;
+  }
+
   return (
     <div className="space-y-6">
       <div>
