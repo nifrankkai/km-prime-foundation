@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { adminUpsertProduct, listAdminProducts } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/products")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/products")({
   component: AdminProducts,
 });
 

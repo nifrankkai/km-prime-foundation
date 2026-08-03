@@ -16,21 +16,21 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as RegisterRouteImport } from './routes/register'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedConsoleX7q9f4k2m8RouteImport } from './routes/_authenticated/console-x7q9f4k2m8'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as AuthenticatedAdminCommissionsRouteImport } from './routes/_authenticated/admin.commissions'
-import { Route as AuthenticatedAdminContentRouteImport } from './routes/_authenticated/admin.content'
-import { Route as AuthenticatedAdminInventoryRouteImport } from './routes/_authenticated/admin.inventory'
-import { Route as AuthenticatedAdminKycRouteImport } from './routes/_authenticated/admin.kyc'
-import { Route as AuthenticatedAdminMembersRouteImport } from './routes/_authenticated/admin.members'
-import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin.orders'
-import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin.products'
-import { Route as AuthenticatedAdminRanksRouteImport } from './routes/_authenticated/admin.ranks'
-import { Route as AuthenticatedAdminStaffRouteImport } from './routes/_authenticated/admin.staff'
-import { Route as AuthenticatedAdminWithdrawalsRouteImport } from './routes/_authenticated/admin.withdrawals'
+import { Route as AuthenticatedConsoleX7q9f4k2m8IndexRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.index'
+import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.commissions'
+import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
+import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
+import { Route as AuthenticatedConsoleX7q9f4k2m8KycRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.kyc'
+import { Route as AuthenticatedConsoleX7q9f4k2m8MembersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.members'
+import { Route as AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.orders'
+import { Route as AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.products'
+import { Route as AuthenticatedConsoleX7q9f4k2m8RanksRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.ranks'
+import { Route as AuthenticatedConsoleX7q9f4k2m8StaffRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.staff'
+import { Route as AuthenticatedConsoleX7q9f4k2m8WithdrawalsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.withdrawals'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
@@ -78,11 +78,12 @@ const RegisterRoute = RegisterRouteImport.update({
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
+const AuthenticatedConsoleX7q9f4k2m8Route =
+  AuthenticatedConsoleX7q9f4k2m8RouteImport.update({
+    id: '/console-x7q9f4k2m8',
+    path: '/console-x7q9f4k2m8',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -98,67 +99,71 @@ const ShopSlugRoute = ShopSlugRouteImport.update({
   path: '/shop/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminCommissionsRoute =
-  AuthenticatedAdminCommissionsRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8IndexRoute =
+  AuthenticatedConsoleX7q9f4k2m8IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8CommissionsRoute =
+  AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport.update({
     id: '/commissions',
     path: '/commissions',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminContentRoute =
-  AuthenticatedAdminContentRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8ContentRoute =
+  AuthenticatedConsoleX7q9f4k2m8ContentRouteImport.update({
     id: '/content',
     path: '/content',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminInventoryRoute =
-  AuthenticatedAdminInventoryRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8InventoryRoute =
+  AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport.update({
     id: '/inventory',
     path: '/inventory',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminKycRoute = AuthenticatedAdminKycRouteImport.update({
-  id: '/kyc',
-  path: '/kyc',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminMembersRoute =
-  AuthenticatedAdminMembersRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8KycRoute =
+  AuthenticatedConsoleX7q9f4k2m8KycRouteImport.update({
+    id: '/kyc',
+    path: '/kyc',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8MembersRoute =
+  AuthenticatedConsoleX7q9f4k2m8MembersRouteImport.update({
     id: '/members',
     path: '/members',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminOrdersRoute =
-  AuthenticatedAdminOrdersRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8OrdersRoute =
+  AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport.update({
     id: '/orders',
     path: '/orders',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminProductsRoute =
-  AuthenticatedAdminProductsRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8ProductsRoute =
+  AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport.update({
     id: '/products',
     path: '/products',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
-const AuthenticatedAdminRanksRoute = AuthenticatedAdminRanksRouteImport.update({
-  id: '/ranks',
-  path: '/ranks',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminStaffRoute = AuthenticatedAdminStaffRouteImport.update({
-  id: '/staff',
-  path: '/staff',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminWithdrawalsRoute =
-  AuthenticatedAdminWithdrawalsRouteImport.update({
+const AuthenticatedConsoleX7q9f4k2m8RanksRoute =
+  AuthenticatedConsoleX7q9f4k2m8RanksRouteImport.update({
+    id: '/ranks',
+    path: '/ranks',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8StaffRoute =
+  AuthenticatedConsoleX7q9f4k2m8StaffRouteImport.update({
+    id: '/staff',
+    path: '/staff',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute =
+  AuthenticatedConsoleX7q9f4k2m8WithdrawalsRouteImport.update({
     id: '/withdrawals',
     path: '/withdrawals',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
@@ -240,20 +245,20 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/console-x7q9f4k2m8': typeof AuthenticatedConsoleX7q9f4k2m8RouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
-  '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
-  '/admin/content': typeof AuthenticatedAdminContentRoute
-  '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
-  '/admin/kyc': typeof AuthenticatedAdminKycRoute
-  '/admin/members': typeof AuthenticatedAdminMembersRoute
-  '/admin/orders': typeof AuthenticatedAdminOrdersRoute
-  '/admin/products': typeof AuthenticatedAdminProductsRoute
-  '/admin/ranks': typeof AuthenticatedAdminRanksRoute
-  '/admin/staff': typeof AuthenticatedAdminStaffRoute
-  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
+  '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
+  '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
+  '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
+  '/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
+  '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
+  '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -261,7 +266,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
-  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/console-x7q9f4k2m8/': typeof AuthenticatedConsoleX7q9f4k2m8IndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -277,16 +282,16 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
-  '/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
-  '/admin/content': typeof AuthenticatedAdminContentRoute
-  '/admin/inventory': typeof AuthenticatedAdminInventoryRoute
-  '/admin/kyc': typeof AuthenticatedAdminKycRoute
-  '/admin/members': typeof AuthenticatedAdminMembersRoute
-  '/admin/orders': typeof AuthenticatedAdminOrdersRoute
-  '/admin/products': typeof AuthenticatedAdminProductsRoute
-  '/admin/ranks': typeof AuthenticatedAdminRanksRoute
-  '/admin/staff': typeof AuthenticatedAdminStaffRoute
-  '/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
+  '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
+  '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
+  '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
+  '/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
+  '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
+  '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -294,7 +299,7 @@ export interface FileRoutesByTo {
   '/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
-  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/console-x7q9f4k2m8': typeof AuthenticatedConsoleX7q9f4k2m8IndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -310,20 +315,20 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/register': typeof RegisterRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/console-x7q9f4k2m8': typeof AuthenticatedConsoleX7q9f4k2m8RouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
-  '/_authenticated/admin/commissions': typeof AuthenticatedAdminCommissionsRoute
-  '/_authenticated/admin/content': typeof AuthenticatedAdminContentRoute
-  '/_authenticated/admin/inventory': typeof AuthenticatedAdminInventoryRoute
-  '/_authenticated/admin/kyc': typeof AuthenticatedAdminKycRoute
-  '/_authenticated/admin/members': typeof AuthenticatedAdminMembersRoute
-  '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
-  '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
-  '/_authenticated/admin/ranks': typeof AuthenticatedAdminRanksRoute
-  '/_authenticated/admin/staff': typeof AuthenticatedAdminStaffRoute
-  '/_authenticated/admin/withdrawals': typeof AuthenticatedAdminWithdrawalsRoute
+  '/_authenticated/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
+  '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
+  '/_authenticated/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/_authenticated/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
+  '/_authenticated/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/_authenticated/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
+  '/_authenticated/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
+  '/_authenticated/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
+  '/_authenticated/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -331,7 +336,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/orders': typeof AuthenticatedDashboardOrdersRoute
   '/_authenticated/dashboard/performance': typeof AuthenticatedDashboardPerformanceRoute
   '/_authenticated/dashboard/wallet': typeof AuthenticatedDashboardWalletRoute
-  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/console-x7q9f4k2m8/': typeof AuthenticatedConsoleX7q9f4k2m8IndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/public/hooks/license-grace': typeof ApiPublicHooksLicenseGraceRoute
   '/api/public/hooks/matrix-commissions': typeof ApiPublicHooksMatrixCommissionsRoute
@@ -347,20 +352,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/admin'
+    | '/console-x7q9f4k2m8'
     | '/dashboard'
     | '/shop/$slug'
     | '/shop/'
-    | '/admin/commissions'
-    | '/admin/content'
-    | '/admin/inventory'
-    | '/admin/kyc'
-    | '/admin/members'
-    | '/admin/orders'
-    | '/admin/products'
-    | '/admin/ranks'
-    | '/admin/staff'
-    | '/admin/withdrawals'
+    | '/console-x7q9f4k2m8/commissions'
+    | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/inventory'
+    | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/members'
+    | '/console-x7q9f4k2m8/orders'
+    | '/console-x7q9f4k2m8/products'
+    | '/console-x7q9f4k2m8/ranks'
+    | '/console-x7q9f4k2m8/staff'
+    | '/console-x7q9f4k2m8/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -368,7 +373,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
-    | '/admin/'
+    | '/console-x7q9f4k2m8/'
     | '/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -384,16 +389,16 @@ export interface FileRouteTypes {
     | '/register'
     | '/shop/$slug'
     | '/shop'
-    | '/admin/commissions'
-    | '/admin/content'
-    | '/admin/inventory'
-    | '/admin/kyc'
-    | '/admin/members'
-    | '/admin/orders'
-    | '/admin/products'
-    | '/admin/ranks'
-    | '/admin/staff'
-    | '/admin/withdrawals'
+    | '/console-x7q9f4k2m8/commissions'
+    | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/inventory'
+    | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/members'
+    | '/console-x7q9f4k2m8/orders'
+    | '/console-x7q9f4k2m8/products'
+    | '/console-x7q9f4k2m8/ranks'
+    | '/console-x7q9f4k2m8/staff'
+    | '/console-x7q9f4k2m8/withdrawals'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -401,7 +406,7 @@ export interface FileRouteTypes {
     | '/dashboard/orders'
     | '/dashboard/performance'
     | '/dashboard/wallet'
-    | '/admin'
+    | '/console-x7q9f4k2m8'
     | '/dashboard'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -416,20 +421,20 @@ export interface FileRouteTypes {
     | '/login'
     | '/membership'
     | '/register'
-    | '/_authenticated/admin'
+    | '/_authenticated/console-x7q9f4k2m8'
     | '/_authenticated/dashboard'
     | '/shop/$slug'
     | '/shop/'
-    | '/_authenticated/admin/commissions'
-    | '/_authenticated/admin/content'
-    | '/_authenticated/admin/inventory'
-    | '/_authenticated/admin/kyc'
-    | '/_authenticated/admin/members'
-    | '/_authenticated/admin/orders'
-    | '/_authenticated/admin/products'
-    | '/_authenticated/admin/ranks'
-    | '/_authenticated/admin/staff'
-    | '/_authenticated/admin/withdrawals'
+    | '/_authenticated/console-x7q9f4k2m8/commissions'
+    | '/_authenticated/console-x7q9f4k2m8/content'
+    | '/_authenticated/console-x7q9f4k2m8/inventory'
+    | '/_authenticated/console-x7q9f4k2m8/kyc'
+    | '/_authenticated/console-x7q9f4k2m8/members'
+    | '/_authenticated/console-x7q9f4k2m8/orders'
+    | '/_authenticated/console-x7q9f4k2m8/products'
+    | '/_authenticated/console-x7q9f4k2m8/ranks'
+    | '/_authenticated/console-x7q9f4k2m8/staff'
+    | '/_authenticated/console-x7q9f4k2m8/withdrawals'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
@@ -437,7 +442,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/orders'
     | '/_authenticated/dashboard/performance'
     | '/_authenticated/dashboard/wallet'
-    | '/_authenticated/admin/'
+    | '/_authenticated/console-x7q9f4k2m8/'
     | '/_authenticated/dashboard/'
     | '/api/public/hooks/license-grace'
     | '/api/public/hooks/matrix-commissions'
@@ -512,11 +517,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegisterRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+    '/_authenticated/console-x7q9f4k2m8': {
+      id: '/_authenticated/console-x7q9f4k2m8'
+      path: '/console-x7q9f4k2m8'
+      fullPath: '/console-x7q9f4k2m8'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8RouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -540,82 +545,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/': {
-      id: '/_authenticated/admin/'
+    '/_authenticated/console-x7q9f4k2m8/': {
+      id: '/_authenticated/console-x7q9f4k2m8/'
       path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8IndexRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/commissions': {
-      id: '/_authenticated/admin/commissions'
+    '/_authenticated/console-x7q9f4k2m8/commissions': {
+      id: '/_authenticated/console-x7q9f4k2m8/commissions'
       path: '/commissions'
-      fullPath: '/admin/commissions'
-      preLoaderRoute: typeof AuthenticatedAdminCommissionsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/commissions'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/content': {
-      id: '/_authenticated/admin/content'
+    '/_authenticated/console-x7q9f4k2m8/content': {
+      id: '/_authenticated/console-x7q9f4k2m8/content'
       path: '/content'
-      fullPath: '/admin/content'
-      preLoaderRoute: typeof AuthenticatedAdminContentRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/content'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/inventory': {
-      id: '/_authenticated/admin/inventory'
+    '/_authenticated/console-x7q9f4k2m8/inventory': {
+      id: '/_authenticated/console-x7q9f4k2m8/inventory'
       path: '/inventory'
-      fullPath: '/admin/inventory'
-      preLoaderRoute: typeof AuthenticatedAdminInventoryRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/inventory'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/kyc': {
-      id: '/_authenticated/admin/kyc'
+    '/_authenticated/console-x7q9f4k2m8/kyc': {
+      id: '/_authenticated/console-x7q9f4k2m8/kyc'
       path: '/kyc'
-      fullPath: '/admin/kyc'
-      preLoaderRoute: typeof AuthenticatedAdminKycRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/kyc'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/members': {
-      id: '/_authenticated/admin/members'
+    '/_authenticated/console-x7q9f4k2m8/members': {
+      id: '/_authenticated/console-x7q9f4k2m8/members'
       path: '/members'
-      fullPath: '/admin/members'
-      preLoaderRoute: typeof AuthenticatedAdminMembersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/members'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8MembersRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/orders': {
-      id: '/_authenticated/admin/orders'
+    '/_authenticated/console-x7q9f4k2m8/orders': {
+      id: '/_authenticated/console-x7q9f4k2m8/orders'
       path: '/orders'
-      fullPath: '/admin/orders'
-      preLoaderRoute: typeof AuthenticatedAdminOrdersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/orders'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/products': {
-      id: '/_authenticated/admin/products'
+    '/_authenticated/console-x7q9f4k2m8/products': {
+      id: '/_authenticated/console-x7q9f4k2m8/products'
       path: '/products'
-      fullPath: '/admin/products'
-      preLoaderRoute: typeof AuthenticatedAdminProductsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/products'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/ranks': {
-      id: '/_authenticated/admin/ranks'
+    '/_authenticated/console-x7q9f4k2m8/ranks': {
+      id: '/_authenticated/console-x7q9f4k2m8/ranks'
       path: '/ranks'
-      fullPath: '/admin/ranks'
-      preLoaderRoute: typeof AuthenticatedAdminRanksRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/ranks'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8RanksRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/staff': {
-      id: '/_authenticated/admin/staff'
+    '/_authenticated/console-x7q9f4k2m8/staff': {
+      id: '/_authenticated/console-x7q9f4k2m8/staff'
       path: '/staff'
-      fullPath: '/admin/staff'
-      preLoaderRoute: typeof AuthenticatedAdminStaffRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/staff'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8StaffRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
-    '/_authenticated/admin/withdrawals': {
-      id: '/_authenticated/admin/withdrawals'
+    '/_authenticated/console-x7q9f4k2m8/withdrawals': {
+      id: '/_authenticated/console-x7q9f4k2m8/withdrawals'
       path: '/withdrawals'
-      fullPath: '/admin/withdrawals'
-      preLoaderRoute: typeof AuthenticatedAdminWithdrawalsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/console-x7q9f4k2m8/withdrawals'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
@@ -704,36 +709,50 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthenticatedAdminRouteChildren {
-  AuthenticatedAdminCommissionsRoute: typeof AuthenticatedAdminCommissionsRoute
-  AuthenticatedAdminContentRoute: typeof AuthenticatedAdminContentRoute
-  AuthenticatedAdminInventoryRoute: typeof AuthenticatedAdminInventoryRoute
-  AuthenticatedAdminKycRoute: typeof AuthenticatedAdminKycRoute
-  AuthenticatedAdminMembersRoute: typeof AuthenticatedAdminMembersRoute
-  AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
-  AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
-  AuthenticatedAdminRanksRoute: typeof AuthenticatedAdminRanksRoute
-  AuthenticatedAdminStaffRoute: typeof AuthenticatedAdminStaffRoute
-  AuthenticatedAdminWithdrawalsRoute: typeof AuthenticatedAdminWithdrawalsRoute
-  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
+  AuthenticatedConsoleX7q9f4k2m8CommissionsRoute: typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
+  AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
+  AuthenticatedConsoleX7q9f4k2m8KycRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  AuthenticatedConsoleX7q9f4k2m8MembersRoute: typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
+  AuthenticatedConsoleX7q9f4k2m8OrdersRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  AuthenticatedConsoleX7q9f4k2m8ProductsRoute: typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
+  AuthenticatedConsoleX7q9f4k2m8RanksRoute: typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
+  AuthenticatedConsoleX7q9f4k2m8StaffRoute: typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
+  AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute: typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
+  AuthenticatedConsoleX7q9f4k2m8IndexRoute: typeof AuthenticatedConsoleX7q9f4k2m8IndexRoute
 }
 
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminCommissionsRoute: AuthenticatedAdminCommissionsRoute,
-  AuthenticatedAdminContentRoute: AuthenticatedAdminContentRoute,
-  AuthenticatedAdminInventoryRoute: AuthenticatedAdminInventoryRoute,
-  AuthenticatedAdminKycRoute: AuthenticatedAdminKycRoute,
-  AuthenticatedAdminMembersRoute: AuthenticatedAdminMembersRoute,
-  AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
-  AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
-  AuthenticatedAdminRanksRoute: AuthenticatedAdminRanksRoute,
-  AuthenticatedAdminStaffRoute: AuthenticatedAdminStaffRoute,
-  AuthenticatedAdminWithdrawalsRoute: AuthenticatedAdminWithdrawalsRoute,
-  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-}
+const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m8RouteChildren =
+  {
+    AuthenticatedConsoleX7q9f4k2m8CommissionsRoute:
+      AuthenticatedConsoleX7q9f4k2m8CommissionsRoute,
+    AuthenticatedConsoleX7q9f4k2m8ContentRoute:
+      AuthenticatedConsoleX7q9f4k2m8ContentRoute,
+    AuthenticatedConsoleX7q9f4k2m8InventoryRoute:
+      AuthenticatedConsoleX7q9f4k2m8InventoryRoute,
+    AuthenticatedConsoleX7q9f4k2m8KycRoute:
+      AuthenticatedConsoleX7q9f4k2m8KycRoute,
+    AuthenticatedConsoleX7q9f4k2m8MembersRoute:
+      AuthenticatedConsoleX7q9f4k2m8MembersRoute,
+    AuthenticatedConsoleX7q9f4k2m8OrdersRoute:
+      AuthenticatedConsoleX7q9f4k2m8OrdersRoute,
+    AuthenticatedConsoleX7q9f4k2m8ProductsRoute:
+      AuthenticatedConsoleX7q9f4k2m8ProductsRoute,
+    AuthenticatedConsoleX7q9f4k2m8RanksRoute:
+      AuthenticatedConsoleX7q9f4k2m8RanksRoute,
+    AuthenticatedConsoleX7q9f4k2m8StaffRoute:
+      AuthenticatedConsoleX7q9f4k2m8StaffRoute,
+    AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute:
+      AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute,
+    AuthenticatedConsoleX7q9f4k2m8IndexRoute:
+      AuthenticatedConsoleX7q9f4k2m8IndexRoute,
+  }
 
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+const AuthenticatedConsoleX7q9f4k2m8RouteWithChildren =
+  AuthenticatedConsoleX7q9f4k2m8Route._addFileChildren(
+    AuthenticatedConsoleX7q9f4k2m8RouteChildren,
+  )
 
 interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
@@ -766,12 +785,13 @@ const AuthenticatedDashboardRouteWithChildren =
   )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedConsoleX7q9f4k2m8Route: typeof AuthenticatedConsoleX7q9f4k2m8RouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedConsoleX7q9f4k2m8Route:
+    AuthenticatedConsoleX7q9f4k2m8RouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
 }
 

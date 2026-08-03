@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { adminUpdateRank } from "@/lib/admin.functions";
 import { listRanks } from "@/lib/compensation.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/ranks")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/ranks")({
   component: AdminRanks,
 });
 

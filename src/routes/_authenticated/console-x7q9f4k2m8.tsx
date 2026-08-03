@@ -16,7 +16,7 @@ import {
 import { Logo } from "@/components/site/logo";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
-export const Route = createFileRoute("/_authenticated/admin")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8")({
   head: () => ({
     meta: [
       { title: "Admin Console — KM Prime" },
@@ -27,35 +27,35 @@ export const Route = createFileRoute("/_authenticated/admin")({
 });
 
 const nav = [
-  { to: "/admin", label: "Overview", icon: Gauge, permission: "reports.view", exact: true },
-  { to: "/admin/members", label: "Members", icon: Users, permission: "members.manage", exact: false },
-  { to: "/admin/kyc", label: "KYC queue", icon: IdCard, permission: "kyc.review", exact: false },
+  { to: "/console-x7q9f4k2m8", label: "Overview", icon: Gauge, permission: "reports.view", exact: true },
+  { to: "/console-x7q9f4k2m8/members", label: "Members", icon: Users, permission: "members.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/kyc", label: "KYC queue", icon: IdCard, permission: "kyc.review", exact: false },
   {
-    to: "/admin/withdrawals",
+    to: "/console-x7q9f4k2m8/withdrawals",
     label: "Withdrawals",
     icon: Wallet,
     permission: "withdrawals.review",
     exact: false,
   },
-  { to: "/admin/products", label: "Products", icon: Package, permission: "products.manage", exact: false },
-  { to: "/admin/inventory", label: "Stock", icon: Boxes, permission: "stock.manage", exact: false },
-  { to: "/admin/orders", label: "Orders", icon: BadgeCheck, permission: "orders.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/products", label: "Products", icon: Package, permission: "products.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/inventory", label: "Stock", icon: Boxes, permission: "stock.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/orders", label: "Orders", icon: BadgeCheck, permission: "orders.manage", exact: false },
   {
-    to: "/admin/commissions",
+    to: "/console-x7q9f4k2m8/commissions",
     label: "Commissions",
     icon: Coins,
     permission: "commissions.manage",
     exact: false,
   },
-  { to: "/admin/ranks", label: "Ranks", icon: Trophy, permission: "ranks.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/ranks", label: "Ranks", icon: Trophy, permission: "ranks.manage", exact: false },
   {
-    to: "/admin/content",
+    to: "/console-x7q9f4k2m8/content",
     label: "News & gallery",
     icon: Megaphone,
     permission: "announcements.manage",
     exact: false,
   },
-  { to: "/admin/staff", label: "Staff & roles", icon: UserCog, permission: "staff.manage", exact: false },
+  { to: "/console-x7q9f4k2m8/staff", label: "Staff & roles", icon: UserCog, permission: "staff.manage", exact: false },
 ] as const;
 
 function AdminLayout() {

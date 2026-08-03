@@ -8,7 +8,7 @@ import { PanelCard } from "@/components/dashboard/panel-card";
 import { Button } from "@/components/ui/button";
 import { adminReviewWithdrawal, listWithdrawalQueue } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/withdrawals")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/withdrawals")({
   component: AdminWithdrawals,
 });
 

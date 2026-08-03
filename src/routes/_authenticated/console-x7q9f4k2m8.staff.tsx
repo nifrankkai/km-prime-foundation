@@ -24,7 +24,7 @@ import {
   type RoleKey,
 } from "@/lib/permissions";
 
-export const Route = createFileRoute("/_authenticated/admin/staff")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/staff")({
   component: AdminStaff,
 });
 

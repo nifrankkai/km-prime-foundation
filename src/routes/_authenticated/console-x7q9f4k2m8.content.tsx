@@ -15,7 +15,7 @@ import {
   listAdminGallery,
 } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/content")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/content")({
   component: AdminContent,
 });
 

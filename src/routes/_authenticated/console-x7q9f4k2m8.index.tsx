@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { PanelCard } from "@/components/dashboard/panel-card";
 import { getAdminStats } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/")({
   component: AdminOverview,
 });
 
