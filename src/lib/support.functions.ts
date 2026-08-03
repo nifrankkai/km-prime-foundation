@@ -146,7 +146,7 @@ export const replyToTicket = createServerFn({ method: "POST" })
       _ticket_id: data.ticketId,
       _body: data.body,
       _attachment_path: data.attachmentPath,
-    });
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
