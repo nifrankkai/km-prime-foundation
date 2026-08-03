@@ -80,24 +80,24 @@ export function SiteFooter() {
         <div className="mt-12 grid gap-6 rounded-2xl border border-border bg-card p-6 text-xs leading-relaxed text-muted-foreground shadow-soft md:grid-cols-2">
           <div>
             <p className="font-bold text-foreground">
-              {content?.footer_disclaimer?.title || "Compliance disclaimer"}
+              {content?.['footer_disclaimer']?.title || "Compliance disclaimer"}
             </p>
             <div
               className="mt-2 [&_a]:text-primary"
               dangerouslySetInnerHTML={{
                 __html:
-                  content?.footer_disclaimer?.content ??
+                  content?.['footer_disclaimer']?.content ??
                   "Statements about KM Prime products have not been evaluated by any regulatory authority.",
               }}
             />
           </div>
           <div>
             <p className="font-bold text-foreground">
-              {content?.footer_address?.title || "Company address"}
+              {content?.['footer_address']?.title || "Company address"}
             </p>
             <div
               className="mt-2 [&_a]:text-primary"
-              dangerouslySetInnerHTML={{ __html: content?.footer_address?.content ?? "" }}
+              dangerouslySetInnerHTML={{ __html: content?.['footer_address']?.content ?? "" }}
             />
           </div>
         </div>
