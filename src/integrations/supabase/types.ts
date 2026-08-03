@@ -749,6 +749,36 @@ export type Database = {
         }
         Relationships: []
       }
+      platform_reset_settings: {
+        Row: {
+          created_at: string
+          enabled: boolean
+          id: boolean
+          password_hash: string | null
+          password_set_at: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          enabled?: boolean
+          id?: boolean
+          password_hash?: string | null
+          password_set_at?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          enabled?: boolean
+          id?: boolean
+          password_hash?: string | null
+          password_set_at?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string
@@ -1188,6 +1218,36 @@ export type Database = {
         }
         Relationships: []
       }
+      system_audit_log: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_id: string | null
+          created_at: string
+          detail: string | null
+          id: string
+          metadata: Json
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_id?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: string
+          metadata?: Json
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_id?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: string
+          metadata?: Json
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount_cents: number
@@ -1537,6 +1597,15 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      log_system_event: {
+        Args: {
+          _action: string
+          _actor: string
+          _detail: string
+          _metadata: Json
+        }
+        Returns: undefined
+      }
       my_wallet_balance: { Args: never; Returns: number }
       pay_license: { Args: { _user_id: string }; Returns: undefined }
       pay_order_from_wallet: { Args: { _order_id: string }; Returns: undefined }
@@ -1556,6 +1625,15 @@ export type Database = {
           _pin: string
         }
         Returns: string
+      }
+      reset_platform_data: { Args: { _password: string }; Returns: Json }
+      set_platform_reset_enabled: {
+        Args: { _enabled: boolean }
+        Returns: undefined
+      }
+      set_platform_reset_password: {
+        Args: { _password: string }
+        Returns: undefined
       }
       set_withdrawal_pin: { Args: { _pin: string }; Returns: undefined }
       submit_deposit: {

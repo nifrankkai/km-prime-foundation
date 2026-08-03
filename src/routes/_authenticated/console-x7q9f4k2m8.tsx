@@ -13,6 +13,7 @@ import {
   Palette,
   Package,
   Scale,
+  ShieldAlert,
   Sigma,
 
 
@@ -169,6 +170,14 @@ function AdminLayout() {
                   >
                     <Banknote className="size-4" />
                     Payment methods
+                  </Link>
+                  <Link
+                    to="/console-x7q9f4k2m8/danger"
+                    className="mt-2 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-destructive transition-colors hover:bg-destructive/10"
+                    activeProps={{ className: "bg-destructive/10" }}
+                  >
+                    <ShieldAlert className="size-4" />
+                    Danger zone
                   </Link>
 
 
