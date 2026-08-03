@@ -3,7 +3,7 @@ import { BadgeCheck, PackageCheck, ShieldCheck, Truck } from "lucide-react";
 const badges = [
   { icon: BadgeCheck, label: "Lab-verified batches" },
   { icon: ShieldCheck, label: "30-day money back" },
-  { icon: Truck, label: "Free delivery over RM 150" },
+  { icon: Truck, label: "Free delivery over $150" },
   { icon: PackageCheck, label: "Sealed, traceable packaging" },
 ];
 

@@ -65,9 +65,9 @@ function MembershipPage() {
             <h2 className="text-2xl">Member vs. guest</h2>
             <div className="mt-6 space-y-4">
               {[
-                { label: "Prime Starter Set", retail: "RM 520", member: "RM 349" },
-                { label: "Radiance Collagen Blend", retail: "RM 249", member: "RM 174" },
-                { label: "Daily Defense Capsules", retail: "RM 189", member: "RM 132" },
+                { label: "Prime Starter Set", retail: "$520", member: "$349" },
+                { label: "Radiance Collagen Blend", retail: "$249", member: "$174" },
+                { label: "Daily Defense Capsules", retail: "$189", member: "$132" },
               ].map((row) => (
                 <div
                   key={row.label}

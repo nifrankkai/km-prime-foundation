@@ -35,9 +35,9 @@ export function Hero() {
             </Button>
           </div>
           <div className="mt-8 flex items-baseline gap-4 text-sm">
-            <span className="text-muted-foreground line-through">Typical retail RM 249</span>
+            <span className="text-muted-foreground line-through">Typical retail $249</span>
             <span className="rounded-full bg-primary-soft px-3 py-1 font-bold text-primary-deep">
-              Member price RM 174
+              Member price $174
             </span>
           </div>
         </div>
