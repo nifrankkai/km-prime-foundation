@@ -166,6 +166,51 @@ export type Database = {
         }
         Relationships: []
       }
+      deposit_requests: {
+        Row: {
+          admin_note: string | null
+          amount_cents: number
+          created_at: string
+          id: string
+          method_key: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          screenshot_path: string
+          status: Database["public"]["Enums"]["deposit_status"]
+          submitted_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          amount_cents: number
+          created_at?: string
+          id?: string
+          method_key: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          screenshot_path: string
+          status?: Database["public"]["Enums"]["deposit_status"]
+          submitted_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          method_key?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          screenshot_path?: string
+          status?: Database["public"]["Enums"]["deposit_status"]
+          submitted_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_settings: {
         Row: {
           action_emails_enabled: boolean
@@ -647,6 +692,39 @@ export type Database = {
           total_pv?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      payment_methods: {
+        Row: {
+          created_at: string
+          id: string
+          instructions_text: string
+          is_enabled: boolean
+          key: string
+          method_name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instructions_text?: string
+          is_enabled?: boolean
+          key: string
+          method_name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instructions_text?: string
+          is_enabled?: boolean
+          key?: string
+          method_name?: string
+          sort_order?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1253,6 +1331,7 @@ export type Database = {
         | "product"
         | "leadership"
         | "rank"
+      deposit_status: "pending" | "approved" | "rejected"
       kyc_status: "not_submitted" | "pending" | "approved" | "rejected"
       license_status: "active" | "inactive" | "grace_period"
       matrix_slot: "left" | "right"
@@ -1292,6 +1371,7 @@ export type Database = {
         | "admin_debit"
         | "order_payment"
         | "license_payment"
+        | "deposit_credit"
       withdrawal_status: "pending" | "approved" | "rejected" | "paid"
     }
     CompositeTypes: {
@@ -1430,6 +1510,7 @@ export const Constants = {
         "leadership",
         "rank",
       ],
+      deposit_status: ["pending", "approved", "rejected"],
       kyc_status: ["not_submitted", "pending", "approved", "rejected"],
       license_status: ["active", "inactive", "grace_period"],
       matrix_slot: ["left", "right"],
@@ -1467,6 +1548,7 @@ export const Constants = {
         "admin_debit",
         "order_payment",
         "license_payment",
+        "deposit_credit",
       ],
       withdrawal_status: ["pending", "approved", "rejected", "paid"],
     },
