@@ -76,26 +76,45 @@ export const listCommissionRules = createServerFn({ method: "GET" }).handler(
 export const getPerformance = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const period = new Date();
-    const periodMonth = `${period.getUTCFullYear()}-${String(period.getUTCMonth() + 1).padStart(2, "0")}-01`;
+    const now = new Date();
+    const month = (offset: number) => {
+      const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + offset, 1));
+      return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-01`;
+    };
+    const periodMonth = month(0);
 
-    const [{ data: pv }, { data: history }] = await Promise.all([
-      context.supabase
-        .from("pv_totals")
-        .select("personal_pv, group_pv, period_month")
-        .eq("period_month", periodMonth)
-        .maybeSingle(),
-      context.supabase
-        .from("rank_history")
-        .select("id, from_rank, to_rank, reason, created_at")
-        .order("created_at", { ascending: false })
-        .limit(10),
-    ]);
+    const [{ data: pv }, { data: history }, { data: pvHistory }, { data: ledger }] =
+      await Promise.all([
+        context.supabase
+          .from("pv_totals")
+          .select("personal_pv, group_pv, period_month")
+          .eq("period_month", periodMonth)
+          .maybeSingle(),
+        context.supabase
+          .from("rank_history")
+          .select("id, from_rank, to_rank, reason, direction, created_at")
+          .order("created_at", { ascending: false })
+          .limit(10),
+        context.supabase
+          .from("pv_period_history")
+          .select("period_month, personal_pv, group_pv, rank_key")
+          .order("period_month", { ascending: false })
+          .limit(6),
+        context.supabase
+          .from("pv_transactions")
+          .select("id, type, pv_amount, level, created_at")
+          .eq("period_month", periodMonth)
+          .order("created_at", { ascending: false })
+          .limit(20),
+      ]);
 
     return {
       periodMonth,
       personalPv: pv?.personal_pv ?? 0,
       groupPv: pv?.group_pv ?? 0,
       rankHistory: history ?? [],
+      pvHistory: pvHistory ?? [],
+      recentPv: ledger ?? [],
     };
   });
+

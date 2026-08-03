@@ -844,6 +844,36 @@ export type Database = {
           },
         ]
       }
+      pv_period_history: {
+        Row: {
+          created_at: string
+          group_pv: number
+          id: string
+          period_month: string
+          personal_pv: number
+          rank_key: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          group_pv?: number
+          id?: string
+          period_month: string
+          personal_pv?: number
+          rank_key?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          group_pv?: number
+          id?: string
+          period_month?: string
+          personal_pv?: number
+          rank_key?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       pv_totals: {
         Row: {
           created_at: string
@@ -874,28 +904,91 @@ export type Database = {
         }
         Relationships: []
       }
+      pv_transactions: {
+        Row: {
+          created_at: string
+          id: string
+          level: number
+          order_id: string | null
+          period_month: string
+          product_id: string | null
+          pv_amount: number
+          source_user_id: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          level?: number
+          order_id?: string | null
+          period_month: string
+          product_id?: string | null
+          pv_amount: number
+          source_user_id?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          level?: number
+          order_id?: string | null
+          period_month?: string
+          product_id?: string | null
+          pv_amount?: number
+          source_user_id?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pv_transactions_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pv_transactions_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       rank_history: {
         Row: {
           created_at: string
+          direction: string
           from_rank: string | null
           id: string
+          period_month: string | null
           reason: string
+          snapshot: Json
           to_rank: string
           user_id: string
         }
         Insert: {
           created_at?: string
+          direction?: string
           from_rank?: string | null
           id?: string
+          period_month?: string | null
           reason?: string
+          snapshot?: Json
           to_rank: string
           user_id: string
         }
         Update: {
           created_at?: string
+          direction?: string
           from_rank?: string | null
           id?: string
+          period_month?: string | null
           reason?: string
+          snapshot?: Json
           to_rank?: string
           user_id?: string
         }
@@ -1411,6 +1504,8 @@ export type Database = {
         }
         Returns: string
       }
+      apply_order_pv: { Args: { _order_id: string }; Returns: undefined }
+      archive_pv_period: { Args: { _period: string }; Returns: Json }
       confirm_order_received: {
         Args: { _order_id: string }
         Returns: undefined

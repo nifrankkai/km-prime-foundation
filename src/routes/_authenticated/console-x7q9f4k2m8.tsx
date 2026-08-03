@@ -13,6 +13,8 @@ import {
   Palette,
   Package,
   Scale,
+  Sigma,
+
 
   Trophy,
   UserCog,
@@ -70,6 +72,14 @@ const nav = [
     exact: false,
   },
   { to: "/console-x7q9f4k2m8/ranks", label: "Ranks", icon: Trophy, permission: "ranks.manage", exact: false },
+  {
+    to: "/console-x7q9f4k2m8/pv-records",
+    label: "PV records",
+    icon: Sigma,
+    permission: "reports.view",
+    exact: false,
+  },
+
   {
     to: "/console-x7q9f4k2m8/content",
     label: "News & gallery",

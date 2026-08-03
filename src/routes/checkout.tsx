@@ -9,7 +9,16 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+
 import { getCart, placeOrder, INSUFFICIENT_BALANCE } from "@/lib/commerce.functions";
 import { getWalletSnapshot } from "@/lib/wallet.functions";
 import { money } from "@/lib/format";
@@ -39,6 +48,7 @@ function CheckoutPage() {
 
   const [placed, setPlaced] = useState<{ reference: string } | null>(null);
   const [insufficient, setInsufficient] = useState(false);
+  const [pendingForm, setPendingForm] = useState<Record<string, string> | null>(null);
 
   const { data: lines } = useQuery({ queryKey: ["cart"], queryFn: () => fetchCart() });
   const { data: wallet } = useQuery({ queryKey: ["wallet-snapshot"], queryFn: () => fetchWallet() });
@@ -49,24 +59,26 @@ function CheckoutPage() {
   const shortfall = Math.max(0, subtotal - balance);
 
   const mutation = useMutation({
-    mutationFn: (form: FormData) =>
+    mutationFn: (form: Record<string, string>) =>
       submitOrder({
         data: {
-          fullName: String(form.get("fullName") ?? ""),
-          phone: String(form.get("phone") ?? ""),
-          addressLine1: String(form.get("addressLine1") ?? ""),
-          addressLine2: String(form.get("addressLine2") ?? "") || undefined,
-          city: String(form.get("city") ?? ""),
-          state: String(form.get("state") ?? "") || undefined,
-          postalCode: String(form.get("postalCode") ?? ""),
-          country: String(form.get("country") ?? ""),
+          fullName: form["fullName"] ?? "",
+          phone: form["phone"] ?? "",
+          addressLine1: form["addressLine1"] ?? "",
+          addressLine2: form["addressLine2"] || undefined,
+          city: form["city"] ?? "",
+          state: form["state"] || undefined,
+          postalCode: form["postalCode"] ?? "",
+          country: form["country"] ?? "",
         },
       }),
     onSuccess: (result) => {
       setInsufficient(false);
+      setPendingForm(null);
       setPlaced(result);
     },
     onError: (error: Error) => {
+      setPendingForm(null);
       if (error.message.includes(INSUFFICIENT_BALANCE)) {
         setInsufficient(true);
         toast.error("Insufficient balance. Please deposit funds to continue.");
@@ -75,6 +87,7 @@ function CheckoutPage() {
       toast.error(error.message);
     },
   });
+
 
   if (placed) {
     return (
@@ -109,8 +122,12 @@ function CheckoutPage() {
           className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr]"
           onSubmit={(event) => {
             event.preventDefault();
-            mutation.mutate(new FormData(event.currentTarget));
+            const entries = Object.fromEntries(
+              new FormData(event.currentTarget).entries(),
+            ) as Record<string, string>;
+            setPendingForm(entries);
           }}
+
         >
           <div className="space-y-6">
             <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">
@@ -185,14 +202,76 @@ function CheckoutPage() {
               className="mt-6 w-full"
               disabled={mutation.isPending || items.length === 0 || shortfall > 0}
             >
-              {mutation.isPending ? "Placing order…" : "Pay from wallet"}
+              {mutation.isPending ? "Placing order…" : "Review & pay from wallet"}
             </Button>
             <Button asChild variant="primeGhost" className="mt-3 w-full">
               <Link to="/cart">Back to cart</Link>
             </Button>
           </aside>
         </form>
+
+        <Dialog
+          open={pendingForm !== null}
+          onOpenChange={(next) => {
+            if (!next && !mutation.isPending) setPendingForm(null);
+          }}
+        >
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Confirm your purchase</DialogTitle>
+              <DialogDescription>
+                Review your order before it is paid from your wallet. This cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+
+            <ul className="space-y-2 text-sm">
+              {items.map((line) => (
+                <li key={line.id} className="flex justify-between gap-3">
+                  <span className="text-muted-foreground">
+                    {line.product.name} × {line.quantity}
+                  </span>
+                  <span className="font-semibold">
+                    {money(line.product.priceCents * line.quantity)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <dl className="space-y-2 border-t border-border pt-4 text-sm">
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Point value earned</dt>
+                <dd className="font-semibold text-primary">{pv} PV</dd>
+              </div>
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Wallet balance after</dt>
+                <dd>{money(Math.max(0, balance - subtotal))}</dd>
+              </div>
+              <div className="flex justify-between text-base font-extrabold text-foreground">
+                <dt>Total charged</dt>
+                <dd>{money(subtotal)}</dd>
+              </div>
+            </dl>
+
+            <DialogFooter className="gap-2 sm:gap-2">
+              <Button
+                variant="outline"
+                disabled={mutation.isPending}
+                onClick={() => setPendingForm(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="prime"
+                disabled={mutation.isPending}
+                onClick={() => pendingForm && mutation.mutate(pendingForm)}
+              >
+                {mutation.isPending ? "Processing…" : "Confirm purchase"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
+
       <SiteFooter />
     </div>
   );
