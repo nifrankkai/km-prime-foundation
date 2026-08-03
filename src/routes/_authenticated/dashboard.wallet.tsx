@@ -471,12 +471,7 @@ function WithdrawTab({
         className="grid max-w-2xl gap-4 sm:grid-cols-2"
         onSubmit={(event) => {
           event.preventDefault();
-          if (!selected) return toast.error("Select a payout method.");
-          if (cents < minCents) return toast.error(`Minimum withdrawal is ${money(minCents)}.`);
-          if (cents > wallet.availableCents) return toast.error("Amount exceeds available balance.");
-          if (destinationValue.trim().length < 4) return toast.error("Enter a payout destination.");
-          if (pin.length !== 4) return toast.error("Enter your 4-digit PIN.");
-          mutation.mutate();
+          if (validate()) mutation.mutate();
         }}
       >
         <div>
