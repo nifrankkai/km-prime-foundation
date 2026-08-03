@@ -6,6 +6,7 @@ import {
   Gauge,
   IdCard,
   Megaphone,
+  Palette,
   Package,
   Trophy,
   UserCog,
@@ -58,8 +59,9 @@ const nav = [
   { to: "/console-x7q9f4k2m8/staff", label: "Staff & roles", icon: UserCog, permission: "staff.manage", exact: false },
 ] as const;
 
+
 function AdminLayout() {
-  const { can, isStaff, isLoading } = useAdminAccess();
+  const { can, isStaff, isLoading, access } = useAdminAccess();
 
   if (isLoading) {
     return <div className="p-10 text-sm text-muted-foreground">Loading console…</div>;
@@ -103,6 +105,16 @@ function AdminLayout() {
                   {item.label}
                 </Link>
               ))}
+              {access?.roles.includes("super_admin") && (
+                <Link
+                  to="/console-x7q9f4k2m8/branding"
+                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  activeProps={{ className: "bg-primary-soft text-primary-deep" }}
+                >
+                  <Palette className="size-4" />
+                  Logo & favicon
+                </Link>
+              )}
               <Link
                 to="/dashboard"
                 className="mt-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent"

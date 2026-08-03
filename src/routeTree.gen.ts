@@ -21,6 +21,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
 import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as AuthenticatedConsoleX7q9f4k2m8IndexRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.index'
+import { Route as AuthenticatedConsoleX7q9f4k2m8BrandingRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.branding'
 import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.commissions'
 import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
 import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
@@ -103,6 +104,12 @@ const AuthenticatedConsoleX7q9f4k2m8IndexRoute =
   AuthenticatedConsoleX7q9f4k2m8IndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8BrandingRoute =
+  AuthenticatedConsoleX7q9f4k2m8BrandingRouteImport.update({
+    id: '/branding',
+    path: '/branding',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
 const AuthenticatedConsoleX7q9f4k2m8CommissionsRoute =
@@ -249,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
+  '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
@@ -282,6 +290,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
+  '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
@@ -319,6 +328,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
   '/shop/': typeof ShopIndexRoute
+  '/_authenticated/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/_authenticated/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
@@ -356,6 +366,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/shop/$slug'
     | '/shop/'
+    | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
@@ -389,6 +400,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/shop/$slug'
     | '/shop'
+    | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
@@ -425,6 +437,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/shop/$slug'
     | '/shop/'
+    | '/_authenticated/console-x7q9f4k2m8/branding'
     | '/_authenticated/console-x7q9f4k2m8/commissions'
     | '/_authenticated/console-x7q9f4k2m8/content'
     | '/_authenticated/console-x7q9f4k2m8/inventory'
@@ -550,6 +563,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/console-x7q9f4k2m8/'
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8IndexRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
+    '/_authenticated/console-x7q9f4k2m8/branding': {
+      id: '/_authenticated/console-x7q9f4k2m8/branding'
+      path: '/branding'
+      fullPath: '/console-x7q9f4k2m8/branding'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8BrandingRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
     '/_authenticated/console-x7q9f4k2m8/commissions': {
@@ -710,6 +730,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
+  AuthenticatedConsoleX7q9f4k2m8BrandingRoute: typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   AuthenticatedConsoleX7q9f4k2m8CommissionsRoute: typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
@@ -725,6 +746,8 @@ interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
 
 const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m8RouteChildren =
   {
+    AuthenticatedConsoleX7q9f4k2m8BrandingRoute:
+      AuthenticatedConsoleX7q9f4k2m8BrandingRoute,
     AuthenticatedConsoleX7q9f4k2m8CommissionsRoute:
       AuthenticatedConsoleX7q9f4k2m8CommissionsRoute,
     AuthenticatedConsoleX7q9f4k2m8ContentRoute:
