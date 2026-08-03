@@ -40,6 +40,29 @@ const trust = [
   { icon: Truck, label: "Ships within 2 business days" },
 ];
 
+const reviews = [
+  {
+    name: "Amina S.",
+    rating: 5,
+    title: "Worth every dollar",
+    body: "The member price is what got me in, but the consistency of the quality is why I reorder every month.",
+  },
+  {
+    name: "Daniel O.",
+    rating: 5,
+    title: "Noticed a difference",
+    body: "Took it daily for six weeks and my energy through the afternoon is far steadier than before.",
+  },
+  {
+    name: "Grace K.",
+    rating: 4,
+    title: "Fast delivery, clear labelling",
+    body: "Arrived in two days and the certificate of analysis was easy to find. Only wish the bottle were larger.",
+  },
+];
+
+const averageRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
+
 function ProductDetailPage() {
   const { slug } = useParams({ from: "/shop/$slug" });
   const navigate = useNavigate();
