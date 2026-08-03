@@ -25,6 +25,7 @@ function money(cents: number) {
 function AdminMembers() {
   const [search, setSearch] = useState("");
   const [term, setTerm] = useState("");
+  const [amounts, setAmounts] = useState<Record<string, string>>({});
   const queryClient = useQueryClient();
 
   const fetchMembers = useServerFn(listAdminMembers);
