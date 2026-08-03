@@ -106,12 +106,13 @@ function CatalogueTab({ onViewCart }: { onViewCart: () => void }) {
     <PanelCard
       title="Product catalogue"
       description="Every product carries a point value that counts toward your personal and group volume."
-      action={
+    >
+      <div className="mb-5 flex justify-end">
         <Button variant="primeGhost" size="sm" onClick={onViewCart}>
           <ShoppingCart className="mr-1.5 size-4" /> View cart
         </Button>
-      }
-    >
+      </div>
+
       {isLoading ? (
         <p className="text-sm text-muted-foreground">Loading the catalogue…</p>
       ) : (products ?? []).length === 0 ? (
