@@ -113,8 +113,12 @@ function CheckoutPage() {
           className="mt-10 grid gap-8 lg:grid-cols-[1.5fr_1fr]"
           onSubmit={(event) => {
             event.preventDefault();
-            mutation.mutate(new FormData(event.currentTarget));
+            const entries = Object.fromEntries(
+              new FormData(event.currentTarget).entries(),
+            ) as Record<string, string>;
+            setPendingForm(entries);
           }}
+
         >
           <div className="space-y-6">
             <section className="rounded-2xl border border-border bg-card p-6 shadow-soft">
