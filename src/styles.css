@@ -297,3 +297,36 @@
     animation: none;
   }
 }
+
+/* App-side: safe-area aware bottom tab bar. */
+@utility safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Filled matrix nodes glow softly. */
+@utility node-glow {
+  box-shadow:
+    0 0 0 1px oklch(0.76 0.144 172 / 0.35),
+    0 0 18px -2px oklch(0.76 0.144 172 / 0.55);
+}
+
+@keyframes rank-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 oklch(0.84 0.14 86 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 14px 3px oklch(0.84 0.14 86 / 0.45);
+  }
+}
+
+@utility animate-rank-pulse {
+  animation: rank-pulse 2.4s ease-in-out 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rank-pulse,
+  .animate-fade-in {
+    animation: none !important;
+  }
+}
