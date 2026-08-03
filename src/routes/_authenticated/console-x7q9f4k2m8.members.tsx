@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 import { PanelCard } from "@/components/dashboard/panel-card";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Input } from "@/components/ui/input";
 import {
   adminAdjustWallet,
@@ -25,6 +26,7 @@ function money(cents: number) {
 function AdminMembers() {
   const [search, setSearch] = useState("");
   const [term, setTerm] = useState("");
+  const [amounts, setAmounts] = useState<Record<string, string>>({});
   const queryClient = useQueryClient();
 
   const fetchMembers = useServerFn(listAdminMembers);
@@ -68,21 +70,16 @@ function AdminMembers() {
     onError: (error: Error) => toast.error(error.message),
   });
 
-  function handleAdjust(userId: string, sign: 1 | -1) {
-    const raw = window.prompt(`Amount in USD to ${sign > 0 ? "credit" : "debit"}`);
-    if (!raw) return;
-    const amount = Math.round(Number(raw) * 100);
+  function submitAdjust(userId: string, sign: 1 | -1, note: string) {
+    const amount = Math.round(Number(amounts[userId] ?? "") * 100);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("Enter a valid amount");
-      return;
-    }
-    const note = window.prompt("Reason for this adjustment") ?? "";
-    if (note.trim().length < 3) {
-      toast.error("A reason of at least 3 characters is required");
+      toast.error("Enter a valid amount first");
       return;
     }
     adjustMutation.mutate({ userId, amountCents: amount * sign, note });
+    setAmounts((prev) => ({ ...prev, [userId]: "" }));
   }
+
 
   return (
     <div className="space-y-6">
@@ -131,22 +128,61 @@ function AdminMembers() {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Button size="sm" variant="prime" onClick={() => handleAdjust(member.id, 1)}>
-                  Credit
-                </Button>
-                <Button size="sm" variant="outline" onClick={() => handleAdjust(member.id, -1)}>
-                  Debit
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() =>
-                    freezeMutation.mutate({ userId: member.id, frozen: !member.frozen })
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <Input
+                  className="w-36"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="Amount USD"
+                  value={amounts[member.id] ?? ""}
+                  onChange={(event) =>
+                    setAmounts((prev) => ({ ...prev, [member.id]: event.target.value }))
                   }
-                >
-                  {member.frozen ? "Unfreeze wallet" : "Freeze wallet"}
-                </Button>
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="prime">
+                      Credit
+                    </Button>
+                  }
+                  title="Credit this wallet?"
+                  description={`Are you sure you want to credit $${amounts[member.id] || "0.00"} to ${member.fullName || member.email}? This changes their balance immediately.`}
+                  confirmLabel="Confirm credit"
+                  reasonLabel="Reason"
+                  reasonRequired
+                  pending={adjustMutation.isPending}
+                  onConfirm={(note) => submitAdjust(member.id, 1, note)}
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="outline">
+                      Debit
+                    </Button>
+                  }
+                  title="Debit this wallet?"
+                  description={`Are you sure you want to debit $${amounts[member.id] || "0.00"} from ${member.fullName || member.email}? This changes their balance immediately.`}
+                  confirmLabel="Confirm debit"
+                  destructive
+                  reasonLabel="Reason"
+                  reasonRequired
+                  pending={adjustMutation.isPending}
+                  onConfirm={(note) => submitAdjust(member.id, -1, note)}
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="outline">
+                      {member.frozen ? "Unfreeze wallet" : "Freeze wallet"}
+                    </Button>
+                  }
+                  title={member.frozen ? "Unfreeze this wallet?" : "Freeze this wallet?"}
+                  description={`Are you sure you want to ${member.frozen ? "unfreeze" : "freeze"} the wallet of ${member.fullName || member.email}?`}
+                  confirmLabel="Confirm"
+                  destructive={!member.frozen}
+                  pending={freezeMutation.isPending}
+                  onConfirm={() => freezeMutation.mutate({ userId: member.id, frozen: !member.frozen })}
+                />
+
                 <Button
                   size="sm"
                   variant="outline"

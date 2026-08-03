@@ -165,18 +165,9 @@ export const setCartQuantity = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const PAYMENT_METHODS = [
-  { value: "visa", label: "Visa", hint: "Card payment, confirmed instantly" },
-  { value: "mastercard", label: "MasterCard", hint: "Card payment, confirmed instantly" },
-  { value: "usdt", label: "USDT (TRC-20)", hint: "Crypto transfer, confirmed instantly" },
-  { value: "mobile_money", label: "Mobile Money", hint: "Confirmed instantly" },
-  { value: "bank_transfer", label: "Bank Transfer", hint: "Confirmed instantly" },
-  { value: "manual", label: "Manual Payment", hint: "Reviewed by an admin before your order confirms" },
-] as const;
+export const INSUFFICIENT_BALANCE = "INSUFFICIENT_BALANCE";
 
 const checkoutSchema = z.object({
-  paymentMethod: z.enum(["visa", "mastercard", "usdt", "mobile_money", "bank_transfer", "manual"]),
-  paymentReference: z.string().trim().max(120).optional(),
   fullName: z.string().trim().min(2).max(120),
   phone: z.string().trim().min(5).max(40),
   addressLine1: z.string().trim().min(3).max(160),
@@ -187,6 +178,7 @@ const checkoutSchema = z.object({
   country: z.string().trim().min(2).max(80),
 });
 
+/** Orders are paid from the member wallet; insufficient funds block the order entirely. */
 export const placeOrder = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: unknown) => checkoutSchema.parse(data))
@@ -217,15 +209,22 @@ export const placeOrder = createServerFn({ method: "POST" })
       };
     });
 
-    const manual = data.paymentMethod === "manual";
+    const { data: wallet } = await supabase
+      .from("wallets")
+      .select("balance_cents, frozen")
+      .eq("user_id", userId)
+      .maybeSingle();
+    if (wallet?.frozen) throw new Error("Your wallet is frozen. Contact support.");
+    if ((wallet?.balance_cents ?? 0) < subtotal) throw new Error(INSUFFICIENT_BALANCE);
+
     const { data: order, error } = await supabase
       .from("orders")
       .insert({
         user_id: userId,
-        payment_method: data.paymentMethod,
-        payment_state: manual ? "pending_review" : "paid",
-        status: manual ? "awaiting_approval" : "paid",
-        payment_reference: data.paymentReference ?? null,
+        payment_method: "manual",
+        payment_state: "unpaid",
+        status: "pending_payment",
+        payment_reference: null,
         subtotal_cents: subtotal,
         shipping_cents: 0,
         total_cents: subtotal,
@@ -248,10 +247,21 @@ export const placeOrder = createServerFn({ method: "POST" })
       .insert(items.map((item) => ({ ...item, order_id: order.id })));
     if (itemsError) throw itemsError;
 
+    // Atomic: debits the wallet and marks the order paid, or nothing changes.
+    const { error: payError } = await supabase.rpc("pay_order_from_wallet", {
+      _order_id: order.id as string,
+    } as never);
+    if (payError) {
+      throw new Error(
+        payError.message.includes(INSUFFICIENT_BALANCE) ? INSUFFICIENT_BALANCE : payError.message,
+      );
+    }
+
     await supabase.from("cart_items").delete().eq("user_id", userId);
 
-    return { reference: order.reference as string, manual };
+    return { reference: order.reference as string, totalCents: subtotal };
   });
+
 
 export const listOrders = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

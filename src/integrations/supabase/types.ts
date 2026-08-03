@@ -166,6 +166,51 @@ export type Database = {
         }
         Relationships: []
       }
+      deposit_requests: {
+        Row: {
+          admin_note: string | null
+          amount_cents: number
+          created_at: string
+          id: string
+          method_key: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          screenshot_path: string
+          status: Database["public"]["Enums"]["deposit_status"]
+          submitted_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_note?: string | null
+          amount_cents: number
+          created_at?: string
+          id?: string
+          method_key: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          screenshot_path: string
+          status?: Database["public"]["Enums"]["deposit_status"]
+          submitted_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_note?: string | null
+          amount_cents?: number
+          created_at?: string
+          id?: string
+          method_key?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          screenshot_path?: string
+          status?: Database["public"]["Enums"]["deposit_status"]
+          submitted_at?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       email_settings: {
         Row: {
           action_emails_enabled: boolean
@@ -650,6 +695,39 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_methods: {
+        Row: {
+          created_at: string
+          id: string
+          instructions_text: string
+          is_enabled: boolean
+          key: string
+          method_name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instructions_text?: string
+          is_enabled?: boolean
+          key: string
+          method_name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instructions_text?: string
+          is_enabled?: boolean
+          key?: string
+          method_name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           category: string
@@ -1094,6 +1172,10 @@ export type Database = {
         Returns: undefined
       }
       admin_report_stats: { Args: never; Returns: Json }
+      admin_review_deposit: {
+        Args: { _approve: boolean; _id: string; _note: string }
+        Returns: undefined
+      }
       admin_review_kyc: {
         Args: { _approve: boolean; _reason: string; _user_id: string }
         Returns: undefined
@@ -1123,6 +1205,10 @@ export type Database = {
           _order_id: string
           _status: Database["public"]["Enums"]["order_status"]
         }
+        Returns: undefined
+      }
+      admin_set_payment_method: {
+        Args: { _instructions: string; _is_enabled: boolean; _key: string }
         Returns: undefined
       }
       admin_set_role_permission: {
@@ -1213,7 +1299,9 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      my_wallet_balance: { Args: never; Returns: number }
       pay_license: { Args: { _user_id: string }; Returns: undefined }
+      pay_order_from_wallet: { Args: { _order_id: string }; Returns: undefined }
       place_in_matrix: { Args: { _user_id: string }; Returns: string }
       process_leadership_bonus: { Args: never; Returns: Json }
       process_license_grace: { Args: never; Returns: Json }
@@ -1227,6 +1315,14 @@ export type Database = {
           _amount_cents: number
           _destination: string
           _method: Database["public"]["Enums"]["payment_method"]
+        }
+        Returns: string
+      }
+      submit_deposit: {
+        Args: {
+          _amount_cents: number
+          _method_key: string
+          _screenshot_path: string
         }
         Returns: string
       }
@@ -1253,6 +1349,7 @@ export type Database = {
         | "product"
         | "leadership"
         | "rank"
+      deposit_status: "pending" | "approved" | "rejected"
       kyc_status: "not_submitted" | "pending" | "approved" | "rejected"
       license_status: "active" | "inactive" | "grace_period"
       matrix_slot: "left" | "right"
@@ -1292,6 +1389,7 @@ export type Database = {
         | "admin_debit"
         | "order_payment"
         | "license_payment"
+        | "deposit_credit"
       withdrawal_status: "pending" | "approved" | "rejected" | "paid"
     }
     CompositeTypes: {
@@ -1430,6 +1528,7 @@ export const Constants = {
         "leadership",
         "rank",
       ],
+      deposit_status: ["pending", "approved", "rejected"],
       kyc_status: ["not_submitted", "pending", "approved", "rejected"],
       license_status: ["active", "inactive", "grace_period"],
       matrix_slot: ["left", "right"],
@@ -1467,6 +1566,7 @@ export const Constants = {
         "admin_debit",
         "order_payment",
         "license_payment",
+        "deposit_credit",
       ],
       withdrawal_status: ["pending", "approved", "rejected", "paid"],
     },

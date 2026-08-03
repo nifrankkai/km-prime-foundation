@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -51,22 +52,36 @@ function MembershipPanel() {
     queryClient.invalidateQueries({ queryKey: ["wallet-ledger"] });
   };
 
+  const [insufficient, setInsufficient] = useState<string | null>(null);
+
+  const handleError = (error: Error) => {
+    if (error.message.includes("INSUFFICIENT_BALANCE")) {
+      setInsufficient("Insufficient balance. Please deposit funds to continue.");
+      toast.error("Insufficient balance. Please deposit funds to continue.");
+      return;
+    }
+    setInsufficient(null);
+    toast.error(error.message || "Payment could not be recorded.");
+  };
+
   const activate = useMutation({
     mutationFn: () => activateFn(),
     onSuccess: () => {
+      setInsufficient(null);
       toast.success("Activated — $65 package + $10 licence recorded. You have been placed in the matrix.");
       invalidate();
     },
-    onError: () => toast.error("Activation could not be completed."),
+    onError: handleError,
   });
 
   const renew = useMutation({
     mutationFn: () => payFn(),
     onSuccess: () => {
+      setInsufficient(null);
       toast.success("Licence payment recorded — active for another 30 days.");
       invalidate();
     },
-    onError: () => toast.error("Payment could not be recorded."),
+    onError: handleError,
   });
 
   const activated = overview?.membershipStatus === "active";
@@ -116,6 +131,15 @@ function MembershipPanel() {
               </Button>
             )}
           </div>
+
+          {insufficient && (
+            <div className="mt-4 rounded-xl border border-destructive/40 bg-destructive/10 p-4">
+              <p className="text-sm font-semibold text-destructive">{insufficient}</p>
+              <Button asChild variant="prime" size="sm" className="mt-3">
+                <Link to="/dashboard/deposit">Deposit Now</Link>
+              </Button>
+            </div>
+          )}
         </PanelCard>
 
         <PanelCard

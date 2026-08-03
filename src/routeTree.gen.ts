@@ -27,17 +27,20 @@ import { Route as AuthenticatedConsoleX7q9f4k2m8IndexRouteImport } from './route
 import { Route as AuthenticatedConsoleX7q9f4k2m8BrandingRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.branding'
 import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.commissions'
 import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
+import { Route as AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.deposits'
 import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
 import { Route as AuthenticatedConsoleX7q9f4k2m8KycRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.kyc'
 import { Route as AuthenticatedConsoleX7q9f4k2m8LegalRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.legal'
 import { Route as AuthenticatedConsoleX7q9f4k2m8MailRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.mail'
 import { Route as AuthenticatedConsoleX7q9f4k2m8MembersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.members'
 import { Route as AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.orders'
+import { Route as AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.payment-methods'
 import { Route as AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.products'
 import { Route as AuthenticatedConsoleX7q9f4k2m8RanksRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.ranks'
 import { Route as AuthenticatedConsoleX7q9f4k2m8StaffRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.staff'
 import { Route as AuthenticatedConsoleX7q9f4k2m8WithdrawalsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.withdrawals'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardDepositRouteImport } from './routes/_authenticated/dashboard.deposit'
 import { Route as AuthenticatedDashboardKycRouteImport } from './routes/_authenticated/dashboard.kyc'
 import { Route as AuthenticatedDashboardMatrixRouteImport } from './routes/_authenticated/dashboard.matrix'
 import { Route as AuthenticatedDashboardMembershipRouteImport } from './routes/_authenticated/dashboard.membership'
@@ -144,6 +147,12 @@ const AuthenticatedConsoleX7q9f4k2m8ContentRoute =
     path: '/content',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
+const AuthenticatedConsoleX7q9f4k2m8DepositsRoute =
+  AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport.update({
+    id: '/deposits',
+    path: '/deposits',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
 const AuthenticatedConsoleX7q9f4k2m8InventoryRoute =
   AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport.update({
     id: '/inventory',
@@ -180,6 +189,12 @@ const AuthenticatedConsoleX7q9f4k2m8OrdersRoute =
     path: '/orders',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
+const AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute =
+  AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRouteImport.update({
+    id: '/payment-methods',
+    path: '/payment-methods',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
 const AuthenticatedConsoleX7q9f4k2m8ProductsRoute =
   AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport.update({
     id: '/products',
@@ -208,6 +223,12 @@ const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardDepositRoute =
+  AuthenticatedDashboardDepositRouteImport.update({
+    id: '/deposit',
+    path: '/deposit',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardKycRoute =
@@ -294,16 +315,19 @@ export interface FileRoutesByFullPath {
   '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/console-x7q9f4k2m8/payment-methods': typeof AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute
   '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
   '/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
   '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
+  '/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -333,16 +357,19 @@ export interface FileRoutesByTo {
   '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/console-x7q9f4k2m8/payment-methods': typeof AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute
   '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
   '/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
   '/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
+  '/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -376,16 +403,19 @@ export interface FileRoutesById {
   '/_authenticated/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/_authenticated/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/_authenticated/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/_authenticated/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/_authenticated/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/_authenticated/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/_authenticated/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/_authenticated/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  '/_authenticated/console-x7q9f4k2m8/payment-methods': typeof AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute
   '/_authenticated/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
   '/_authenticated/console-x7q9f4k2m8/ranks': typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
   '/_authenticated/console-x7q9f4k2m8/staff': typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
   '/_authenticated/console-x7q9f4k2m8/withdrawals': typeof AuthenticatedConsoleX7q9f4k2m8WithdrawalsRoute
+  '/_authenticated/dashboard/deposit': typeof AuthenticatedDashboardDepositRoute
   '/_authenticated/dashboard/kyc': typeof AuthenticatedDashboardKycRoute
   '/_authenticated/dashboard/matrix': typeof AuthenticatedDashboardMatrixRoute
   '/_authenticated/dashboard/membership': typeof AuthenticatedDashboardMembershipRoute
@@ -419,16 +449,19 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/deposits'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
     | '/console-x7q9f4k2m8/legal'
     | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
+    | '/console-x7q9f4k2m8/payment-methods'
     | '/console-x7q9f4k2m8/products'
     | '/console-x7q9f4k2m8/ranks'
     | '/console-x7q9f4k2m8/staff'
     | '/console-x7q9f4k2m8/withdrawals'
+    | '/dashboard/deposit'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -458,16 +491,19 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/deposits'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
     | '/console-x7q9f4k2m8/legal'
     | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
+    | '/console-x7q9f4k2m8/payment-methods'
     | '/console-x7q9f4k2m8/products'
     | '/console-x7q9f4k2m8/ranks'
     | '/console-x7q9f4k2m8/staff'
     | '/console-x7q9f4k2m8/withdrawals'
+    | '/dashboard/deposit'
     | '/dashboard/kyc'
     | '/dashboard/matrix'
     | '/dashboard/membership'
@@ -500,16 +536,19 @@ export interface FileRouteTypes {
     | '/_authenticated/console-x7q9f4k2m8/branding'
     | '/_authenticated/console-x7q9f4k2m8/commissions'
     | '/_authenticated/console-x7q9f4k2m8/content'
+    | '/_authenticated/console-x7q9f4k2m8/deposits'
     | '/_authenticated/console-x7q9f4k2m8/inventory'
     | '/_authenticated/console-x7q9f4k2m8/kyc'
     | '/_authenticated/console-x7q9f4k2m8/legal'
     | '/_authenticated/console-x7q9f4k2m8/mail'
     | '/_authenticated/console-x7q9f4k2m8/members'
     | '/_authenticated/console-x7q9f4k2m8/orders'
+    | '/_authenticated/console-x7q9f4k2m8/payment-methods'
     | '/_authenticated/console-x7q9f4k2m8/products'
     | '/_authenticated/console-x7q9f4k2m8/ranks'
     | '/_authenticated/console-x7q9f4k2m8/staff'
     | '/_authenticated/console-x7q9f4k2m8/withdrawals'
+    | '/_authenticated/dashboard/deposit'
     | '/_authenticated/dashboard/kyc'
     | '/_authenticated/dashboard/matrix'
     | '/_authenticated/dashboard/membership'
@@ -672,6 +711,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
+    '/_authenticated/console-x7q9f4k2m8/deposits': {
+      id: '/_authenticated/console-x7q9f4k2m8/deposits'
+      path: '/deposits'
+      fullPath: '/console-x7q9f4k2m8/deposits'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
     '/_authenticated/console-x7q9f4k2m8/inventory': {
       id: '/_authenticated/console-x7q9f4k2m8/inventory'
       path: '/inventory'
@@ -714,6 +760,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
+    '/_authenticated/console-x7q9f4k2m8/payment-methods': {
+      id: '/_authenticated/console-x7q9f4k2m8/payment-methods'
+      path: '/payment-methods'
+      fullPath: '/console-x7q9f4k2m8/payment-methods'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
     '/_authenticated/console-x7q9f4k2m8/products': {
       id: '/_authenticated/console-x7q9f4k2m8/products'
       path: '/products'
@@ -747,6 +800,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/deposit': {
+      id: '/_authenticated/dashboard/deposit'
+      path: '/deposit'
+      fullPath: '/dashboard/deposit'
+      preLoaderRoute: typeof AuthenticatedDashboardDepositRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/kyc': {
@@ -833,12 +893,14 @@ interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
   AuthenticatedConsoleX7q9f4k2m8BrandingRoute: typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   AuthenticatedConsoleX7q9f4k2m8CommissionsRoute: typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  AuthenticatedConsoleX7q9f4k2m8DepositsRoute: typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   AuthenticatedConsoleX7q9f4k2m8KycRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   AuthenticatedConsoleX7q9f4k2m8LegalRoute: typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   AuthenticatedConsoleX7q9f4k2m8MailRoute: typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   AuthenticatedConsoleX7q9f4k2m8MembersRoute: typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   AuthenticatedConsoleX7q9f4k2m8OrdersRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
+  AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute: typeof AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute
   AuthenticatedConsoleX7q9f4k2m8ProductsRoute: typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
   AuthenticatedConsoleX7q9f4k2m8RanksRoute: typeof AuthenticatedConsoleX7q9f4k2m8RanksRoute
   AuthenticatedConsoleX7q9f4k2m8StaffRoute: typeof AuthenticatedConsoleX7q9f4k2m8StaffRoute
@@ -854,6 +916,8 @@ const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m
       AuthenticatedConsoleX7q9f4k2m8CommissionsRoute,
     AuthenticatedConsoleX7q9f4k2m8ContentRoute:
       AuthenticatedConsoleX7q9f4k2m8ContentRoute,
+    AuthenticatedConsoleX7q9f4k2m8DepositsRoute:
+      AuthenticatedConsoleX7q9f4k2m8DepositsRoute,
     AuthenticatedConsoleX7q9f4k2m8InventoryRoute:
       AuthenticatedConsoleX7q9f4k2m8InventoryRoute,
     AuthenticatedConsoleX7q9f4k2m8KycRoute:
@@ -866,6 +930,8 @@ const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m
       AuthenticatedConsoleX7q9f4k2m8MembersRoute,
     AuthenticatedConsoleX7q9f4k2m8OrdersRoute:
       AuthenticatedConsoleX7q9f4k2m8OrdersRoute,
+    AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute:
+      AuthenticatedConsoleX7q9f4k2m8PaymentMethodsRoute,
     AuthenticatedConsoleX7q9f4k2m8ProductsRoute:
       AuthenticatedConsoleX7q9f4k2m8ProductsRoute,
     AuthenticatedConsoleX7q9f4k2m8RanksRoute:
@@ -884,6 +950,7 @@ const AuthenticatedConsoleX7q9f4k2m8RouteWithChildren =
   )
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardDepositRoute: typeof AuthenticatedDashboardDepositRoute
   AuthenticatedDashboardKycRoute: typeof AuthenticatedDashboardKycRoute
   AuthenticatedDashboardMatrixRoute: typeof AuthenticatedDashboardMatrixRoute
   AuthenticatedDashboardMembershipRoute: typeof AuthenticatedDashboardMembershipRoute
@@ -896,6 +963,7 @@ interface AuthenticatedDashboardRouteChildren {
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardDepositRoute: AuthenticatedDashboardDepositRoute,
     AuthenticatedDashboardKycRoute: AuthenticatedDashboardKycRoute,
     AuthenticatedDashboardMatrixRoute: AuthenticatedDashboardMatrixRoute,
     AuthenticatedDashboardMembershipRoute:

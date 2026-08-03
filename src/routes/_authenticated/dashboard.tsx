@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
+  Banknote,
   IdCard,
   LogOut,
   Megaphone,
@@ -23,6 +24,7 @@ const items = [
   { to: "/dashboard/matrix", label: "Matrix Tree", icon: Network, exact: false },
   { to: "/dashboard/performance", label: "PV & Ranks", icon: BarChart3, exact: false },
   { to: "/dashboard/wallet", label: "Wallet & Payouts", icon: Wallet, exact: false },
+  { to: "/dashboard/deposit", label: "Deposit Funds", icon: Banknote, exact: false },
   { to: "/dashboard/orders", label: "Orders", icon: Receipt, exact: false },
   { to: "/dashboard/kyc", label: "KYC Verification", icon: IdCard, exact: false },
   { to: "/dashboard/news", label: "Company News", icon: Megaphone, exact: false },
