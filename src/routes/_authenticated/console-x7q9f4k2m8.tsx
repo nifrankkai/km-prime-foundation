@@ -13,6 +13,8 @@ import {
   Palette,
   Package,
   Scale,
+  Sigma,
+
 
   Trophy,
   UserCog,
