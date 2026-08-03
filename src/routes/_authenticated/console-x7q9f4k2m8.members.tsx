@@ -127,22 +127,61 @@ function AdminMembers() {
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Button size="sm" variant="prime" onClick={() => handleAdjust(member.id, 1)}>
-                  Credit
-                </Button>
-                <Button size="sm" variant="outline" onClick={() => handleAdjust(member.id, -1)}>
-                  Debit
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() =>
-                    freezeMutation.mutate({ userId: member.id, frozen: !member.frozen })
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <Input
+                  className="w-36"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder="Amount USD"
+                  value={amounts[member.id] ?? ""}
+                  onChange={(event) =>
+                    setAmounts((prev) => ({ ...prev, [member.id]: event.target.value }))
                   }
-                >
-                  {member.frozen ? "Unfreeze wallet" : "Freeze wallet"}
-                </Button>
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="prime">
+                      Credit
+                    </Button>
+                  }
+                  title="Credit this wallet?"
+                  description={`Are you sure you want to credit $${amounts[member.id] || "0.00"} to ${member.fullName || member.email}? This changes their balance immediately.`}
+                  confirmLabel="Confirm credit"
+                  reasonLabel="Reason"
+                  reasonRequired
+                  pending={adjustMutation.isPending}
+                  onConfirm={(note) => submitAdjust(member.id, 1, note)}
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="outline">
+                      Debit
+                    </Button>
+                  }
+                  title="Debit this wallet?"
+                  description={`Are you sure you want to debit $${amounts[member.id] || "0.00"} from ${member.fullName || member.email}? This changes their balance immediately.`}
+                  confirmLabel="Confirm debit"
+                  destructive
+                  reasonLabel="Reason"
+                  reasonRequired
+                  pending={adjustMutation.isPending}
+                  onConfirm={(note) => submitAdjust(member.id, -1, note)}
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="outline">
+                      {member.frozen ? "Unfreeze wallet" : "Freeze wallet"}
+                    </Button>
+                  }
+                  title={member.frozen ? "Unfreeze this wallet?" : "Freeze this wallet?"}
+                  description={`Are you sure you want to ${member.frozen ? "unfreeze" : "freeze"} the wallet of ${member.fullName || member.email}?`}
+                  confirmLabel="Confirm"
+                  destructive={!member.frozen}
+                  pending={freezeMutation.isPending}
+                  onConfirm={() => freezeMutation.mutate({ userId: member.id, frozen: !member.frozen })}
+                />
+
                 <Button
                   size="sm"
                   variant="outline"
