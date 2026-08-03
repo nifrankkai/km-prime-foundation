@@ -2,8 +2,8 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
-  Banknote,
   IdCard,
+  LifeBuoy,
   LogOut,
   Megaphone,
   Network,
@@ -23,12 +23,13 @@ const items = [
   { to: "/dashboard/membership", label: "Membership Status", icon: ShieldCheck, exact: false },
   { to: "/dashboard/matrix", label: "Matrix Tree", icon: Network, exact: false },
   { to: "/dashboard/performance", label: "PV & Ranks", icon: BarChart3, exact: false },
-  { to: "/dashboard/wallet", label: "Wallet & Payouts", icon: Wallet, exact: false },
-  { to: "/dashboard/deposit", label: "Deposit Funds", icon: Banknote, exact: false },
+  { to: "/dashboard/wallet", label: "Wallet", icon: Wallet, exact: false },
   { to: "/dashboard/orders", label: "Orders", icon: Receipt, exact: false },
   { to: "/dashboard/kyc", label: "KYC Verification", icon: IdCard, exact: false },
+  { to: "/dashboard/support", label: "Support", icon: LifeBuoy, exact: false },
   { to: "/dashboard/news", label: "Company News", icon: Megaphone, exact: false },
 ] as const;
+
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Member Dashboard — KM Prime" }] }),
