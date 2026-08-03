@@ -28,9 +28,15 @@ function PerformancePage() {
   });
 
   const currentRank = overview?.rank.key ?? "member";
-  const nextRank = (ranks ?? []).find(
-    (rank) => rank.level > ((ranks ?? []).find((r) => r.key === currentRank)?.level ?? 0),
-  );
+  const ladder = ranks ?? [];
+  const currentLevel = ladder.find((r) => r.key === currentRank)?.level ?? 0;
+  const nextRank = ladder.find((rank) => rank.level > currentLevel);
+
+  const personalPv = performance?.personalPv ?? 0;
+  const groupPv = performance?.groupPv ?? 0;
+  const directs = overview?.activeDirects ?? 0;
+  const pct = (value: number, target: number) =>
+    target <= 0 ? 100 : Math.min(100, Math.round((value / target) * 100));
 
   return (
     <div className="space-y-6">
@@ -41,9 +47,9 @@ function PerformancePage() {
         description="Your personal and group point value for the current cycle, and what the next rank requires."
       >
         <div className="grid gap-4 sm:grid-cols-3">
-          <Stat label="Personal PV" value={`${performance?.personalPv ?? 0} PV`} />
-          <Stat label="Group PV" value={`${performance?.groupPv ?? 0} PV`} />
-          <Stat label="Active directs" value={String(overview?.activeDirects ?? 0)} />
+          <Stat label="Personal PV" value={`${personalPv} PV`} />
+          <Stat label="Group PV" value={`${groupPv} PV`} />
+          <Stat label="Active directs" value={String(directs)} />
         </div>
 
         <div className="mt-6 rounded-2xl border border-border bg-background p-5">
@@ -53,15 +59,101 @@ function PerformancePage() {
           <p className="mt-1 text-2xl font-extrabold text-primary">
             {overview?.rank.name ?? "Member"}
           </p>
-          {nextRank && (
+          {nextRank ? (
+            <div className="mt-5 space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Progress to <span className="font-bold text-foreground">{nextRank.name}</span>
+              </p>
+              <Progress
+                label="Personal PV"
+                value={personalPv}
+                target={nextRank.minPersonalPv}
+                pct={pct(personalPv, nextRank.minPersonalPv)}
+              />
+              <Progress
+                label="Group PV"
+                value={groupPv}
+                target={nextRank.minGroupPv}
+                pct={pct(groupPv, nextRank.minGroupPv)}
+              />
+              <Progress
+                label="Active directs"
+                value={directs}
+                target={nextRank.minActiveDirects}
+                pct={pct(directs, nextRank.minActiveDirects)}
+              />
+            </div>
+          ) : (
             <p className="mt-3 text-sm text-muted-foreground">
-              Next: <span className="font-bold text-foreground">{nextRank.name}</span> requires{" "}
-              {nextRank.minPersonalPv} personal PV, {nextRank.minGroupPv} group PV and{" "}
-              {nextRank.minActiveDirects} active directs.
+              You are at the highest rank. Maintain your PV each period to keep it.
             </p>
           )}
+          <p className="mt-5 rounded-xl bg-secondary/60 p-3 text-xs text-muted-foreground">
+            Ranks are re-evaluated every month. If your period figures fall below your current rank
+            thresholds, your rank is adjusted down and you will be notified.
+          </p>
         </div>
       </PanelCard>
+
+      <PanelCard
+        title="Recent PV activity"
+        description="Every point-value credit posted to your account this period."
+      >
+        {(performance?.recentPv ?? []).length === 0 ? (
+          <p className="text-sm text-muted-foreground">No PV recorded this period yet.</p>
+        ) : (
+          <ul className="space-y-2 text-sm">
+            {(performance?.recentPv ?? []).map((entry) => (
+              <li
+                key={entry.id}
+                className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border bg-background p-4"
+              >
+                <span className="font-semibold text-foreground">
+                  {entry.type === "personal" ? "Personal PV" : `Group PV — level ${entry.level}`}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  +{entry.pv_amount} PV • {new Date(entry.created_at).toLocaleDateString()}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </PanelCard>
+
+      <PanelCard title="PV history" description="Closing totals archived at the end of each period.">
+        {(performance?.pvHistory ?? []).length === 0 ? (
+          <p className="text-sm text-muted-foreground">No closed periods yet.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[24rem] text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs uppercase tracking-widest text-muted-foreground">
+                  <th className="py-3">Period</th>
+                  <th className="py-3">Personal PV</th>
+                  <th className="py-3">Group PV</th>
+                  <th className="py-3">Rank</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(performance?.pvHistory ?? []).map((row) => (
+                  <tr key={row.period_month} className="border-b border-border text-muted-foreground">
+                    <td className="py-3 font-semibold text-foreground">
+                      {new Date(row.period_month).toLocaleDateString(undefined, {
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td className="py-3">{row.personal_pv}</td>
+                    <td className="py-3">{row.group_pv}</td>
+                    <td className="py-3">{row.rank_key ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </PanelCard>
+
 
       <PanelCard title="Rank ladder" description="Thresholds evaluated automatically in the monthly cycle.">
         <div className="overflow-x-auto">
