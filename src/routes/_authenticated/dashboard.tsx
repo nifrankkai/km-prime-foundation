@@ -16,6 +16,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
+import { MobileTabBar } from "@/components/dashboard/mobile-tab-bar";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
