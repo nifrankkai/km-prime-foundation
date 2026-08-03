@@ -166,6 +166,96 @@ export type Database = {
         }
         Relationships: []
       }
+      email_settings: {
+        Row: {
+          action_emails_enabled: boolean
+          created_at: string
+          from_email: string
+          from_name: string
+          id: boolean
+          notification_emails_enabled: boolean
+          reply_to: string | null
+          smtp_encryption: string
+          smtp_host: string
+          smtp_password: string
+          smtp_port: number
+          smtp_username: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          action_emails_enabled?: boolean
+          created_at?: string
+          from_email?: string
+          from_name?: string
+          id?: boolean
+          notification_emails_enabled?: boolean
+          reply_to?: string | null
+          smtp_encryption?: string
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_username?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          action_emails_enabled?: boolean
+          created_at?: string
+          from_email?: string
+          from_name?: string
+          id?: boolean
+          notification_emails_enabled?: boolean
+          reply_to?: string | null
+          smtp_encryption?: string
+          smtp_host?: string
+          smtp_password?: string
+          smtp_port?: number
+          smtp_username?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      email_templates: {
+        Row: {
+          body: string
+          category: string
+          created_at: string
+          enabled: boolean
+          id: string
+          key: string
+          name: string
+          sort_order: number
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          body: string
+          category?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          key: string
+          name: string
+          sort_order?: number
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          category?: string
+          created_at?: string
+          enabled?: boolean
+          id?: string
+          key?: string
+          name?: string
+          sort_order?: number
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       gallery_features: {
         Row: {
           caption: string | null
