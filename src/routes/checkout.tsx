@@ -39,6 +39,7 @@ function CheckoutPage() {
 
   const [placed, setPlaced] = useState<{ reference: string } | null>(null);
   const [insufficient, setInsufficient] = useState(false);
+  const [pendingForm, setPendingForm] = useState<Record<string, string> | null>(null);
 
   const { data: lines } = useQuery({ queryKey: ["cart"], queryFn: () => fetchCart() });
   const { data: wallet } = useQuery({ queryKey: ["wallet-snapshot"], queryFn: () => fetchWallet() });
@@ -49,24 +50,26 @@ function CheckoutPage() {
   const shortfall = Math.max(0, subtotal - balance);
 
   const mutation = useMutation({
-    mutationFn: (form: FormData) =>
+    mutationFn: (form: Record<string, string>) =>
       submitOrder({
         data: {
-          fullName: String(form.get("fullName") ?? ""),
-          phone: String(form.get("phone") ?? ""),
-          addressLine1: String(form.get("addressLine1") ?? ""),
-          addressLine2: String(form.get("addressLine2") ?? "") || undefined,
-          city: String(form.get("city") ?? ""),
-          state: String(form.get("state") ?? "") || undefined,
-          postalCode: String(form.get("postalCode") ?? ""),
-          country: String(form.get("country") ?? ""),
+          fullName: form["fullName"] ?? "",
+          phone: form["phone"] ?? "",
+          addressLine1: form["addressLine1"] ?? "",
+          addressLine2: form["addressLine2"] || undefined,
+          city: form["city"] ?? "",
+          state: form["state"] || undefined,
+          postalCode: form["postalCode"] ?? "",
+          country: form["country"] ?? "",
         },
       }),
     onSuccess: (result) => {
       setInsufficient(false);
+      setPendingForm(null);
       setPlaced(result);
     },
     onError: (error: Error) => {
+      setPendingForm(null);
       if (error.message.includes(INSUFFICIENT_BALANCE)) {
         setInsufficient(true);
         toast.error("Insufficient balance. Please deposit funds to continue.");
@@ -75,6 +78,7 @@ function CheckoutPage() {
       toast.error(error.message);
     },
   });
+
 
   if (placed) {
     return (
