@@ -142,6 +142,15 @@ function AdminLayout() {
                     <Mail className="size-4" />
                     Mail settings
                   </Link>
+                  <Link
+                    to="/console-x7q9f4k2m8/payment-methods"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    activeProps={{ className: "bg-primary-soft text-primary-deep" }}
+                  >
+                    <Banknote className="size-4" />
+                    Payment methods
+                  </Link>
+
 
                 </>
               )}
