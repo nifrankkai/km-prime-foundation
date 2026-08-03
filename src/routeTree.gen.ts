@@ -27,6 +27,7 @@ import { Route as AuthenticatedConsoleX7q9f4k2m8IndexRouteImport } from './route
 import { Route as AuthenticatedConsoleX7q9f4k2m8BrandingRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.branding'
 import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.commissions'
 import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
+import { Route as AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.deposits'
 import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
 import { Route as AuthenticatedConsoleX7q9f4k2m8KycRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.kyc'
 import { Route as AuthenticatedConsoleX7q9f4k2m8LegalRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.legal'
@@ -143,6 +144,12 @@ const AuthenticatedConsoleX7q9f4k2m8ContentRoute =
   AuthenticatedConsoleX7q9f4k2m8ContentRouteImport.update({
     id: '/content',
     path: '/content',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8DepositsRoute =
+  AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport.update({
+    id: '/deposits',
+    path: '/deposits',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
 const AuthenticatedConsoleX7q9f4k2m8InventoryRoute =
@@ -301,6 +308,7 @@ export interface FileRoutesByFullPath {
   '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
@@ -341,6 +349,7 @@ export interface FileRoutesByTo {
   '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
@@ -385,6 +394,7 @@ export interface FileRoutesById {
   '/_authenticated/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   '/_authenticated/console-x7q9f4k2m8/commissions': typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  '/_authenticated/console-x7q9f4k2m8/deposits': typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/_authenticated/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   '/_authenticated/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
@@ -429,6 +439,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/deposits'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
     | '/console-x7q9f4k2m8/legal'
@@ -469,6 +480,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/branding'
     | '/console-x7q9f4k2m8/commissions'
     | '/console-x7q9f4k2m8/content'
+    | '/console-x7q9f4k2m8/deposits'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
     | '/console-x7q9f4k2m8/legal'
@@ -512,6 +524,7 @@ export interface FileRouteTypes {
     | '/_authenticated/console-x7q9f4k2m8/branding'
     | '/_authenticated/console-x7q9f4k2m8/commissions'
     | '/_authenticated/console-x7q9f4k2m8/content'
+    | '/_authenticated/console-x7q9f4k2m8/deposits'
     | '/_authenticated/console-x7q9f4k2m8/inventory'
     | '/_authenticated/console-x7q9f4k2m8/kyc'
     | '/_authenticated/console-x7q9f4k2m8/legal'
@@ -685,6 +698,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
+    '/_authenticated/console-x7q9f4k2m8/deposits': {
+      id: '/_authenticated/console-x7q9f4k2m8/deposits'
+      path: '/deposits'
+      fullPath: '/console-x7q9f4k2m8/deposits'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8DepositsRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
     '/_authenticated/console-x7q9f4k2m8/inventory': {
       id: '/_authenticated/console-x7q9f4k2m8/inventory'
       path: '/inventory'
@@ -853,6 +873,7 @@ interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
   AuthenticatedConsoleX7q9f4k2m8BrandingRoute: typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
   AuthenticatedConsoleX7q9f4k2m8CommissionsRoute: typeof AuthenticatedConsoleX7q9f4k2m8CommissionsRoute
   AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
+  AuthenticatedConsoleX7q9f4k2m8DepositsRoute: typeof AuthenticatedConsoleX7q9f4k2m8DepositsRoute
   AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   AuthenticatedConsoleX7q9f4k2m8KycRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
   AuthenticatedConsoleX7q9f4k2m8LegalRoute: typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
@@ -874,6 +895,8 @@ const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m
       AuthenticatedConsoleX7q9f4k2m8CommissionsRoute,
     AuthenticatedConsoleX7q9f4k2m8ContentRoute:
       AuthenticatedConsoleX7q9f4k2m8ContentRoute,
+    AuthenticatedConsoleX7q9f4k2m8DepositsRoute:
+      AuthenticatedConsoleX7q9f4k2m8DepositsRoute,
     AuthenticatedConsoleX7q9f4k2m8InventoryRoute:
       AuthenticatedConsoleX7q9f4k2m8InventoryRoute,
     AuthenticatedConsoleX7q9f4k2m8KycRoute:
