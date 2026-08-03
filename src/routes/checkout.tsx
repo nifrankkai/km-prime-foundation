@@ -193,14 +193,76 @@ function CheckoutPage() {
               className="mt-6 w-full"
               disabled={mutation.isPending || items.length === 0 || shortfall > 0}
             >
-              {mutation.isPending ? "Placing order…" : "Pay from wallet"}
+              {mutation.isPending ? "Placing order…" : "Review & pay from wallet"}
             </Button>
             <Button asChild variant="primeGhost" className="mt-3 w-full">
               <Link to="/cart">Back to cart</Link>
             </Button>
           </aside>
         </form>
+
+        <Dialog
+          open={pendingForm !== null}
+          onOpenChange={(next) => {
+            if (!next && !mutation.isPending) setPendingForm(null);
+          }}
+        >
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Confirm your purchase</DialogTitle>
+              <DialogDescription>
+                Review your order before it is paid from your wallet. This cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+
+            <ul className="space-y-2 text-sm">
+              {items.map((line) => (
+                <li key={line.id} className="flex justify-between gap-3">
+                  <span className="text-muted-foreground">
+                    {line.product.name} × {line.quantity}
+                  </span>
+                  <span className="font-semibold">
+                    {money(line.product.priceCents * line.quantity)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <dl className="space-y-2 border-t border-border pt-4 text-sm">
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Point value earned</dt>
+                <dd className="font-semibold text-primary">{pv} PV</dd>
+              </div>
+              <div className="flex justify-between text-muted-foreground">
+                <dt>Wallet balance after</dt>
+                <dd>{money(Math.max(0, balance - subtotal))}</dd>
+              </div>
+              <div className="flex justify-between text-base font-extrabold text-foreground">
+                <dt>Total charged</dt>
+                <dd>{money(subtotal)}</dd>
+              </div>
+            </dl>
+
+            <DialogFooter className="gap-2 sm:gap-2">
+              <Button
+                variant="outline"
+                disabled={mutation.isPending}
+                onClick={() => setPendingForm(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="prime"
+                disabled={mutation.isPending}
+                onClick={() => pendingForm && mutation.mutate(pendingForm)}
+              >
+                {mutation.isPending ? "Processing…" : "Confirm purchase"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </main>
+
       <SiteFooter />
     </div>
   );
