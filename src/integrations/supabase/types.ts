@@ -778,6 +778,30 @@ export type Database = {
         }
         Relationships: []
       }
+      site_branding: {
+        Row: {
+          favicon_url: string | null
+          id: boolean
+          logo_url: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          favicon_url?: string | null
+          id?: boolean
+          logo_url?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          favicon_url?: string | null
+          id?: boolean
+          logo_url?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount_cents: number
