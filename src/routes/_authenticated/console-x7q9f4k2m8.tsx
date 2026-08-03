@@ -5,6 +5,7 @@ import {
   Coins,
   Gauge,
   IdCard,
+  Mail,
   Megaphone,
   Palette,
   Package,
@@ -106,14 +107,24 @@ function AdminLayout() {
                 </Link>
               ))}
               {access?.roles.includes("super_admin") && (
-                <Link
-                  to="/console-x7q9f4k2m8/branding"
-                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                  activeProps={{ className: "bg-primary-soft text-primary-deep" }}
-                >
-                  <Palette className="size-4" />
-                  Logo & favicon
-                </Link>
+                <>
+                  <Link
+                    to="/console-x7q9f4k2m8/branding"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    activeProps={{ className: "bg-primary-soft text-primary-deep" }}
+                  >
+                    <Palette className="size-4" />
+                    Logo & favicon
+                  </Link>
+                  <Link
+                    to="/console-x7q9f4k2m8/mail"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                    activeProps={{ className: "bg-primary-soft text-primary-deep" }}
+                  >
+                    <Mail className="size-4" />
+                    Mail settings
+                  </Link>
+                </>
               )}
               <Link
                 to="/dashboard"
