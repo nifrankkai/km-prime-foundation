@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQueryClient } from "@tanstack/react-query";
 import {
   BarChart3,
+  Home,
   IdCard,
   LifeBuoy,
   LogOut,
@@ -22,7 +23,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAdminAccess } from "@/hooks/use-admin-access";
 
 const items = [
-  { to: "/dashboard", label: "Profile", icon: UserRound, exact: true },
+  { to: "/dashboard", label: "Overview", icon: Home, exact: true },
+  { to: "/dashboard/profile", label: "Profile Settings", icon: UserRound, exact: false },
   { to: "/dashboard/membership", label: "Membership Status", icon: ShieldCheck, exact: false },
   { to: "/dashboard/matrix", label: "Matrix Tree", icon: Network, exact: false },
   { to: "/dashboard/performance", label: "PV & Ranks", icon: BarChart3, exact: false },

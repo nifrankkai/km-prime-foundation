@@ -20,21 +20,30 @@ import {
   TICKET_CATEGORIES,
 } from "@/lib/support.functions";
 
+type SupportSearch = { subject?: string; category?: string; new?: boolean };
+
 export const Route = createFileRoute("/_authenticated/dashboard/support")({
+  validateSearch: (search: Record<string, unknown>): SupportSearch => ({
+    subject: typeof search["subject"] === "string" ? search["subject"].slice(0, 140) : undefined,
+    category: typeof search["category"] === "string" ? search["category"] : undefined,
+    new: search["new"] === true || search["new"] === "true",
+  }),
   component: SupportPage,
 });
 
 function SupportPage() {
+  const search = Route.useSearch();
   const { data: overview } = useMemberOverview();
   const queryClient = useQueryClient();
   const fetchTickets = useServerFn(listMyTickets);
   const create = useServerFn(createSupportTicket);
 
   const [openId, setOpenId] = useState<string | null>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [subject, setSubject] = useState("");
+  const [showForm, setShowForm] = useState(Boolean(search.new));
+  const [subject, setSubject] = useState(search.subject ?? "");
   const [category, setCategory] = useState<(typeof TICKET_CATEGORIES)[number]["value"]>(
-    "general_question",
+    (TICKET_CATEGORIES.find((item) => item.value === search.category)?.value ??
+      "general_question") as (typeof TICKET_CATEGORIES)[number]["value"],
   );
   const [message, setMessage] = useState("");
 

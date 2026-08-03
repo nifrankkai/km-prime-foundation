@@ -6,7 +6,7 @@ const tabs = [
   { to: "/dashboard/wallet", label: "Wallet", icon: Wallet, exact: false },
   { to: "/dashboard/matrix", label: "Team", icon: Network, exact: false },
   { to: "/dashboard/shop", label: "Shop", icon: ShoppingBag, exact: false },
-  { to: "/dashboard/membership", label: "Profile", icon: UserRound, exact: false },
+  { to: "/dashboard/profile", label: "Profile", icon: UserRound, exact: false },
 ] as const;
 
 export function MobileTabBar() {
