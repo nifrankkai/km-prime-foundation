@@ -92,7 +92,29 @@ function DashboardLayout() {
 
         <main className="min-w-0 flex-1 animate-fade-in">
           <div className="mb-4 flex items-center justify-between md:hidden">
-            <Logo />
+            <div className="flex min-w-0 items-center gap-2">
+              <NavDrawer
+                eyebrow="Member menu"
+                groups={[
+                  { items: items.map((item) => ({ ...item })) },
+                  ...(isStaff
+                    ? [
+                        {
+                          label: "Staff",
+                          items: [
+                            {
+                              to: "/console-x7q9f4k2m8",
+                              label: "Admin console",
+                              icon: ShieldCheck,
+                            },
+                          ],
+                        },
+                      ]
+                    : []),
+                ]}
+              />
+              <Logo />
+            </div>
             <div className="flex items-center gap-2">
               {isStaff && (
                 <Link
