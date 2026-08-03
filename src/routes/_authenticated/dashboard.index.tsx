@@ -47,7 +47,7 @@ function DashboardIndex() {
       const [{ data: commissions }, { data: orders }] = await Promise.all([
         supabase
           .from("commissions")
-          .select("id, amount_cents, kind, created_at")
+          .select("id, amount_cents, type, created_at")
           .order("created_at", { ascending: false })
           .limit(5),
         supabase
@@ -59,7 +59,7 @@ function DashboardIndex() {
       const rows = [
         ...(commissions ?? []).map((c) => ({
           id: `c-${c.id}`,
-          title: `Commission — ${String(c.kind ?? "matrix").replace(/_/g, " ")}`,
+          title: `Commission — ${String(c.type ?? "matrix").replace(/_/g, " ")}`,
           amount: c.amount_cents ?? 0,
           at: c.created_at as string,
           positive: true,
