@@ -15,7 +15,10 @@ import { Route as CartRouteImport } from './routes/cart'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundRouteImport } from './routes/refund'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedConsoleX7q9f4k2m8RouteImport } from './routes/_authenticated/console-x7q9f4k2m8'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
@@ -26,6 +29,7 @@ import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from '.
 import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
 import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
 import { Route as AuthenticatedConsoleX7q9f4k2m8KycRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.kyc'
+import { Route as AuthenticatedConsoleX7q9f4k2m8LegalRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.legal'
 import { Route as AuthenticatedConsoleX7q9f4k2m8MailRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.mail'
 import { Route as AuthenticatedConsoleX7q9f4k2m8MembersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.members'
 import { Route as AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.orders'
@@ -75,9 +79,24 @@ const MembershipRoute = MembershipRouteImport.update({
   path: '/membership',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedConsoleX7q9f4k2m8Route =
@@ -135,6 +154,12 @@ const AuthenticatedConsoleX7q9f4k2m8KycRoute =
   AuthenticatedConsoleX7q9f4k2m8KycRouteImport.update({
     id: '/kyc',
     path: '/kyc',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8LegalRoute =
+  AuthenticatedConsoleX7q9f4k2m8LegalRouteImport.update({
+    id: '/legal',
+    path: '/legal',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
 const AuthenticatedConsoleX7q9f4k2m8MailRoute =
@@ -258,7 +283,10 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/console-x7q9f4k2m8': typeof AuthenticatedConsoleX7q9f4k2m8RouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
@@ -268,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
@@ -295,7 +324,10 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/shop': typeof ShopIndexRoute
   '/console-x7q9f4k2m8/branding': typeof AuthenticatedConsoleX7q9f4k2m8BrandingRoute
@@ -303,6 +335,7 @@ export interface FileRoutesByTo {
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
@@ -332,7 +365,10 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
   '/_authenticated/console-x7q9f4k2m8': typeof AuthenticatedConsoleX7q9f4k2m8RouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
   '/shop/$slug': typeof ShopSlugRoute
@@ -342,6 +378,7 @@ export interface FileRoutesById {
   '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/_authenticated/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/_authenticated/console-x7q9f4k2m8/legal': typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   '/_authenticated/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/_authenticated/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/_authenticated/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
@@ -371,7 +408,10 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/login'
     | '/membership'
+    | '/privacy'
+    | '/refund'
     | '/register'
+    | '/terms'
     | '/console-x7q9f4k2m8'
     | '/dashboard'
     | '/shop/$slug'
@@ -381,6 +421,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/legal'
     | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
@@ -408,7 +449,10 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/login'
     | '/membership'
+    | '/privacy'
+    | '/refund'
     | '/register'
+    | '/terms'
     | '/shop/$slug'
     | '/shop'
     | '/console-x7q9f4k2m8/branding'
@@ -416,6 +460,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/legal'
     | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
@@ -444,7 +489,10 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/login'
     | '/membership'
+    | '/privacy'
+    | '/refund'
     | '/register'
+    | '/terms'
     | '/_authenticated/console-x7q9f4k2m8'
     | '/_authenticated/dashboard'
     | '/shop/$slug'
@@ -454,6 +502,7 @@ export interface FileRouteTypes {
     | '/_authenticated/console-x7q9f4k2m8/content'
     | '/_authenticated/console-x7q9f4k2m8/inventory'
     | '/_authenticated/console-x7q9f4k2m8/kyc'
+    | '/_authenticated/console-x7q9f4k2m8/legal'
     | '/_authenticated/console-x7q9f4k2m8/mail'
     | '/_authenticated/console-x7q9f4k2m8/members'
     | '/_authenticated/console-x7q9f4k2m8/orders'
@@ -483,7 +532,10 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundRoute: typeof RefundRoute
   RegisterRoute: typeof RegisterRoute
+  TermsRoute: typeof TermsRoute
   ShopSlugRoute: typeof ShopSlugRoute
   ShopIndexRoute: typeof ShopIndexRoute
   ApiPublicHooksLicenseGraceRoute: typeof ApiPublicHooksLicenseGraceRoute
@@ -536,11 +588,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembershipRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/console-x7q9f4k2m8': {
@@ -611,6 +684,13 @@ declare module '@tanstack/react-router' {
       path: '/kyc'
       fullPath: '/console-x7q9f4k2m8/kyc'
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
+    '/_authenticated/console-x7q9f4k2m8/legal': {
+      id: '/_authenticated/console-x7q9f4k2m8/legal'
+      path: '/legal'
+      fullPath: '/console-x7q9f4k2m8/legal'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8LegalRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
     '/_authenticated/console-x7q9f4k2m8/mail': {
@@ -755,6 +835,7 @@ interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
   AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   AuthenticatedConsoleX7q9f4k2m8KycRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  AuthenticatedConsoleX7q9f4k2m8LegalRoute: typeof AuthenticatedConsoleX7q9f4k2m8LegalRoute
   AuthenticatedConsoleX7q9f4k2m8MailRoute: typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   AuthenticatedConsoleX7q9f4k2m8MembersRoute: typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   AuthenticatedConsoleX7q9f4k2m8OrdersRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
@@ -777,6 +858,8 @@ const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m
       AuthenticatedConsoleX7q9f4k2m8InventoryRoute,
     AuthenticatedConsoleX7q9f4k2m8KycRoute:
       AuthenticatedConsoleX7q9f4k2m8KycRoute,
+    AuthenticatedConsoleX7q9f4k2m8LegalRoute:
+      AuthenticatedConsoleX7q9f4k2m8LegalRoute,
     AuthenticatedConsoleX7q9f4k2m8MailRoute:
       AuthenticatedConsoleX7q9f4k2m8MailRoute,
     AuthenticatedConsoleX7q9f4k2m8MembersRoute:
@@ -851,7 +934,10 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundRoute: RefundRoute,
   RegisterRoute: RegisterRoute,
+  TermsRoute: TermsRoute,
   ShopSlugRoute: ShopSlugRoute,
   ShopIndexRoute: ShopIndexRoute,
   ApiPublicHooksLicenseGraceRoute: ApiPublicHooksLicenseGraceRoute,

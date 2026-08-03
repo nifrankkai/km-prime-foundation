@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 import { Logo } from "@/components/site/logo";
+import { useSiteContent } from "@/hooks/use-site-content";
+
 
 const columns = [
   {
@@ -31,7 +33,9 @@ const columns = [
 ];
 
 export function SiteFooter() {
+  const { data: content } = useSiteContent();
   return (
+
     <footer className="border-t border-border bg-secondary/40">
       <div className="section-shell py-16">
         <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
@@ -75,36 +79,44 @@ export function SiteFooter() {
 
         <div className="mt-12 grid gap-6 rounded-2xl border border-border bg-card p-6 text-xs leading-relaxed text-muted-foreground shadow-soft md:grid-cols-2">
           <div>
-            <p className="font-bold text-foreground">Compliance disclaimer</p>
-            <p className="mt-2">
-              [Disclaimer placeholder] Statements about KM Prime products have not been evaluated by
-              any regulatory authority and are not intended to diagnose, treat, cure, or prevent any
-              disease. Membership income examples are illustrative only; earnings depend on
-              individual effort and are not guaranteed.
+            <p className="font-bold text-foreground">
+              {content?.['footer_disclaimer']?.title || "Compliance disclaimer"}
             </p>
+            <div
+              className="mt-2 [&_a]:text-primary"
+              dangerouslySetInnerHTML={{
+                __html:
+                  content?.['footer_disclaimer']?.content ??
+                  "Statements about KM Prime products have not been evaluated by any regulatory authority.",
+              }}
+            />
           </div>
           <div>
-            <p className="font-bold text-foreground">Company address</p>
-            <p className="mt-2">
-              KM Prime Sdn. Bhd. [Company registration no. placeholder]
-              <br />
-              [Street address placeholder]
-              <br />
-              [City, State, Postcode]
-              <br />
-              [Country]
+            <p className="font-bold text-foreground">
+              {content?.['footer_address']?.title || "Company address"}
             </p>
+            <div
+              className="mt-2 [&_a]:text-primary"
+              dangerouslySetInnerHTML={{ __html: content?.['footer_address']?.content ?? "" }}
+            />
           </div>
         </div>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} KM Prime. All rights reserved.</p>
           <div className="flex gap-5">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Refund Policy</span>
+            <Link to="/privacy" className="transition-colors hover:text-primary">
+              Privacy Policy
+            </Link>
+            <Link to="/terms" className="transition-colors hover:text-primary">
+              Terms of Service
+            </Link>
+            <Link to="/refund" className="transition-colors hover:text-primary">
+              Refund Policy
+            </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );
