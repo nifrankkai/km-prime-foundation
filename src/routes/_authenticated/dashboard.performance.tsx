@@ -208,7 +208,10 @@ function PerformancePage() {
         </div>
       </PanelCard>
 
-      <PanelCard title="Rank history" description="Every promotion logged by the monthly evaluation job.">
+      <PanelCard
+        title="Rank history"
+        description="Every promotion and demotion logged by the monthly evaluation job."
+      >
         {(performance?.rankHistory ?? []).length === 0 ? (
           <p className="text-sm text-muted-foreground">No rank changes recorded yet.</p>
         ) : (
@@ -218,7 +221,16 @@ function PerformancePage() {
                 key={entry.id}
                 className="flex flex-wrap justify-between gap-2 rounded-xl border border-border bg-background p-4"
               >
-                <span className="font-semibold text-foreground">
+                <span className="flex items-center gap-2 font-semibold text-foreground">
+                  <span
+                    className={
+                      entry.direction === "demotion"
+                        ? "rounded-full bg-destructive/10 px-2.5 py-0.5 text-[11px] font-bold uppercase text-destructive"
+                        : "rounded-full bg-primary-soft px-2.5 py-0.5 text-[11px] font-bold uppercase text-primary-deep"
+                    }
+                  >
+                    {entry.direction === "demotion" ? "Demotion" : "Promotion"}
+                  </span>
                   {entry.from_rank} → {entry.to_rank}
                 </span>
                 <span className="text-xs text-muted-foreground">
@@ -243,3 +255,30 @@ function Stat({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+function Progress({
+  label,
+  value,
+  target,
+  pct,
+}: {
+  label: string;
+  value: number;
+  target: number;
+  pct: number;
+}) {
+  return (
+    <div>
+      <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
+        <span>{label}</span>
+        <span>
+          {value} / {target}
+        </span>
+      </div>
+      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-secondary">
+        <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
+      </div>
+    </div>
+  );
+}
+
