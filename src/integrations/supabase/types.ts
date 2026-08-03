@@ -829,6 +829,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           email: string
           full_name: string
@@ -841,6 +842,7 @@ export type Database = {
           username: string | null
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           email?: string
           full_name?: string
@@ -853,6 +855,7 @@ export type Database = {
           username?: string | null
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           email?: string
           full_name?: string
@@ -1517,17 +1520,41 @@ export type Database = {
         Args: { _frozen: boolean; _user_id: string }
         Returns: undefined
       }
-      admin_update_rank: {
+      admin_update_member_profile: {
         Args: {
-          _key: string
-          _leadership_share: number
-          _min_active_directs: number
-          _min_group_pv: number
-          _min_personal_pv: number
-          _unlocked_levels: number
+          _avatar_url: string
+          _full_name: string
+          _mobile_money_number: string
+          _usdt_address: string
+          _user_id: string
+          _username: string
         }
         Returns: undefined
       }
+      admin_update_rank:
+        | {
+            Args: {
+              _key: string
+              _leadership_share: number
+              _min_active_directs: number
+              _min_group_pv: number
+              _min_personal_pv: number
+              _unlocked_levels: number
+            }
+            Returns: undefined
+          }
+        | {
+            Args: {
+              _key: string
+              _leadership_qualified: boolean
+              _leadership_share: number
+              _min_active_directs: number
+              _min_group_pv: number
+              _min_personal_pv: number
+              _unlocked_levels: number
+            }
+            Returns: undefined
+          }
       admin_upsert_announcement: {
         Args: {
           _body: string
@@ -1580,6 +1607,7 @@ export type Database = {
         Returns: string
       }
       credit_paid_commissions: { Args: never; Returns: Json }
+      evaluate_rank_promotion: { Args: { _user_id: string }; Returns: string }
       has_permission: {
         Args: { _key: string; _user_id: string }
         Returns: boolean
@@ -1706,6 +1734,7 @@ export type Database = {
         | "account_issue"
         | "general_question"
         | "other"
+        | "account_info_change"
       ticket_status: "open" | "in_progress" | "resolved" | "closed"
       transaction_type:
         | "commission_credit"
@@ -1891,6 +1920,7 @@ export const Constants = {
         "account_issue",
         "general_question",
         "other",
+        "account_info_change",
       ],
       ticket_status: ["open", "in_progress", "resolved", "closed"],
       transaction_type: [

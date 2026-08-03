@@ -8,6 +8,7 @@ export const TICKET_CATEGORIES = [
   { value: "deposit_issue", label: "Deposit issue" },
   { value: "withdrawal_issue", label: "Withdrawal issue" },
   { value: "account_issue", label: "Account issue" },
+  { value: "account_info_change", label: "Account info change" },
   { value: "general_question", label: "General question" },
   { value: "other", label: "Other" },
 ] as const;
@@ -44,6 +45,7 @@ const categoryEnum = z.enum([
   "deposit_issue",
   "withdrawal_issue",
   "account_issue",
+  "account_info_change",
   "general_question",
   "other",
 ]);

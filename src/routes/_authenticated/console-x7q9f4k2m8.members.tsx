@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowLeft, KeyRound } from "lucide-react";
+import { ArrowLeft, KeyRound, LogIn } from "lucide-react";
 import { toast } from "sonner";
 
 import { PanelCard } from "@/components/dashboard/panel-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,15 @@ import {
   adminSetWalletFrozen,
   listAdminMembers,
 } from "@/lib/admin.functions";
-import { adminResetWithdrawalPin, getMemberAccount } from "@/lib/member-admin.functions";
+import {
+  adminResetWithdrawalPin,
+  adminUpdateMemberProfile,
+  getMemberAccount,
+  impersonateMember,
+  type MemberAccountDetail,
+} from "@/lib/member-admin.functions";
+import { beginImpersonation } from "@/lib/impersonation";
+import { uploadAvatar } from "@/lib/avatar-upload";
 import { money, titleCase } from "@/lib/format";
 
 export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/members")({
@@ -195,6 +204,9 @@ function MemberDetail({ userId }: { userId: string }) {
           <Stat label="Sponsor" value={account.sponsor?.fullName ?? "—"} />
         </div>
       </PanelCard>
+
+      <MemberEditPanel account={account} onSaved={refresh} />
+
 
       <PanelCard
         title="Account actions"
@@ -374,5 +386,171 @@ function Stat({ label, value, accent }: { label: string; value: string; accent?:
         {value}
       </p>
     </div>
+  );
+}
+
+function MemberEditPanel({
+  account,
+  onSaved,
+}: {
+  account: MemberAccountDetail;
+  onSaved: () => void;
+}) {
+  const { can } = useAdminAccess();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const saveProfile = useServerFn(adminUpdateMemberProfile);
+  const startImpersonation = useServerFn(impersonateMember);
+
+  const [fullName, setFullName] = useState(account.fullName);
+  const [username, setUsername] = useState(account.username ?? "");
+  const [mobileMoney, setMobileMoney] = useState(account.mobileMoneyNumber ?? "");
+  const [usdt, setUsdt] = useState(account.usdtAddress ?? "");
+  const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    setFullName(account.fullName);
+    setUsername(account.username ?? "");
+    setMobileMoney(account.mobileMoneyNumber ?? "");
+    setUsdt(account.usdtAddress ?? "");
+    setFile(null);
+  }, [account]);
+
+  const saveMutation = useMutation({
+    mutationFn: async () => {
+      const avatarPath = file ? await uploadAvatar(file, account.id) : account.avatarPath;
+      return saveProfile({
+        data: {
+          userId: account.id,
+          fullName: fullName.trim(),
+          username: username.trim(),
+          mobileMoneyNumber: mobileMoney.trim() || null,
+          usdtAddress: usdt.trim() || null,
+          avatarPath,
+        },
+      });
+    },
+    onSuccess: () => {
+      toast.success("Member details updated");
+      onSaved();
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const impersonateMutation = useMutation({
+    mutationFn: async () => {
+      const grant = await startImpersonation({ data: { userId: account.id } });
+      await beginImpersonation(grant);
+    },
+    onSuccess: async () => {
+      queryClient.clear();
+      toast.success(`You are now viewing as ${account.fullName || account.email}`);
+      await navigate({ to: "/dashboard", replace: true });
+    },
+    onError: (error: Error) => toast.error(error.message),
+  });
+
+  const initials = (account.fullName || account.email).slice(0, 2).toUpperCase();
+
+  return (
+    <PanelCard
+      title="Edit member details"
+      description="Administrators can correct locked fields on a member's behalf. Every change is written to the audit log and the member is notified."
+    >
+      <div className="space-y-5">
+        <div className="flex flex-wrap items-center gap-4">
+          <Avatar className="size-16 border border-border">
+            <AvatarImage src={account.avatarUrl ?? undefined} alt="" />
+            <AvatarFallback className="font-bold">{initials}</AvatarFallback>
+          </Avatar>
+          <div>
+            <Label htmlFor="member-avatar">Profile picture</Label>
+            <Input
+              id="member-avatar"
+              type="file"
+              accept="image/*"
+              className="mt-2 max-w-xs"
+              disabled={!can("members.manage")}
+              onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <Label htmlFor="member-name">Full name</Label>
+            <Input
+              id="member-name"
+              className="mt-2"
+              value={fullName}
+              maxLength={100}
+              onChange={(event) => setFullName(event.target.value)}
+              disabled={!can("members.manage")}
+            />
+          </div>
+          <div>
+            <Label htmlFor="member-username">Username</Label>
+            <Input
+              id="member-username"
+              className="mt-2"
+              value={username}
+              maxLength={30}
+              onChange={(event) => setUsername(event.target.value)}
+              disabled={!can("members.manage")}
+            />
+          </div>
+          <div>
+            <Label htmlFor="member-momo">Withdrawal phone (Mobile Money)</Label>
+            <Input
+              id="member-momo"
+              className="mt-2"
+              value={mobileMoney}
+              maxLength={40}
+              onChange={(event) => setMobileMoney(event.target.value)}
+              disabled={!can("members.manage")}
+            />
+          </div>
+          <div>
+            <Label htmlFor="member-usdt">USDT wallet address</Label>
+            <Input
+              id="member-usdt"
+              className="mt-2"
+              value={usdt}
+              maxLength={120}
+              onChange={(event) => setUsdt(event.target.value)}
+              disabled={!can("members.manage")}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3">
+          <ConfirmDialog
+            trigger={
+              <Button variant="prime" disabled={!can("members.manage")}>
+                Save member details
+              </Button>
+            }
+            title="Update this member's details?"
+            description={`These are protected fields for ${account.fullName || account.email}. The change is logged and the member is notified.`}
+            confirmLabel="Save changes"
+            pending={saveMutation.isPending}
+            onConfirm={() => saveMutation.mutate()}
+          />
+
+          <ConfirmDialog
+            trigger={
+              <Button variant="outline" disabled={!can("members.impersonate")}>
+                <LogIn /> Log in as this member
+              </Button>
+            }
+            title="Start an impersonated session?"
+            description={`You will be signed in as ${account.fullName || account.email} to help them directly. A banner stays visible and every page you open is recorded against your admin account.`}
+            confirmLabel="Log in as member"
+            pending={impersonateMutation.isPending}
+            onConfirm={() => impersonateMutation.mutate()}
+          />
+        </div>
+      </div>
+    </PanelCard>
   );
 }
