@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import {
   BadgeCheck,
+  Banknote,
   Boxes,
   Coins,
   Gauge,
