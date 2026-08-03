@@ -3,6 +3,7 @@ export const PERMISSION_KEYS = [
   "members.wallet",
   "kyc.review",
   "withdrawals.review",
+  "deposits.review",
   "products.manage",
   "orders.manage",
   "stock.manage",
