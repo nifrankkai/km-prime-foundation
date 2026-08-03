@@ -26,6 +26,7 @@ import { Route as AuthenticatedConsoleX7q9f4k2m8CommissionsRouteImport } from '.
 import { Route as AuthenticatedConsoleX7q9f4k2m8ContentRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.content'
 import { Route as AuthenticatedConsoleX7q9f4k2m8InventoryRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.inventory'
 import { Route as AuthenticatedConsoleX7q9f4k2m8KycRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.kyc'
+import { Route as AuthenticatedConsoleX7q9f4k2m8MailRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.mail'
 import { Route as AuthenticatedConsoleX7q9f4k2m8MembersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.members'
 import { Route as AuthenticatedConsoleX7q9f4k2m8OrdersRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.orders'
 import { Route as AuthenticatedConsoleX7q9f4k2m8ProductsRouteImport } from './routes/_authenticated/console-x7q9f4k2m8.products'
@@ -134,6 +135,12 @@ const AuthenticatedConsoleX7q9f4k2m8KycRoute =
   AuthenticatedConsoleX7q9f4k2m8KycRouteImport.update({
     id: '/kyc',
     path: '/kyc',
+    getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
+  } as any)
+const AuthenticatedConsoleX7q9f4k2m8MailRoute =
+  AuthenticatedConsoleX7q9f4k2m8MailRouteImport.update({
+    id: '/mail',
+    path: '/mail',
     getParentRoute: () => AuthenticatedConsoleX7q9f4k2m8Route,
   } as any)
 const AuthenticatedConsoleX7q9f4k2m8MembersRoute =
@@ -261,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
   '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
@@ -295,6 +303,7 @@ export interface FileRoutesByTo {
   '/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
   '/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
@@ -333,6 +342,7 @@ export interface FileRoutesById {
   '/_authenticated/console-x7q9f4k2m8/content': typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   '/_authenticated/console-x7q9f4k2m8/inventory': typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   '/_authenticated/console-x7q9f4k2m8/kyc': typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  '/_authenticated/console-x7q9f4k2m8/mail': typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   '/_authenticated/console-x7q9f4k2m8/members': typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   '/_authenticated/console-x7q9f4k2m8/orders': typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
   '/_authenticated/console-x7q9f4k2m8/products': typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
@@ -371,6 +381,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
     | '/console-x7q9f4k2m8/products'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/console-x7q9f4k2m8/content'
     | '/console-x7q9f4k2m8/inventory'
     | '/console-x7q9f4k2m8/kyc'
+    | '/console-x7q9f4k2m8/mail'
     | '/console-x7q9f4k2m8/members'
     | '/console-x7q9f4k2m8/orders'
     | '/console-x7q9f4k2m8/products'
@@ -442,6 +454,7 @@ export interface FileRouteTypes {
     | '/_authenticated/console-x7q9f4k2m8/content'
     | '/_authenticated/console-x7q9f4k2m8/inventory'
     | '/_authenticated/console-x7q9f4k2m8/kyc'
+    | '/_authenticated/console-x7q9f4k2m8/mail'
     | '/_authenticated/console-x7q9f4k2m8/members'
     | '/_authenticated/console-x7q9f4k2m8/orders'
     | '/_authenticated/console-x7q9f4k2m8/products'
@@ -600,6 +613,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRouteImport
       parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
     }
+    '/_authenticated/console-x7q9f4k2m8/mail': {
+      id: '/_authenticated/console-x7q9f4k2m8/mail'
+      path: '/mail'
+      fullPath: '/console-x7q9f4k2m8/mail'
+      preLoaderRoute: typeof AuthenticatedConsoleX7q9f4k2m8MailRouteImport
+      parentRoute: typeof AuthenticatedConsoleX7q9f4k2m8Route
+    }
     '/_authenticated/console-x7q9f4k2m8/members': {
       id: '/_authenticated/console-x7q9f4k2m8/members'
       path: '/members'
@@ -735,6 +755,7 @@ interface AuthenticatedConsoleX7q9f4k2m8RouteChildren {
   AuthenticatedConsoleX7q9f4k2m8ContentRoute: typeof AuthenticatedConsoleX7q9f4k2m8ContentRoute
   AuthenticatedConsoleX7q9f4k2m8InventoryRoute: typeof AuthenticatedConsoleX7q9f4k2m8InventoryRoute
   AuthenticatedConsoleX7q9f4k2m8KycRoute: typeof AuthenticatedConsoleX7q9f4k2m8KycRoute
+  AuthenticatedConsoleX7q9f4k2m8MailRoute: typeof AuthenticatedConsoleX7q9f4k2m8MailRoute
   AuthenticatedConsoleX7q9f4k2m8MembersRoute: typeof AuthenticatedConsoleX7q9f4k2m8MembersRoute
   AuthenticatedConsoleX7q9f4k2m8OrdersRoute: typeof AuthenticatedConsoleX7q9f4k2m8OrdersRoute
   AuthenticatedConsoleX7q9f4k2m8ProductsRoute: typeof AuthenticatedConsoleX7q9f4k2m8ProductsRoute
@@ -756,6 +777,8 @@ const AuthenticatedConsoleX7q9f4k2m8RouteChildren: AuthenticatedConsoleX7q9f4k2m
       AuthenticatedConsoleX7q9f4k2m8InventoryRoute,
     AuthenticatedConsoleX7q9f4k2m8KycRoute:
       AuthenticatedConsoleX7q9f4k2m8KycRoute,
+    AuthenticatedConsoleX7q9f4k2m8MailRoute:
+      AuthenticatedConsoleX7q9f4k2m8MailRoute,
     AuthenticatedConsoleX7q9f4k2m8MembersRoute:
       AuthenticatedConsoleX7q9f4k2m8MembersRoute,
     AuthenticatedConsoleX7q9f4k2m8OrdersRoute:
