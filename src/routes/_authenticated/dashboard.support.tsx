@@ -20,7 +20,7 @@ import {
   TICKET_CATEGORIES,
 } from "@/lib/support.functions";
 
-type SupportSearch = { subject?: string; category?: string; new?: boolean };
+type SupportSearch = { subject?: string | undefined; category?: string | undefined; new?: boolean | undefined };
 
 export const Route = createFileRoute("/_authenticated/dashboard/support")({
   validateSearch: (search: Record<string, unknown>): SupportSearch => ({
