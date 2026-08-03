@@ -27,6 +27,7 @@ function AdminRanks() {
       minActiveDirects: number;
       unlockedLevels: number;
       leadershipShare: number;
+      leadershipQualified: boolean;
     }) => update({ data: vars }),
     onSuccess: () => {
       toast.success("Rank thresholds updated");
@@ -87,6 +88,7 @@ function AdminRanks() {
                   minActiveDirects,
                   unlockedLevels,
                   leadershipShare,
+                  leadershipQualified: leadershipShare > 0,
                 });
               }}
             >
