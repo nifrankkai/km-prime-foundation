@@ -23,6 +23,7 @@ export const PERMISSION_LABELS: Record<PermissionKey, string> = {
   "members.wallet": "Wallet adjustments",
   "kyc.review": "KYC review",
   "withdrawals.review": "Withdrawal approvals",
+  "deposits.review": "Deposit approvals",
   "products.manage": "Product management",
   "orders.manage": "Order management",
   "stock.manage": "Stock & shipments",
