@@ -58,6 +58,7 @@ const nav = [
   { to: "/console-x7q9f4k2m8/staff", label: "Staff & roles", icon: UserCog, permission: "staff.manage", exact: false },
 ] as const;
 
+
 function AdminLayout() {
   const { can, isStaff, isLoading } = useAdminAccess();
 
