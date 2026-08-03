@@ -68,21 +68,16 @@ function AdminMembers() {
     onError: (error: Error) => toast.error(error.message),
   });
 
-  function handleAdjust(userId: string, sign: 1 | -1) {
-    const raw = window.prompt(`Amount in USD to ${sign > 0 ? "credit" : "debit"}`);
-    if (!raw) return;
-    const amount = Math.round(Number(raw) * 100);
+  function submitAdjust(userId: string, sign: 1 | -1, note: string) {
+    const amount = Math.round(Number(amounts[userId] ?? "") * 100);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("Enter a valid amount");
-      return;
-    }
-    const note = window.prompt("Reason for this adjustment") ?? "";
-    if (note.trim().length < 3) {
-      toast.error("A reason of at least 3 characters is required");
+      toast.error("Enter a valid amount first");
       return;
     }
     adjustMutation.mutate({ userId, amountCents: amount * sign, note });
+    setAmounts((prev) => ({ ...prev, [userId]: "" }));
   }
+
 
   return (
     <div className="space-y-6">
