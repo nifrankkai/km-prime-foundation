@@ -6,7 +6,9 @@ import {
   Coins,
   Gauge,
   IdCard,
+  LifeBuoy,
   Mail,
+
   Megaphone,
   Palette,
   Package,
