@@ -136,7 +136,7 @@ function MembershipPanel() {
             <div className="mt-4 rounded-xl border border-destructive/40 bg-destructive/10 p-4">
               <p className="text-sm font-semibold text-destructive">{insufficient}</p>
               <Button asChild variant="prime" size="sm" className="mt-3">
-                <Link to="/dashboard/deposit">Deposit Now</Link>
+                <Link to="/dashboard/wallet">Deposit Now</Link>
               </Button>
             </div>
           )}

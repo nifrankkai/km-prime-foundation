@@ -173,7 +173,7 @@ function CheckoutPage() {
                   You need {money(shortfall)} more to complete this order.
                 </p>
                 <Button asChild variant="prime" size="sm" className="mt-3">
-                  <Link to="/dashboard/deposit">Deposit Now</Link>
+                  <Link to="/dashboard/wallet">Deposit Now</Link>
                 </Button>
               </div>
             )}
