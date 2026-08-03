@@ -81,23 +81,34 @@ function AdminWithdrawals() {
 
             {filter === "pending" && (
               <div className="mt-4 flex flex-wrap gap-2">
-                <Button
-                  size="sm"
-                  variant="prime"
-                  onClick={() => mutation.mutate({ id: row.id, approve: true })}
-                >
-                  Approve &amp; debit
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => {
-                    const note = window.prompt("Reason for rejection") ?? "";
-                    mutation.mutate({ id: row.id, approve: false, note });
-                  }}
-                >
-                  Reject
-                </Button>
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="prime">
+                      Approve &amp; debit
+                    </Button>
+                  }
+                  title="Approve this withdrawal?"
+                  description={`Are you sure you want to approve this withdrawal of ${money(row.amount_cents)} for ${row.fullName}? This will deduct from their wallet and mark it as paid.`}
+                  confirmLabel="Confirm approval"
+                  reasonLabel="Note (optional)"
+                  pending={mutation.isPending}
+                  onConfirm={(note) => mutation.mutate({ id: row.id, approve: true, note })}
+                />
+                <ConfirmDialog
+                  trigger={
+                    <Button size="sm" variant="outline">
+                      Reject
+                    </Button>
+                  }
+                  title="Reject this withdrawal?"
+                  description={`Are you sure you want to reject this withdrawal of ${money(row.amount_cents)} for ${row.fullName}? No balance will change.`}
+                  confirmLabel="Confirm rejection"
+                  destructive
+                  reasonLabel="Reason"
+                  reasonRequired
+                  pending={mutation.isPending}
+                  onConfirm={(note) => mutation.mutate({ id: row.id, approve: false, note })}
+                />
               </div>
             )}
           </div>
