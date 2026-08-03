@@ -14,7 +14,7 @@ import {
   listAdminMembers,
 } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/members")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/members")({
   component: AdminMembers,
 });
 

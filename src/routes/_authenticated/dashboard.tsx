@@ -67,7 +67,7 @@ function DashboardLayout() {
             </nav>
             {isStaff && (
               <Link
-                to="/admin"
+                to="/console-x7q9f4k2m8"
                 className="mt-3 flex items-center gap-3 rounded-xl border border-primary/30 bg-primary-soft px-3 py-2.5 text-sm font-semibold text-primary-deep"
               >
                 <ShieldCheck className="size-4" /> Admin console

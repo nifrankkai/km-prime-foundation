@@ -7,7 +7,7 @@ import { PanelCard } from "@/components/dashboard/panel-card";
 import { Button } from "@/components/ui/button";
 import { adminSetCommissionStatus, listAdminCommissions } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/commissions")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/commissions")({
   component: AdminCommissions,
 });
 

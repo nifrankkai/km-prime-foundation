@@ -8,7 +8,7 @@ import { PanelCard } from "@/components/dashboard/panel-card";
 import { Button } from "@/components/ui/button";
 import { adminReviewKyc, listKycQueue } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/kyc")({
+export const Route = createFileRoute("/_authenticated/console-x7q9f4k2m8/kyc")({
   component: AdminKyc,
 });
 
