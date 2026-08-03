@@ -1,5 +1,6 @@
 export const PERMISSION_KEYS = [
   "members.manage",
+  "members.impersonate",
   "members.wallet",
   "kyc.review",
   "withdrawals.review",
