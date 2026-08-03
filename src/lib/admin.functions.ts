@@ -425,6 +425,7 @@ export const adminUpdateRank = createServerFn({ method: "POST" })
         minActiveDirects: z.number().int().min(0).max(1000),
         unlockedLevels: z.number().int().min(1).max(15),
         leadershipShare: z.number().min(0).max(100),
+        leadershipQualified: z.boolean(),
       })
       .parse(data),
   )
@@ -436,7 +437,8 @@ export const adminUpdateRank = createServerFn({ method: "POST" })
       _min_active_directs: data.minActiveDirects,
       _unlocked_levels: data.unlockedLevels,
       _leadership_share: data.leadershipShare,
-    });
+      _leadership_qualified: data.leadershipQualified,
+    } as never);
     if (error) throw new Error(error.message);
     return { ok: true };
   });
