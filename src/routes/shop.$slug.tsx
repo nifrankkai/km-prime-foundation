@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { BadgeCheck, Minus, Plus, ShieldCheck, ShoppingCart, Truck } from "lucide-react";
+import { BadgeCheck, Minus, Plus, ShieldCheck, ShoppingCart, Star, Truck } from "lucide-react";
 import { toast } from "sonner";
 
 import { SiteHeader } from "@/components/site/site-header";
